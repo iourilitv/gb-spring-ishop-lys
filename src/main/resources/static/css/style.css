@@ -1,0 +1,87 @@
+/*.color-black {*/
+/*    color: black;*/
+/*}*/
+
+/*.height-150 {*/
+/*    height: 150px;*/
+/*}*/
+
+.container {
+    margin: 0 auto;
+}
+
+.header {
+    margin: 0 auto 20px;
+    padding: 10px;
+}
+
+.searching-form-div, header-navbar-div {
+    margin: 0 auto;
+    padding: .5rem 1rem;
+}
+
+.searching-form, .navbar {
+    margin: 0 auto;
+    padding: .5rem 1rem;
+    display: flex;
+    /*justify-content: flex-end;*/
+    justify-content: center;
+    align-items: center;
+}
+
+/* header */
+.bd-example {
+    height: 300px;
+    margin: 0 auto 5px;
+}
+
+/* catalog product card*/
+.card-deck {
+    margin-bottom: 20px;
+    /*justify-content: space-between;*/
+    /*justify-content: space-around;*/
+}
+
+.card {
+    min-width: 25%;
+    max-width: 31%;
+    margin: 15px;
+    height: 500px;
+    box-shadow: 5px 20px 50px rgba(16, 112, 177, 0.2);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.card-img-top {
+    border: 1px solid steelblue;
+    height: 300px;
+    width: 100%;
+}
+.card-footer {
+    background-color: darkslateblue;
+    text-align: center;
+    display: flex;
+}
+
+.card-body {
+    max-height: 300px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.card-footer:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.price {
+    color: beige;
+    font-size: x-large;
+    font-weight: bold;
+    margin: 0 auto;
+}
+
+.footer {
+    color: beige;
+    padding: 20px;
+}
