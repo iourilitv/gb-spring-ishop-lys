@@ -12,46 +12,46 @@
 
 <div class="container">
 
-    <header class="header justify-content-center bg-dark">
-        <!-- top searching form -->
-        <div class="searching-form-div">
-            <form class="form-inline searching-form">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-        <!-- top navigation -->
-        <div>
-            <nav class="navbar navbar-dark">
-                <div>
-                    <ul class="nav justify-content-center navbar-dark bg-dar">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Электроника</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Офисная техника</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Бытовая техника</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Обувь</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Одежда</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Книги</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Pets</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-
-    </header>
+<!--    <header class="header justify-content-center bg-dark">-->
+<!--        &lt;!&ndash; top searching form &ndash;&gt;-->
+<!--        <div class="searching-form-div">-->
+<!--            <form class="form-inline searching-form">-->
+<!--                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; top navigation &ndash;&gt;-->
+<!--        <div>-->
+<!--            <nav class="navbar navbar-dark">-->
+<!--                <div>-->
+<!--                    <ul class="nav justify-content-center navbar-dark bg-dar">-->
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link active" href="#">Электроника</a>-->
+<!--                        </li>-->
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link active" href="#">Офисная техника</a>-->
+<!--                        </li>-->
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link active" href="#">Бытовая техника</a>-->
+<!--                        </li>-->
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link active" href="#">Обувь</a>-->
+<!--                        </li>-->
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link active" href="#">Одежда</a>-->
+<!--                        </li>-->
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link active" href="#">Книги</a>-->
+<!--                        </li>-->
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link active" href="#">Pets</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </nav>-->
+<!--        </div>-->
+<!--    </header>-->
+    <header th:replace="fragments/header.html :: header (activePage=${activePage})"/>
 
     <!-- Карусель с индикаторами и подписями -->
     <!-- https://bootstrap-4.ru/docs/4.3.1/components/carousel/ -->
@@ -121,14 +121,15 @@
         </div>
     </div>
 
-    <footer>
-<!--        <nav class="navbar navbar-dark bg-dark">-->
-        <nav class="footer navbar-dark bg-dark">
-            <a class="navbar-brand" href="#"><img src="..." alt="NotWildberries logo"></a>
-            <p>2020 © NotWildberries — модный интернет-магазин одежды, обуви и аксессуаров.</p>
-            <p>Все права защищены. Доставка по всей России.</p>
-        </nav>
-    </footer>
+<!--    <footer>-->
+<!--&lt;!&ndash;        <nav class="navbar navbar-dark bg-dark">&ndash;&gt;-->
+<!--        <nav class="footer navbar-dark bg-dark">-->
+<!--            <a class="navbar-brand" href="#"><img src="..." alt="NotWildberries logo"></a>-->
+<!--            <p>2020 © NotWildberries — модный интернет-магазин одежды, обуви и аксессуаров.</p>-->
+<!--            <p>Все права защищены. Доставка по всей России.</p>-->
+<!--        </nav>-->
+<!--    </footer>-->
+    <footer th:replace="fragments/footer.html"/>
 
 </div>
 
