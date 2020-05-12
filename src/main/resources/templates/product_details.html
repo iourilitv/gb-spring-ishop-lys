@@ -1,0 +1,58 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Каталог</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <!-- full path: src\main\resources\static\css -->
+<!--    <link rel="stylesheet" th:href="@{/css/style.css}">-->
+    <link rel="stylesheet" th:href="@{/css/product_details.css}">
+</head>
+
+<div class="container">
+
+    <header th:replace="fragments/header.html :: header (activePage=${activePage})"/>
+
+    <h2 th:text="${product.title}"/>
+    <!-- Блок картинки и блока кнопки "в корзину" -->
+    <div class="card-row">
+        <div class="card-left">
+            <picture>
+                <img src="..." alt="medium size image of product" style="color: black">
+            </picture>
+        </div>
+
+        <!-- Блок кнопки "в корзину" -->
+        <div class="card-right">
+            <!-- артикул(prod_id) -->
+            <div class="article-div">
+                <h6 th:text="'Article: ' + ${prod_id}"></h6>
+            </div>
+
+            <!-- стоимость -->
+            <div class="cost-div">
+                <div class="cost" th:text="${product.price}"></div>
+            </div>
+
+            <!-- кнопка в корзину -->
+            <div class="order">
+                <div>
+                    <button class="c-btn-main-lg-v1">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Раздел описание -->
+    <div class="card-row">
+        <h2>Описание</h2>
+        <p class="description" th:text="${product.description}">
+    </div>
+
+    <footer th:replace="fragments/footer.html"/>
+
+</div>
+
+</html>

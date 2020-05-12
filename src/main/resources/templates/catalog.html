@@ -16,7 +16,7 @@
 
     <!-- Карусель с индикаторами и подписями -->
     <!-- https://bootstrap-4.ru/docs/4.3.1/components/carousel/ -->
-    <div class="bd-example">
+    <div class="bd-example" style="display: none">
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -65,13 +65,13 @@
     <div class="card-deck">
         <div class="card" th:each="p : ${products}">
             <picture class="card-img-top">
-                <a th:href="@{/catalog/{prod_id}/prod_id(prod_id = ${p.id})}">
+                <a th:href="@{/catalog/{prod_id}/details(prod_id = ${p.id})}">
                             <img src="..." alt="Image of product">
                         </a>
             </picture>
 
             <div class="card-body">
-                <a th:href="@{/catalog/{prod_id}/prod_id(prod_id = ${p.id})}">
+                <a th:href="@{/catalog/{prod_id}/details(prod_id = ${p.id})}">
                     <h5 class="card-title" th:text="${p.title}">Title of product</h5>
                 </a>
             </div>

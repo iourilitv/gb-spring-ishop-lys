@@ -1,43 +1,51 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<header th:fragment="header (activePage)" class="header justify-content-center bg-dark">
-    <!-- top searching form -->
-    <div class="searching-form-div">
-        <form class="form-inline searching-form">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
-    <!-- top navigation -->
-    <div>
-        <nav class="navbar navbar-dark">
-            <div>
-                <ul class="nav justify-content-center navbar-dark bg-dar">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Электроника</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Офисная техника</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Бытовая техника</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Обувь</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Одежда</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Книги</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Pets</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+<!--<header th:fragment="header (activePage)" class="header justify-content-center bg-dark">-->
+<header th:fragment="header (activePage)" class="header bg-dark">
+    <picture class="header__shop-logo">
+        <a th:href="@{/catalog/all}"><img src="..." alt="shop logo"></a>
+    </picture>
+
+    <div class="header-right justify-content-center">
+        <!-- top searching form -->
+        <div class="searching-form-div">
+            <form class="form-inline searching-form">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+
+        <!-- top navigation -->
+        <div>
+            <nav class="navbar navbar-dark">
+                <div>
+                    <ul class="nav justify-content-center navbar-dark bg-dar">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Электроника</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Офисная техника</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Бытовая техника</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Обувь</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Одежда</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Книги</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Pets</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
     </div>
 </header>
 

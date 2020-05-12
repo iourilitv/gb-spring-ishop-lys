@@ -1,18 +1,21 @@
-/*.color-black {*/
-/*    color: black;*/
-/*}*/
-
-/*.height-150 {*/
-/*    height: 150px;*/
-/*}*/
-
 .container {
     margin: 0 auto;
 }
 
 .header {
-    margin: 0 auto 20px;
+    /*margin: 0 auto 20px;*/
+    margin: 0 auto;
     padding: 10px;
+    display: flex;
+}
+
+.header__shop-logo {
+    margin: 10px;
+    width: 15%;
+}
+
+.header-right {
+
 }
 
 .searching-form-div, header-navbar-div {
@@ -24,7 +27,6 @@
     margin: 0 auto;
     padding: .5rem 1rem;
     display: flex;
-    /*justify-content: flex-end;*/
     justify-content: center;
     align-items: center;
 }
@@ -32,14 +34,12 @@
 /* header */
 .bd-example {
     height: 300px;
-    margin: 0 auto 5px;
+    margin: 20px auto 0;
 }
 
 /* catalog product card*/
 .card-deck {
     margin-bottom: 20px;
-    /*justify-content: space-between;*/
-    /*justify-content: space-around;*/
 }
 
 .card {
