@@ -21,7 +21,6 @@ public class ProductController {
         this.service = service;
     }
 
-//    @GetMapping("/") - не находит
     @GetMapping("/all")
     public String allProducts(Model model) {
         List<Product> products = service.findAllProducts();
