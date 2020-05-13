@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
+    <!-- из примера Фисунова -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
     <!-- full path: src\main\resources\static\css -->
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -16,6 +19,7 @@
 
     <!-- Карусель с индикаторами и подписями -->
     <!-- https://bootstrap-4.ru/docs/4.3.1/components/carousel/ -->
+    <!-- //TODO Временно отключен -->
     <div class="bd-example" style="display: none">
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -61,9 +65,30 @@
         </div>
     </div>
 
+    <!-- блок фильтрации -->
+    <form class="filter-form" th:action="@{/catalog/all}" method="GET">
+        <div class="input-group">
+            <!-- http://localhost:8080/shop/catalog/all?minPrice=11&max_price=19 -->
+            <!-- параметр в запросе "minPrice" - это name в input -->
+            <!-- чтобы принять сюда значение параметра, должны совпадать названия в th:value="${param.xxx} и в name="xxx" -->
+            <input class="form-control" th:value="${param.min_price}" name="min_price" type="number"
+                   placeholder="Минимальная цена"/>
+            <input class="form-control" th:value="${param.max_price}" name="max_price" type="number"
+                   placeholder="Максимальная цена"/>
+<!--            <select name="cat_id">-->
+<!--                <option th:text="'Не выбрана'" th:value="null"/>-->
+<!--                <option th:each="c : ${categories}" th:text="${c.title}" th:selected="${c.id == param.cat_id}"-->
+<!--                        th:value="${c.id}"/>-->
+<!--            </select>-->
+        </div>
+<!--        <br>-->
+        <button type="submit" class="btn btn-info">Применить</button>
+        <a class="btn btn-secondary" th:href="@{'/catalog/all'}">Сбросить</a>
+    </form>
+
     <!-- product cards block-->
     <div class="card-deck">
-        <div class="card" th:each="p : ${products}">
+        <div class="card" th:each="p : ${page}">
             <picture class="card-img-top">
                 <a th:href="@{/catalog/{prod_id}/details(prod_id = ${p.id})}">
                             <img src="..." alt="Image of product">

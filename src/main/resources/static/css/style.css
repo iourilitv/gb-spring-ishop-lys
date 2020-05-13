@@ -8,21 +8,21 @@
     padding: 10px;
     display: flex;
 }
-
+/* header */
 .header__shop-logo {
     margin: 10px;
     width: 15%;
 }
-
+/* header */
 .header-right {
 
 }
-
+/* header */
 .searching-form-div, header-navbar-div {
     margin: 0 auto;
     padding: .5rem 1rem;
 }
-
+/* header */
 .searching-form, .navbar {
     margin: 0 auto;
     padding: .5rem 1rem;
@@ -31,10 +31,20 @@
     align-items: center;
 }
 
-/* header */
+/* карусель слайдов */
 .bd-example {
     height: 300px;
     margin: 20px auto 0;
+}
+
+.filter-form {
+    /*margin-top: 20px;*/
+    margin-bottom: 0;
+    padding: 10px;
+}
+
+.input-group {
+    margin-bottom: 10px;
 }
 
 /* catalog product card*/
