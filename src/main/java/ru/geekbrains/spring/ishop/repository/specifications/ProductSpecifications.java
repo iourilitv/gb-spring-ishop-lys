@@ -22,14 +22,4 @@ public class ProductSpecifications {
     }
 
 
-//    public static Specification<Product> findProductById(Long id) {
-//        return (Specification<Product>) (root, criteriaQuery, criteriaBuilder)
-//                -> criteriaBuilder.equal(root.get("id"), id);
-//    }
-
-//    public static Specification<Product> findProductByPrice(int price) {
-//        return (Specification<Product>) (root, criteriaQuery, criteriaBuilder)
-//                -> criteriaBuilder.equal(root.get("price"), price);
-//    }
-
 }

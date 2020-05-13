@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ProductFilter {
     private Specification<Product> spec;
-    private StringBuilder filterDefinition;
+    private final StringBuilder filterDefinition;
 
     public ProductFilter(Map<String, String> map) {
         //инициируем нулевую спецификацию фильтра(фильтр не применится)
@@ -38,15 +38,6 @@ public class ProductFilter {
             filterDefinition.append("&max_price=").append(maxPrice);
         }
 
-//        if(map.containsKey("product_id") && !map.get("product_id").isEmpty()) {
-//            Long product_id = Long.parseLong(map.get("product_id"));
-//            spec.or(ProductSpecifications.findProductById(product_id));
-//        }
-
-//        if(map != null && map.containsKey("price") && !map.get("price").isEmpty()) {
-//            int price = Integer.parseInt(map.get("price"));
-//            spec = spec.or(ProductSpecifications.findProductByPrice(price));
-//        }
     }
 
     public Specification<Product> getSpec() {

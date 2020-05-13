@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.repository.ProductRepository;
@@ -23,13 +22,6 @@ public class ProductService {
         this.repository = repository;
     }
 
-
-//    public List<Product> findAll() {
-//        return repository.findAll();
-//    }
-//    public Page<Product> findAll(Specification<Product> spec, Pageable pageable) {
-//        return repository.findAll(spec, pageable);
-//    }
     public Page<Product> findAll(Map<String, String> params, ProductFilter filter) {
         //номер страницы
         int pageIndex = 0;
