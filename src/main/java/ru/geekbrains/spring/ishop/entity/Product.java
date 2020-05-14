@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name= "products")
+@Table(name = "products")
 public class Product {
 
     @Id
@@ -20,6 +20,10 @@ public class Product {
 
     @Column(name = "price")
     private BigDecimal price;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public Product() {
     }
@@ -56,6 +60,14 @@ public class Product {
         this.price = price;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -63,6 +75,8 @@ public class Product {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
+                ", category_id=" + category.getId() +
+                ", category_title=" + category.getTitle() +
                 '}';
     }
 }
