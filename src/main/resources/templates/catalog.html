@@ -71,19 +71,28 @@
             <!-- http://localhost:8080/shop/catalog/all?minPrice=11&max_price=19 -->
             <!-- параметр в запросе "minPrice" - это name в input -->
             <!-- чтобы принять сюда значение параметра, должны совпадать названия в th:value="${param.xxx} и в name="xxx" -->
-            <input class="form-control" th:value="${param.min_price}" name="min_price" type="number"
+            <input class="form-control" th:value="${param.minPrice}" name="minPrice" type="number"
                    placeholder="Минимальная цена"/>
-            <input class="form-control" th:value="${param.max_price}" name="max_price" type="number"
+            <input class="form-control" th:value="${param.maxPrice}" name="maxPrice" type="number"
                    placeholder="Максимальная цена"/>
-<!--            <select name="cat_id">-->
-<!--                <option th:text="'Не выбрана'" th:value="null"/>-->
-<!--                <option th:each="c : ${categories}" th:text="${c.title}" th:selected="${c.id == param.cat_id}"-->
-<!--                        th:value="${c.id}"/>-->
-<!--            </select>-->
+            <input class="form-control" th:value="${param.limit}" name="limit" type="number"
+                   placeholder="Товаров на странице"/>
+            <!-- выпадающий список направления сортировки -->
+            <label>
+                <select name="direction"
+                        class="btn btn-info dropdown-toggle catalog__filter__select">
+                    <option th:text="'По возрастанию цены'"
+                            th:selected="${#strings.equals(param.direction, 'ASC')}" th:value="ASC"></option>
+                    <option th:text="'По убыванию цены'"
+                            th:selected="${#strings.equals(param.direction, 'DESC')}" th:value="DESC"></option>
+                </select>
+            </label>
         </div>
-<!--        <br>-->
-        <button type="submit" class="btn btn-info">Применить</button>
-        <a class="btn btn-secondary" th:href="@{'/catalog/all'}">Сбросить</a>
+
+        <div class="catalog__filter__btn-group">
+            <button type="submit" class="btn btn-info catalog__filter__btn">Применить</button>
+            <a class="btn btn-secondary" th:href="@{'/catalog/all'}">Сбросить</a>
+        </div>
     </form>
 
     <!-- product cards block-->
@@ -105,6 +114,34 @@
                 <small class="price" th:text="${p.price} + ' руб.'">Price of product</small>
             </div>
         </div>
+    </div>
+
+    <!-- номерация страниц -->
+    <div class="catalog__pagination_div">
+        <nav aria-label="Pagination">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link"
+                       th:href="@{'/catalog/all?page='
+                       + ${page.previousOrFirstPageable().getPageNumber() + 1}
+                       + ${filterDef}}">Previous</a>
+                </li>
+
+                <li class="page-item"
+                    th:classappend="${page.getNumber() + 1 == i ? 'active' : ''}"
+                    th:each="i : ${#numbers.sequence(1, page.getTotalPages())}">
+                    <a class="page-link" th:text="${i}"
+                       th:href="@{'/catalog/all?page='
+                       + ${i} + ${filterDef}}"></a></li>
+
+                <li class="page-item">
+                    <a class="page-link"
+                       th:href="@{'/catalog/all?page='
+                       + ${page.nextOrLastPageable().getPageNumber() + 1}
+                       + ${filterDef}}">Next</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
     <footer th:replace="fragments/footer.html"/>

@@ -25,7 +25,7 @@ public class ProductController {
     }
 
     //http://localhost:8080/shop/catalog/all
-    //http://localhost:8080/shop/catalog/all?page=1&limit=6&direction=DESC&min_price=1000&max_price=10000
+    //http://localhost:8080/shop/catalog/all?page=1&limit=6&direction=DESC&minPrice=1000&maxPrice=10000
     @GetMapping("/all")
     public String allProducts(Model model, @RequestParam Map<String, String> params) {
         //инициируем объект фильтра продуктов

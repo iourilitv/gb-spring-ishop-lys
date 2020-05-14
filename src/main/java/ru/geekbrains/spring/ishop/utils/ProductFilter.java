@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ProductFilter {
     private Specification<Product> spec;
-    private final StringBuilder filterDefinition;
+    private StringBuilder filterDefinition;
 
     public ProductFilter(Map<String, String> map) {
         //инициируем нулевую спецификацию фильтра(фильтр не применится)
@@ -17,27 +17,44 @@ public class ProductFilter {
         //инициируем объект билдера строки для сборки строки с параметрами фильтра,
         // добавляемыми к запросу
         this.filterDefinition = new StringBuilder();
-        //если в параметрах есть параметр минимальной цены
-        if(map != null && map.containsKey("min_price")
-                && !map.get("min_price").isEmpty()) {
-            //инициируем переменную минимальной цены из параметра
-            BigDecimal minPrice = new BigDecimal(map.get("min_price"));
-            //добавляем по и условие фильтра в спецификацию фильтра
-            spec = spec.and(ProductSpecifications.priceGEThan(minPrice));
-            //добавляем параметр фильтра к строке запроса
-            filterDefinition.append("&min_price=").append(minPrice);
+        //если есть хотя бы один параметр
+        if(map != null && !map.isEmpty()) {
+            //если в параметрах есть параметр минимальной цены
+            if(map.containsKey("minPrice")
+                    && !map.get("minPrice").isEmpty()) {
+                //инициируем переменную минимальной цены из параметра
+                BigDecimal minPrice = new BigDecimal(map.get("minPrice"));
+                //добавляем по и условие фильтра в спецификацию фильтра
+                spec = spec.and(ProductSpecifications.priceGEThan(minPrice));
+                //добавляем параметр фильтра к строке запроса
+                filterDefinition.append("&minPrice=").append(minPrice);
+            }
+            //если в параметрах есть параметр максимальной цены
+            if(map.containsKey("maxPrice")
+                    && !map.get("maxPrice").isEmpty()) {
+                //инициируем переменную минимальной цены из параметра
+                BigDecimal maxPrice = new BigDecimal(map.get("maxPrice"));
+                //добавляем по и условие фильтра в спецификацию фильтра
+                spec = spec.and(ProductSpecifications.priceLEThan(maxPrice));
+                //добавляем параметр фильтра к строке запроса
+                filterDefinition.append("&maxPrice=").append(maxPrice);
+            }
+//            //если в параметрах есть параметр количества элементов на странице
+//            if(map.containsKey("limit")
+//                    && !map.get("limit").isEmpty()) {
+//                //количество объектов, выводимых на страницу
+//                int limit = 3;
+//                //если указан количество объектов, выводимых на страницу
+//                if(map.containsKey("limit") && !map.get("limit").isEmpty()) {
+//                    //инициируем переменную из параметра
+//                    limit = Integer.parseInt(map.get("limit"));
+//                }
+////                //добавляем по и условие фильтра в спецификацию фильтра
+////                spec = spec.and(ProductSpecifications.priceLEThan(maxPrice));
+//                //добавляем параметр фильтра к строке запроса
+//                filterDefinition.append("&limit=").append(limit);
+//            }
         }
-        //если в параметрах есть параметр максимальной цены
-        if(map != null && map.containsKey("max_price")
-                && !map.get("max_price").isEmpty()) {
-            //инициируем переменную минимальной цены из параметра
-            BigDecimal maxPrice = new BigDecimal(map.get("max_price"));
-            //добавляем по и условие фильтра в спецификацию фильтра
-            spec = spec.and(ProductSpecifications.priceLEThan(maxPrice));
-            //добавляем параметр фильтра к строке запроса
-            filterDefinition.append("&max_price=").append(maxPrice);
-        }
-
     }
 
     public Specification<Product> getSpec() {
@@ -47,4 +64,5 @@ public class ProductFilter {
     public StringBuilder getFilterDefinition() {
         return filterDefinition;
     }
+
 }

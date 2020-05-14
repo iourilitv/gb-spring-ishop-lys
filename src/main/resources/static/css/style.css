@@ -47,6 +47,20 @@
     margin-bottom: 10px;
 }
 
+.catalog__filter__select {
+    height: calc(2.25rem + 2px);
+    padding:0;
+}
+
+.catalog__filter__btn-group {
+    display: flex;
+    justify-content: center;
+}
+
+.catalog__filter__btn {
+    margin-right: 10px;
+}
+
 /* catalog product card*/
 .card-deck {
     margin-bottom: 20px;
@@ -89,6 +103,10 @@
     font-size: x-large;
     font-weight: bold;
     margin: 0 auto;
+}
+
+.pagination {
+    justify-content: center;
 }
 
 .footer {
