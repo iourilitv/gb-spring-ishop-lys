@@ -39,21 +39,6 @@ public class ProductFilter {
                 //добавляем параметр фильтра к строке запроса
                 filterDefinition.append("&maxPrice=").append(maxPrice);
             }
-//            //если в параметрах есть параметр количества элементов на странице
-//            if(map.containsKey("limit")
-//                    && !map.get("limit").isEmpty()) {
-//                //количество объектов, выводимых на страницу
-//                int limit = 3;
-//                //если указан количество объектов, выводимых на страницу
-//                if(map.containsKey("limit") && !map.get("limit").isEmpty()) {
-//                    //инициируем переменную из параметра
-//                    limit = Integer.parseInt(map.get("limit"));
-//                }
-////                //добавляем по и условие фильтра в спецификацию фильтра
-////                spec = spec.and(ProductSpecifications.priceLEThan(maxPrice));
-//                //добавляем параметр фильтра к строке запроса
-//                filterDefinition.append("&limit=").append(limit);
-//            }
         }
     }
 
