@@ -1,7 +1,6 @@
 package ru.geekbrains.spring.ishop.utils;
 
 import org.springframework.data.jpa.domain.Specification;
-import ru.geekbrains.spring.ishop.entity.Category;
 import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.repository.specifications.ProductSpecifications;
 

@@ -7,4 +7,24 @@ Conclusion: Похоже flyway ругается на строку drop table pr
 Если запустить еще раз миграцию(без очистки) то все работает - 
 [INFO] Schema `gb_spring_ishop_lys` is up to date. No migration necessary.
 
-2. 
+2. Thymeleaf + Spring.
+ Не смог реализовать совместную фильтрацию по ссылкам на категории в header.html 
+ и в фильтре. Все работает отдельно. Либо ссылки, либо фильтр. При применении фильтра слетают ссылки и наоборот. 
+ После добавления параметра category в filterDef, появляется дублирование этого параметра.
+ Возможное решение: 
+ в файле header.html в ссылке в элементе меню удалить этот параметр из filterDef 
+ и добавить новый параметр.
+ Код не работает:
+                             <!-- does not work -->
+ <!--                            <li th:class="${#strings.equals(param.category, category.id) ? 'nav-item nav-pills' : 'nav-item'}">-->
+ <!--                                <a th:class="${#strings.equals(param.category, category.id) ? 'nav-link active color-white' : 'nav-link active'}"-->
+ <!--                                   th:href="@{'/catalog/all' + ${__${#strings.replace(${filterDef},-->
+ <!--                                   'category=' + ${param.category}, 'category=' + ${category.id})}__}}"-->
+ <!--                                   th:text="${category.title}"></a>-->
+ <!--                            </li>-->
+ Нужно, либо найти синтаксис препроцессора thymeleaf, либо делать это на стороне StringBuilderа, 
+ либо создать свой класс filterDef вместо StringBuilder.
+ В своем классе можно реализовать метод замены значения параметра.
+ А вообще лучше все фильтры делать в одном месте. 
+ Пока удалил ссылки категорий из header, и добавил категории в фильтр каталога.
+  

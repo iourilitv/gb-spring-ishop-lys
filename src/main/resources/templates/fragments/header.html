@@ -16,36 +16,29 @@
         </div>
 
         <!-- top navigation -->
-        <div>
+        <!-- //TODO Временно отключен -->
+        <div style="display: none">
             <nav class="navbar navbar-dark">
                 <div>
                     <ul class="nav justify-content-center navbar-dark bg-dar">
-<!--                        <div>-->
-<!--                            &lt;!&ndash; all categories &ndash;&gt;-->
-<!--                            <li th:class="${param.category == null ? 'nav-item nav-pills': 'nav-item'}">-->
-<!--                                <a th:class="${param.category == null ? 'nav-link active color-white': 'nav-link active'}"-->
-<!--                                   th:href="@{'/catalog/all?' + ${filterDef}}"-->
-<!--                                   th:text="'Bce категории'"></a>-->
-<!--                            </li>-->
-<!--                        </div>-->
+                        <div>
+                            <!-- all categories -->
+                            <li th:class="${param.category == null ? 'nav-item nav-pills': 'nav-item'}">
+                                <a th:class="${param.category == null ? 'nav-link active color-white': 'nav-link active'}"
+                                   th:href="@{'/catalog/all?' + ${filterDef}}"
+                                   th:text="'Bce категории'"></a>
+                            </li>
+                        </div>
 
                         <!-- collection of categories -->
-<!--                        <div th:each="category : ${categories}">-->
-<!--                            <li th:class="${#strings.equals(param.category, category.id) ? 'nav-item nav-pills' : 'nav-item'}">-->
-<!--                                <a th:class="${#strings.equals(param.category, category.id) ? 'nav-link active color-white' : 'nav-link active'}"-->
-<!--                                   th:href="@{'/catalog/all?category=' + ${category.id} + ${filterDef}}"-->
-<!--                                   th:text="${category.title}"></a>-->
-<!--                            </li>-->
-                            <!-- does not work -->
-<!--                            <li th:class="${#strings.equals(param.category, category.id) ? 'nav-item nav-pills' : 'nav-item'}">-->
-<!--                                <a th:class="${#strings.equals(param.category, category.id) ? 'nav-link active color-white' : 'nav-link active'}"-->
-<!--                                   th:href="@{'/catalog/all' + ${__${#strings.replace(${filterDef},-->
-<!--                                   'category=' + ${param.category}, 'category=' + ${category.id})}__}}"-->
-<!--                                   th:text="${category.title}"></a>-->
-<!--                            </li>-->
-<!--                        </div>-->
+                        <div th:each="category : ${categories}">
+                            <li th:class="${#strings.equals(param.category, category.id) ? 'nav-item nav-pills' : 'nav-item'}">
+                                <a th:class="${#strings.equals(param.category, category.id) ? 'nav-link active color-white' : 'nav-link active'}"
+                                   th:href="@{'/catalog/all?category=' + ${category.id} + ${filterDef}}"
+                                   th:text="${category.title}"></a>
+                            </li>
+                        </div>
                     </ul>
-
                 </div>
             </nav>
         </div>

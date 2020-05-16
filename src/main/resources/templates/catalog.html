@@ -15,13 +15,9 @@
 
 <div class="container">
 
-<!--    <header th:replace="fragments/header.html :: header (activePage=${activePage})"/>-->
     <!-- в контроллере не определен атрибут activePage -->
     <header th:replace="fragments/header.html
     :: header(activePage=${activePage}, categories=${categories})"></header>
-<!--    <header th:replace="fragments/header.html ::-->
-<!--        header(categories=${categories})">-->
-<!--    </header>-->
 
     <!-- Карусель с индикаторами и подписями -->
     <!-- https://bootstrap-4.ru/docs/4.3.1/components/carousel/ -->
@@ -74,8 +70,6 @@
     <!-- блок фильтрации -->
     <form class="filter-form" th:action="@{/catalog/all}" method="GET">
         <div class="input-group">
-<!--            <input th:hidden="true" th:value="${param.category}" name="category" type="number"/>-->
-
             <label>
                 <select name="category"
                         class="btn btn-info dropdown-toggle catalog__filter__select">

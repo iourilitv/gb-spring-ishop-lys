@@ -39,12 +39,8 @@ public class CatalogController {
         //получаем объект страницы с применением фильтра
         Page<Product> page = productService.findAll(params, filter);
         //получаем коллекцию всех категорий
-//        List<Category> categories = categoryService.findAll();
-//        List<Category> categories = categoryService.findAll(
-//                Sort.by(Sort.Direction.ASC, "id"));
         List<Category> categories = categoryService.findAll(
-                Sort.by(Sort.Direction.ASC, "title"));
-
+                Sort.by(Sort.Direction.ASC, "title"));//было по id
         //передаем в .html атрибуты:
         //часть строки запроса с параметрами фильтра
         model.addAttribute("filterDef", filter.getFilterDefinition());
