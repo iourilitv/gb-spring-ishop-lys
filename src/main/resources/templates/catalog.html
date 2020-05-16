@@ -15,7 +15,13 @@
 
 <div class="container">
 
-    <header th:replace="fragments/header.html :: header (activePage=${activePage})"/>
+<!--    <header th:replace="fragments/header.html :: header (activePage=${activePage})"/>-->
+    <!-- в контроллере не определен атрибут activePage -->
+    <header th:replace="fragments/header.html
+    :: header(activePage=${activePage}, categories=${categories})"></header>
+<!--    <header th:replace="fragments/header.html ::-->
+<!--        header(categories=${categories})">-->
+<!--    </header>-->
 
     <!-- Карусель с индикаторами и подписями -->
     <!-- https://bootstrap-4.ru/docs/4.3.1/components/carousel/ -->
@@ -68,6 +74,19 @@
     <!-- блок фильтрации -->
     <form class="filter-form" th:action="@{/catalog/all}" method="GET">
         <div class="input-group">
+<!--            <input th:hidden="true" th:value="${param.category}" name="category" type="number"/>-->
+
+            <label>
+                <select name="category"
+                        class="btn btn-info dropdown-toggle catalog__filter__select">
+                    <option th:text="'Все категории'"
+                            th:selected="${param.category == null}" th:value="null"></option>
+
+                    <option th:each="category : ${categories}"
+                            th:text="${category.title}"
+                            th:selected="${#strings.equals(param.category, category.id)}" th:value="${category.id}"></option>
+                </select>
+            </label>
             <!-- http://localhost:8080/shop/catalog/all?minPrice=11&max_price=19 -->
             <!-- параметр в запросе "minPrice" - это name в input -->
             <!-- чтобы принять сюда значение параметра, должны совпадать названия в th:value="${param.xxx} и в name="xxx" -->
@@ -144,7 +163,7 @@
         </nav>
     </div>
 
-    <footer th:replace="fragments/footer.html"/>
+    <footer th:replace="fragments/footer.html"></footer>
 
 </div>
 

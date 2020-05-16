@@ -1,7 +1,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<header th:fragment="header (activePage)" class="header bg-dark">
+<header th:fragment="header (activePage, categories)" class="header bg-dark">
     <picture class="header__shop-logo">
         <a th:href="@{/catalog/all}"><img src="..." alt="shop logo"></a>
     </picture>
@@ -20,28 +20,32 @@
             <nav class="navbar navbar-dark">
                 <div>
                     <ul class="nav justify-content-center navbar-dark bg-dar">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Электроника</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Офисная техника</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Бытовая техника</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Обувь</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Одежда</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Книги</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Pets</a>
-                        </li>
+<!--                        <div>-->
+<!--                            &lt;!&ndash; all categories &ndash;&gt;-->
+<!--                            <li th:class="${param.category == null ? 'nav-item nav-pills': 'nav-item'}">-->
+<!--                                <a th:class="${param.category == null ? 'nav-link active color-white': 'nav-link active'}"-->
+<!--                                   th:href="@{'/catalog/all?' + ${filterDef}}"-->
+<!--                                   th:text="'Bce категории'"></a>-->
+<!--                            </li>-->
+<!--                        </div>-->
+
+                        <!-- collection of categories -->
+<!--                        <div th:each="category : ${categories}">-->
+<!--                            <li th:class="${#strings.equals(param.category, category.id) ? 'nav-item nav-pills' : 'nav-item'}">-->
+<!--                                <a th:class="${#strings.equals(param.category, category.id) ? 'nav-link active color-white' : 'nav-link active'}"-->
+<!--                                   th:href="@{'/catalog/all?category=' + ${category.id} + ${filterDef}}"-->
+<!--                                   th:text="${category.title}"></a>-->
+<!--                            </li>-->
+                            <!-- does not work -->
+<!--                            <li th:class="${#strings.equals(param.category, category.id) ? 'nav-item nav-pills' : 'nav-item'}">-->
+<!--                                <a th:class="${#strings.equals(param.category, category.id) ? 'nav-link active color-white' : 'nav-link active'}"-->
+<!--                                   th:href="@{'/catalog/all' + ${__${#strings.replace(${filterDef},-->
+<!--                                   'category=' + ${param.category}, 'category=' + ${category.id})}__}}"-->
+<!--                                   th:text="${category.title}"></a>-->
+<!--                            </li>-->
+<!--                        </div>-->
                     </ul>
+
                 </div>
             </nav>
         </div>

@@ -2,6 +2,7 @@ package ru.geekbrains.spring.ishop.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +24,6 @@ public class CatalogController {
     private ProductService productService;
     private CategoryService categoryService;
 
-//    @Autowired
-//    public void setRepository(ProductService service) {
-//        this.service = service;
-//    }
-
     @Autowired
     public CatalogController(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
@@ -43,7 +39,12 @@ public class CatalogController {
         //получаем объект страницы с применением фильтра
         Page<Product> page = productService.findAll(params, filter);
         //получаем коллекцию всех категорий
-        List<Category> categories = categoryService.findAll();
+//        List<Category> categories = categoryService.findAll();
+//        List<Category> categories = categoryService.findAll(
+//                Sort.by(Sort.Direction.ASC, "id"));
+        List<Category> categories = categoryService.findAll(
+                Sort.by(Sort.Direction.ASC, "title"));
+
         //передаем в .html атрибуты:
         //часть строки запроса с параметрами фильтра
         model.addAttribute("filterDef", filter.getFilterDefinition());

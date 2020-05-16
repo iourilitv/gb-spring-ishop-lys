@@ -3,7 +3,6 @@
 }
 
 .header {
-    /*margin: 0 auto 20px;*/
     margin: 0 auto;
     padding: 10px;
     display: flex;
@@ -38,7 +37,6 @@
 }
 
 .filter-form {
-    /*margin-top: 20px;*/
     margin-bottom: 0;
     padding: 10px;
 }
@@ -112,4 +110,9 @@
 .footer {
     color: beige;
     padding: 20px;
+}
+
+/* special */
+.color-white {
+    color: white;
 }

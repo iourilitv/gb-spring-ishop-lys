@@ -21,5 +21,10 @@ public class ProductSpecifications {
                 -> criteriaBuilder.lessThanOrEqualTo(root.get("price"), value);
     }
 
+    //метод возвращает спецификацию для фильтра "товары категории"
+    public static Specification<Product> categoryIdEquals(Short value) {
+        return (Specification<Product>) (root, criteriaQuery, criteriaBuilder)
+                -> criteriaBuilder.equal(root.get("category").get("id"), value);
+    }
 
 }
