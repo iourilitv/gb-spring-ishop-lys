@@ -1,7 +1,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<header th:fragment="header (activePage, categories)" class="header bg-dark">
+<header th:fragment="header (activePage)" class="header bg-dark">
     <picture class="header__shop-logo">
         <a th:href="@{/catalog/all}"><img src="..." alt="shop logo"></a>
     </picture>
@@ -16,30 +16,22 @@
         </div>
 
         <!-- top navigation -->
-        <!-- //TODO Временно отключен -->
-        <div style="display: none">
+        <div>
             <nav class="navbar navbar-dark">
-                <div>
-                    <ul class="nav justify-content-center navbar-dark bg-dar">
-                        <div>
-                            <!-- all categories -->
-                            <li th:class="${param.category == null ? 'nav-item nav-pills': 'nav-item'}">
-                                <a th:class="${param.category == null ? 'nav-link active color-white': 'nav-link active'}"
-                                   th:href="@{'/catalog/all?' + ${filterDef}}"
-                                   th:text="'Bce категории'"></a>
-                            </li>
-                        </div>
-
-                        <!-- collection of categories -->
-                        <div th:each="category : ${categories}">
-                            <li th:class="${#strings.equals(param.category, category.id) ? 'nav-item nav-pills' : 'nav-item'}">
-                                <a th:class="${#strings.equals(param.category, category.id) ? 'nav-link active color-white' : 'nav-link active'}"
-                                   th:href="@{'/catalog/all?category=' + ${category.id} + ${filterDef}}"
-                                   th:text="${category.title}"></a>
-                            </li>
-                        </div>
-                    </ul>
-                </div>
+                <ul class="nav justify-content-center navbar-dark bg-dar">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/catalog/all}">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/delivery}">Доставка</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/contacts}">Контакты</a>
+                    </li>
+                    <li class="nav-item header__nav-item-inout">
+                        <a class="nav-link active" th:href="@{/profile}">Войти</a>
+                    </li>
+                </ul>
             </nav>
         </div>
     </div>

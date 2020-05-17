@@ -14,10 +14,11 @@
 }
 /* header */
 .header-right {
-
+    display: flex;
+    justify-content: center;
 }
 /* header */
-.searching-form-div, header-navbar-div {
+.searching-form-div {
     margin: 0 auto;
     padding: .5rem 1rem;
 }
@@ -28,6 +29,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.header__nav-item-inout {
+    margin-left: 50px;
 }
 
 /* карусель слайдов */
