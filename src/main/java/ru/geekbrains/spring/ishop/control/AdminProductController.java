@@ -99,14 +99,4 @@ public class AdminProductController {
         return "redirect:/admin/product/all";
     }
 
-//    @PostMapping("/product/form")
-//    @ResponseBody
-//    public String updateProduct(@ModelAttribute @Valid Product product,
-//                                BindingResult bindingResult) {
-//        if(bindingResult.hasErrors()){
-//            return "/product/form";
-//        }
-//        return product.toString();
-//    }
-
 }
