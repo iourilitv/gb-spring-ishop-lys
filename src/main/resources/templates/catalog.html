@@ -18,8 +18,9 @@
 <div class="container">
 
     <!-- в контроллере не определен атрибут activePage -->
-    <header th:replace="fragments/header.html
-    :: header(activePage=${activePage}, categories=${categories})"></header>
+<!--    <header th:replace="fragments/header.html-->
+<!--    :: header(activePage=${activePage}, categories=${categories})"></header>-->
+    <header th:replace="fragments/header.html :: header(activePage=${activePage})"></header>
 
     <!-- Карусель с индикаторами и подписями -->
     <!-- https://bootstrap-4.ru/docs/4.3.1/components/carousel/ -->

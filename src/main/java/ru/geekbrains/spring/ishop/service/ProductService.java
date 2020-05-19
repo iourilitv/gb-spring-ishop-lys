@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.repository.ProductRepository;
 import ru.geekbrains.spring.ishop.utils.ProductFilter;
@@ -22,7 +23,8 @@ public class ProductService {
         this.repository = repository;
     }
 
-    public Page<Product> findAll(Map<String, String> params, ProductFilter filter) {
+    public Page<Product> findAll(Map<String, String> params,
+                                 ProductFilter filter, String property) {
         //номер страницы
         int pageIndex = 0;
         //количество объектов, выводимых на страницу
@@ -49,7 +51,8 @@ public class ProductService {
             }
         }
         //инициируем объект пагинации с сортировкой
-        Pageable pageRequest = PageRequest.of(pageIndex, limit, direction, "price");
+//        Pageable pageRequest = PageRequest.of(pageIndex, limit, direction, "price");
+        Pageable pageRequest = PageRequest.of(pageIndex, limit, direction, property);
         return repository.findAll(filter.getSpec(), pageRequest);
     }
 
@@ -57,4 +60,15 @@ public class ProductService {
         return repository.getOne(id);
     }
 
+    public void save(Product product) {
+        //если в БД нет дубликата, иначе - исключение и не создает бин,
+        //т.к. поле title у Product уникально
+//        if (!repository.getProductsByTitle(product.getTitle()).isEmpty()){
+            repository.save(product);
+//        }
+    }
+
+    public void delete(Product product) {
+        repository.delete(product);
+    }
 }

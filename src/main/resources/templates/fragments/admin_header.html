@@ -1,0 +1,49 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<header th:fragment="header (activePage)" class="header bg-dark">
+    <picture class="header__shop-logo">
+        <a th:href="@{/catalog/all}"><img src="..." alt="shop logo"></a>
+    </picture>
+
+    <div class="header-right justify-content-center">
+        <!-- top searching form -->
+        <div class="searching-form-div">
+            <form class="form-inline searching-form">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+
+        <!-- top navigation -->
+        <div>
+            <nav class="navbar navbar-dark">
+                <ul class="nav justify-content-center navbar-dark bg-dar">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/admin/product/all}">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/admin/category/all}">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/admin/user/all}">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/delivery}">Доставка</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/contacts}">Контакты</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div>
+<!--            <a class="btn header__btn-outline-success my-2 my-sm-0"-->
+            <a class="header__login-btn"
+               th:href="@{/login}" th:text="'in'"></a>
+        </div>
+    </div>
+</header>
+
+</html>

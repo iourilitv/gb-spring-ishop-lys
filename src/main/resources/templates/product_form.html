@@ -1,0 +1,75 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Product form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <!-- full path: src\main\resources\static\css -->
+    <link rel="stylesheet" th:href="@{/css/product_details.css}">
+</head>
+
+<div class="container">
+
+    <header th:replace="fragments/admin_header.html :: header (activePage=${activePage})"></header>
+
+    <h2 th:text="${product.id == null} ? 'Creating a new product'
+            : 'Updating the product:'"></h2>
+
+    <form th:action="@{/admin/product/form}" th:object="${product}" method="post">
+        <div th:if="${product.id != null}" th:hidden="false" class="form-group col-md-6">
+            <label for="inputId"><h5>id</h5></label>
+<!--            <input type="number" th:field="*{id}"-->
+<!--                   th:value="${product.id != null} ? ${product.id}"-->
+<!--                   class="form-control" id="inputId" placeholder="id" disabled>-->
+            <input type="number" th:field="*{id}"
+                   th:value="${product.id != null} ? ${product.id}"
+                   class="form-control" id="inputId" placeholder="id">
+        </div>
+
+        <div class="form-group col-md-12">
+            <label for="inputTitle"><h5>Title</h5></label>
+            <input type="text" th:field="*{title}"
+                    th:value="${product.id != null} ? ${product.title}"
+                   class="form-control" id="inputTitle"
+                   placeholder="Input title" required>
+        </div>
+
+        <div class="form-group col-md-12">
+            <label for="validationTextareaDescription"><h5>Description</h5></label>
+            <textarea name="description" th:field="${product.description}"
+                    th:text="${product.id != null} ? ${product.description}"
+                      th:value="${product.id != null} ? ${product.description}"
+                      class="form-control" id="validationTextareaDescription"
+                      placeholder="Input description" required></textarea>
+        </div>
+
+        <div th:if="${product.id != null}" class="form-group col-md-6">
+            <label for="inputPrice"><h5>Price</h5></label>
+            <input name="price" type="number" th:field="${product.price}"
+                   th:value="${product.id != null} ? ${product.price}"
+                   class="form-control" id="inputPrice" placeholder="Input price">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="dropdownCategory"><h5>Category</h5></label>
+            <select name="category" id="dropdownCategory" class="form-control">
+                <option th:text="'Не выбрана'" th:value="null"></option>
+
+                <option th:each="category : ${categories}"
+                        th:text="${category.title}"
+                        th:selected="${#strings.equals(product.category.id, category.id)}"
+                        th:value="${category.id}"></option>
+            </select>
+        </div>
+        <div style="padding-left: 30px;">
+            <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+    </form>
+
+    <footer th:replace="fragments/footer.html"></footer>
+
+</div>
+
+</html>

@@ -33,11 +33,11 @@ public class CatalogController {
     //http://localhost:8080/shop/catalog/all
     //http://localhost:8080/shop/catalog/all?page=1&limit=6&direction=DESC&minPrice=1000&maxPrice=10000
     @GetMapping("/all")
-    public String allProducts(Model model, @RequestParam Map<String, String> params) {
+    public String allProducts(@RequestParam Map<String, String> params, Model model) {
         //инициируем объект фильтра продуктов
         ProductFilter filter = new ProductFilter(params);
         //получаем объект страницы с применением фильтра
-        Page<Product> page = productService.findAll(params, filter);
+        Page<Product> page = productService.findAll(params, filter,"price");
         //получаем коллекцию всех категорий
         List<Category> categories = categoryService.findAll(
                 Sort.by(Sort.Direction.ASC, "title"));//было по id
