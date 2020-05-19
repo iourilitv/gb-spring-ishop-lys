@@ -19,14 +19,14 @@ import java.util.Map;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin")
-public class CRMController {
+@RequestMapping("/admin/product")
+public class AdminProductController {
     private ProductService productService;
     private CategoryService categoryService;
 
     @Autowired
-    public CRMController(   ProductService productService,
-                            CategoryService categoryService) {
+    public AdminProductController(ProductService productService,
+                                  CategoryService categoryService) {
         this.productService = productService;
         this.categoryService = categoryService;
     }
@@ -36,7 +36,7 @@ public class CRMController {
         return "redirect:/admin/product/all";
     }
 
-    @GetMapping("/product/all")
+    @GetMapping("/all")
     public String productList(@RequestParam Map<String, String> params, Model model) {
         //инициируем объект фильтра продуктов
         ProductFilter filter = new ProductFilter(params);
@@ -55,48 +55,48 @@ public class CRMController {
         return "products";
     }
 
-    @GetMapping("/product/form")
+    @GetMapping("/form")
     public String productForm(Model model) {
+        //получаем коллекцию всех категорий
+        List<Category> categories = categoryService.findAll(
+                Sort.by(Sort.Direction.ASC, "title"));
         model.addAttribute("product", new Product());
+        model.addAttribute("categories", categories);
         return "product_form";
     }
 
-    @PostMapping("/product/form")
-    public String updateProduct(@ModelAttribute @Valid Product product,
-                                BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
-            return "/product/form";
-        }
-        productService.save(product);
-        return "redirect:/catalog/all";
-    }
-
-    //    @GetMapping("/product/form/{id}/id")
-//    public String formProduct(@PathVariable Optional<Long> id, Model model) {
-//        Product product = productService.findById(id.orElseThrow(() -> new RuntimeException("There is no id presented!")));
-//        //получаем коллекцию всех категорий
-//        List<Category> categories = categoryService.findAll(
-//                Sort.by(Sort.Direction.ASC, "id"));
-//        model.addAttribute("product", product);
-//        model.addAttribute("categories", categories);
-//        return "product_form";
-//    }
-    @GetMapping("/product/{id}/id/edit")
+    @GetMapping("/{id}/id/edit")
     public String editProduct(@PathVariable Optional<Long> id, Model model) {
         Product product = productService.findById(id.orElseThrow(() -> new RuntimeException("There is no id presented!")));
         //получаем коллекцию всех категорий
         List<Category> categories = categoryService.findAll(
-                Sort.by(Sort.Direction.ASC, "id"));
+                Sort.by(Sort.Direction.ASC, "title"));
         model.addAttribute("product", product);
         model.addAttribute("categories", categories);
         return "product_form";
     }
 
-    @GetMapping("/product/{id}/id/delete")
+    @GetMapping("/{id}/id/delete")
     public String deleteProduct(@PathVariable Optional<Long> id) {
         Product product = productService.findById(id.orElseThrow(() -> new RuntimeException("There is no id presented!")));
         productService.delete(product);
-        return "redirect:/catalog/all";
+        return "redirect:/admin/product/all";
+    }
+
+    /**
+     * Метод сохраняет в БД новый продукт.
+     * @param product - объект нового продукта
+     * @param bindingResult - объект результата валидации
+     * @return - ссылку на список всех товаров в разделе admin
+     */
+    @PostMapping("/form")
+    public String updateProduct(@ModelAttribute @Valid Product product,
+                                BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return "/form";
+        }
+        productService.save(product);
+        return "redirect:/admin/product/all";
     }
 
 //    @PostMapping("/product/form")

@@ -51,7 +51,6 @@ public class ProductService {
             }
         }
         //инициируем объект пагинации с сортировкой
-//        Pageable pageRequest = PageRequest.of(pageIndex, limit, direction, "price");
         Pageable pageRequest = PageRequest.of(pageIndex, limit, direction, property);
         return repository.findAll(filter.getSpec(), pageRequest);
     }
@@ -61,11 +60,7 @@ public class ProductService {
     }
 
     public void save(Product product) {
-        //если в БД нет дубликата, иначе - исключение и не создает бин,
-        //т.к. поле title у Product уникально
-//        if (!repository.getProductsByTitle(product.getTitle()).isEmpty()){
-            repository.save(product);
-//        }
+        repository.save(product);
     }
 
     public void delete(Product product) {

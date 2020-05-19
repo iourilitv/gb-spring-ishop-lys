@@ -7,7 +7,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
     <!-- full path: src\main\resources\static\css -->
-    <link rel="stylesheet" th:href="@{/css/product_details.css}">
+    <link rel="stylesheet" th:href="@{/css/admin_section.css}">
 </head>
 
 <div class="container">
@@ -18,52 +18,87 @@
             : 'Updating the product:'"></h2>
 
     <form th:action="@{/admin/product/form}" th:object="${product}" method="post">
-        <div th:if="${product.id != null}" th:hidden="false" class="form-group col-md-6">
+        <!-- id -->
+        <div th:if="*{id != null}" class="form-group col-md-6">
             <label for="inputId"><h5>id</h5></label>
-<!--            <input type="number" th:field="*{id}"-->
-<!--                   th:value="${product.id != null} ? ${product.id}"-->
-<!--                   class="form-control" id="inputId" placeholder="id" disabled>-->
-            <input type="number" th:field="*{id}"
-                   th:value="${product.id != null} ? ${product.id}"
-                   class="form-control" id="inputId" placeholder="id">
+            <!-- скрытое поле для передачи в объект продукта-->
+<!--            <input name="id" type="number" th:field="*{id}"-->
+<!--            <input name="id" type="number"-->
+<!--                   th:value="*{id != null} ? *{id}" hidden>-->
+            <input name="id" type="number" th:value="*{id}" hidden>
+            <!-- деактивированное поле для отображения на странице без возможности редактирования -->
+            <input class="form-control" id="inputId" th:value="*{id}" disabled>
         </div>
 
+        <!-- Title -->
         <div class="form-group col-md-12">
             <label for="inputTitle"><h5>Title</h5></label>
-            <input type="text" th:field="*{title}"
-                    th:value="${product.id != null} ? ${product.title}"
-                   class="form-control" id="inputTitle"
+<!--            <input class="form-control" id="inputTitle"-->
+<!--                   type="text" th:field="*{title}"-->
+<!--                   th:value="${product.id != null} ? ${product.title}"-->
+<!--                   placeholder="Input title" required>-->
+            <input name="title" class="form-control" id="inputTitle"
+                   type="text" th:value="${product.id != null} ? ${product.title}"
                    placeholder="Input title" required>
         </div>
 
+        <!-- Description -->
         <div class="form-group col-md-12">
             <label for="validationTextareaDescription"><h5>Description</h5></label>
-            <textarea name="description" th:field="${product.description}"
-                    th:text="${product.id != null} ? ${product.description}"
-                      th:value="${product.id != null} ? ${product.description}"
-                      class="form-control" id="validationTextareaDescription"
+<!--            <textarea name="description" class="form-control" id="validationTextareaDescription"-->
+<!--                      th:field="${product.description}"-->
+<!--                      th:text="${product.id != null} ? ${product.description}"-->
+<!--                      th:value="${product.id != null} ? ${product.description}"-->
+<!--                      placeholder="Input description" required></textarea>-->
+            <textarea name="description" class="form-control" id="validationTextareaDescription"
+                      th:text="*{id != null} ? *{description}"
+                      th:value="*{id != null} ? *{description}"
                       placeholder="Input description" required></textarea>
         </div>
 
-        <div th:if="${product.id != null}" class="form-group col-md-6">
+        <!-- Price -->
+        <div class="form-group col-md-6">
             <label for="inputPrice"><h5>Price</h5></label>
-            <input name="price" type="number" th:field="${product.price}"
-                   th:value="${product.id != null} ? ${product.price}"
-                   class="form-control" id="inputPrice" placeholder="Input price">
+<!--            <input name="price" class="form-control" id="inputPrice"-->
+<!--                   type="number" th:field="${product.price}"-->
+<!--                   th:value="${product.id != null} ? ${product.price}"-->
+<!--                   placeholder="Input price" required>-->
+            <input name="price" class="form-control" id="inputPrice"
+                   type="number" th:value="*{id != null} ? *{price}"
+                   placeholder="Input price" required>
         </div>
 
+        <!-- Category -->
         <div class="form-group col-md-6">
             <label for="dropdownCategory"><h5>Category</h5></label>
-            <select name="category" id="dropdownCategory" class="form-control">
+<!--            <select name="category" th:field="*{category}" id="dropdownCategory" class="form-control">-->
+<!--                <option th:text="'Не выбрана'" th:value="null"></option>-->
+
+<!--                <option th:if="${product.id == null}"-->
+<!--                        th:each="category : ${categories}"-->
+<!--                        th:text="${category.title}"-->
+<!--                        th:value="${category.id}"></option>-->
+<!--                <option th:if="${product.id != null}"-->
+<!--                        th:each="category : ${categories}"-->
+<!--                        th:text="${category.title}"-->
+<!--                        th:selected="${#strings.equals(product.category.id, category.id)}"-->
+<!--                        th:value="${category.id}"></option>-->
+<!--            </select>-->
+            <select name="category" class="form-control" id="dropdownCategory">
                 <option th:text="'Не выбрана'" th:value="null"></option>
 
-                <option th:each="category : ${categories}"
+                <option th:if="*{id == null}"
+                        th:each="category : ${categories}"
+                        th:text="${category.title}"
+                        th:value="${category.id}"></option>
+                <option th:if="*{id != null}"
+                        th:each="category : ${categories}"
                         th:text="${category.title}"
                         th:selected="${#strings.equals(product.category.id, category.id)}"
                         th:value="${category.id}"></option>
             </select>
         </div>
-        <div style="padding-left: 30px;">
+        <div class="product_form__btn-submit-div">
             <button type="submit" class="btn btn-primary">Send</button>
         </div>
     </form>
