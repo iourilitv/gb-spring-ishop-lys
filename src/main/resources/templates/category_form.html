@@ -3,9 +3,6 @@
 <!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
 <head>
     <title>Product category form</title>
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
-<!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"-->
-<!--          crossorigin="anonymous">-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- full path: src\main\resources\static\css -->
     <link rel="stylesheet" th:href="@{/css/admin_section.css}">
@@ -13,7 +10,6 @@
 
 <div class="container">
 
-    <!-- //TODO добавить активную страницу -->
     <header th:replace="fragments/admin_header.html :: header (activePage = null)"></header>
 
     <h2 th:text="${category.id == null} ? 'Creating a new category'
