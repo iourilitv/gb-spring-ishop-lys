@@ -2,9 +2,12 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <header th:fragment="header (activePage)" class="header bg-dark">
-    <picture class="header__shop-logo">
+<!--    <picture class="header__shop-logo">-->
+<!--        <a th:href="@{/catalog/all}"><img src="..." alt="shop logo"></a>-->
+<!--    </picture>-->
+    <div class="header__shop-logo">
         <a th:href="@{/catalog/all}"><img src="..." alt="shop logo"></a>
-    </picture>
+    </div>
 
     <div class="header-right justify-content-center">
         <!-- top searching form -->
@@ -19,7 +22,7 @@
         <div>
             <nav class="navbar navbar-dark">
                 <ul class="nav justify-content-center navbar-dark bg-dar">
-                    <li class="nav-item">
+                    <li th:class="${activePage == 'Catalog' ? 'nav-item nav-pills' : 'nav-item'}">
                         <a class="nav-link active" th:href="@{/catalog/all}">Каталог</a>
                     </li>
                     <li class="nav-item">
@@ -28,9 +31,6 @@
                     <li class="nav-item">
                         <a class="nav-link active" th:href="@{/contacts}">Контакты</a>
                     </li>
-<!--                    <li class="nav-item header__nav-item-inout">-->
-<!--                        <a class="nav-link active" th:href="@{/profile}">Войти</a>-->
-<!--                    </li>-->
                 </ul>
             </nav>
         </div>

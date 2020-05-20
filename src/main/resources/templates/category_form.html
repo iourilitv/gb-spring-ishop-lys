@@ -1,11 +1,12 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
 <head>
-    <title>Category form</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
+    <title>Product category form</title>
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+<!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"-->
+<!--          crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- full path: src\main\resources\static\css -->
     <link rel="stylesheet" th:href="@{/css/admin_section.css}">
 </head>
@@ -13,7 +14,7 @@
 <div class="container">
 
     <!-- //TODO добавить активную страницу -->
-    <header th:replace="fragments/admin_header.html :: header (activePage=${activePage})"></header>
+    <header th:replace="fragments/admin_header.html :: header (activePage = null)"></header>
 
     <h2 th:text="${category.id == null} ? 'Creating a new category'
             : 'Updating the category:'"></h2>
@@ -21,7 +22,7 @@
     <form th:action="@{/admin/product/category/form}" th:object="${category}" method="post">
         <!-- id -->
         <div th:if="*{id != null}" class="form-group col-md-6">
-            <label for="inputId"><h5>id</h5></label>
+            <label for="inputId" class="h5">id</label>
             <!-- скрытое поле для передачи в объект продукта-->
             <input name="id" type="number" th:value="*{id}" hidden>
             <!-- деактивированное поле для отображения на странице без возможности редактирования -->
@@ -30,7 +31,7 @@
 
         <!-- Title -->
         <div class="form-group col-md-12">
-            <label for="inputTitle"><h5>Title</h5></label>
+            <label for="inputTitle" class="h5">Title</label>
             <input name="title" class="form-control" id="inputTitle"
                    type="text" th:value="*{id != null} ? *{title}"
                    placeholder="Input title" required>

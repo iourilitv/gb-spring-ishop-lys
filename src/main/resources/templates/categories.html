@@ -1,11 +1,12 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
 <head>
     <title>Admin product categories list</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+<!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"-->
+<!--          crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <!-- full path: src\main\resources\static\css -->
     <link rel="stylesheet" th:href="@{/css/admin_section.css}">
@@ -19,8 +20,10 @@
     <!-- блок фильтрации -->
     <form class="filter-form" th:action="@{/admin/product/category/all}" method="GET">
         <div class="input-group">
-            <input class="form-control" th:value="${param.limit}" name="limit" type="number"
-                   placeholder="Категорий на странице"/>
+            <label>
+                <input class="form-control" th:value="${param.limit}" name="limit" type="number"
+                       placeholder="Категорий на странице"/>
+            </label>
             <!-- выпадающий список направления сортировки -->
             <label>
                 <select name="direction"
@@ -67,7 +70,7 @@
         </table>
     </section>
 
-    <!-- номерация страниц -->
+    <!-- нумерация страниц -->
     <div class="catalog__pagination_div">
         <nav aria-label="Pagination">
             <ul class="pagination">

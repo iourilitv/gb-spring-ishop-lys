@@ -1,11 +1,12 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
 <head>
     <title>Каталог</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+<!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"-->
+<!--          crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <!-- из примера Фисунова -->
     <!-- //TODO отключено из-за задвоения с предыдущим - работает и без него -->
@@ -17,9 +18,6 @@
 
 <div class="container">
 
-    <!-- в контроллере не определен атрибут activePage -->
-<!--    <header th:replace="fragments/header.html-->
-<!--    :: header(activePage=${activePage}, categories=${categories})"></header>-->
     <header th:replace="fragments/header.html :: header(activePage=${activePage})"></header>
 
     <!-- Карусель с индикаторами и подписями -->
@@ -87,12 +85,18 @@
             <!-- http://localhost:8080/shop/catalog/all?minPrice=11&max_price=19 -->
             <!-- параметр в запросе "minPrice" - это name в input -->
             <!-- чтобы принять сюда значение параметра, должны совпадать названия в th:value="${param.xxx} и в name="xxx" -->
-            <input class="form-control" th:value="${param.minPrice}" name="minPrice" type="number"
-                   placeholder="Минимальная цена"/>
-            <input class="form-control" th:value="${param.maxPrice}" name="maxPrice" type="number"
-                   placeholder="Максимальная цена"/>
-            <input class="form-control" th:value="${param.limit}" name="limit" type="number"
-                   placeholder="Товаров на странице"/>
+            <label>
+                <input class="form-control" th:value="${param.minPrice}" name="minPrice" type="number"
+                       placeholder="Минимальная цена"/>
+            </label>
+            <label>
+                <input class="form-control" th:value="${param.maxPrice}" name="maxPrice" type="number"
+                       placeholder="Максимальная цена"/>
+            </label>
+            <label>
+                <input class="form-control" th:value="${param.limit}" name="limit" type="number"
+                       placeholder="Товаров на странице"/>
+            </label>
             <!-- выпадающий список направления сортировки -->
             <label>
                 <select name="direction"
@@ -114,11 +118,16 @@
     <!-- product cards block-->
     <div class="card-deck">
         <div class="card" th:each="p : ${page}">
-            <picture class="card-img-top">
+<!--            <picture class="card-img-top">-->
+<!--                <a th:href="@{/catalog/{prod_id}/details(prod_id = ${p.id})}">-->
+<!--                            <img src="..." alt="Image of product">-->
+<!--                        </a>-->
+<!--            </picture>-->
+            <div class="card-img-top">
                 <a th:href="@{/catalog/{prod_id}/details(prod_id = ${p.id})}">
-                            <img src="..." alt="Image of product">
-                        </a>
-            </picture>
+                    <img src="..." alt="Image of product">
+                </a>
+            </div>
 
             <div class="card-body">
                 <a th:href="@{/catalog/{prod_id}/details(prod_id = ${p.id})}">

@@ -1,20 +1,21 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
 <head>
     <title>Каталог</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+<!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"-->
+<!--          crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- full path: src\main\resources\static\css -->
     <link rel="stylesheet" th:href="@{/css/product_details.css}">
 </head>
 
 <div class="container">
 
-    <header th:replace="fragments/header.html :: header (activePage=${activePage})"/>
+    <header th:replace="fragments/header.html :: header (activePage = null)"></header>
 
-    <h2 th:text="${product.title}"/>
+    <h2 th:text="${product.title}"></h2>
     <!-- Блок картинки и блока кнопки "в корзину" -->
     <div class="card-row">
         <div class="card-left">
@@ -50,7 +51,7 @@
         <p class="description" th:text="${product.description}">
     </div>
 
-    <footer th:replace="fragments/footer.html"/>
+    <footer th:replace="fragments/footer.html"></footer>
 
 </div>
 

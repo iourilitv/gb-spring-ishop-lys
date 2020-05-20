@@ -1,12 +1,12 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
 <head>
     <title>Admin product list</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
-
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+<!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"-->
+<!--          crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- full path: src\main\resources\static\css -->
     <link rel="stylesheet" th:href="@{/css/admin_section.css}">
 </head>
@@ -30,8 +30,10 @@
                             th:selected="${#strings.equals(param.category, category.id)}" th:value="${category.id}"></option>
                 </select>
             </label>
-            <input class="form-control" th:value="${param.limit}" name="limit" type="number"
-                   placeholder="Товаров на странице"/>
+            <label>
+                <input class="form-control" th:value="${param.limit}" name="limit" type="number"
+                       placeholder="Товаров на странице"/>
+            </label>
             <!-- выпадающий список направления сортировки -->
             <label>
                 <select name="direction"
@@ -59,9 +61,9 @@
         <table class="table table-striped">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">id</th>
-                <th scope="col">title</th>
-                <th scope="col">operations</th>
+                <th>id</th>
+                <th>title</th>
+                <th>operations</th>
             </tr>
             </thead>
 
@@ -78,7 +80,7 @@
         </table>
     </section>
 
-    <!-- номерация страниц -->
+    <!-- нумерация страниц -->
     <div class="catalog__pagination_div">
         <nav aria-label="Pagination">
             <ul class="pagination">

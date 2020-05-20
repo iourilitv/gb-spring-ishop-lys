@@ -48,6 +48,8 @@ public class CatalogController {
         model.addAttribute("categories", categories);
         //объект страницы продуктов
         model.addAttribute("page", page);
+        //активную страницу
+        model.addAttribute("activePage", "Catalog");
         //вызываем файл catalog.html
         return "catalog";
     }

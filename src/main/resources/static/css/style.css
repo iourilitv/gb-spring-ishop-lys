@@ -76,6 +76,7 @@
 
 .input-group {
     margin-bottom: 10px;
+    justify-content: space-around;
 }
 
 .catalog__filter__select {
