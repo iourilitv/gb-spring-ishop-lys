@@ -32,7 +32,7 @@ public class AdminProductController {
     }
 
     @GetMapping
-    public String adminSection() {
+    public String sectionRoot() {
         return "redirect:/admin/product/all";
     }
 
@@ -52,6 +52,8 @@ public class AdminProductController {
         model.addAttribute("categories", categories);
         //объект страницы продуктов
         model.addAttribute("page", page);
+        //активную страницу
+        model.addAttribute("activePage", "Products");
         return "products";
     }
 
@@ -93,7 +95,11 @@ public class AdminProductController {
     public String updateProduct(@ModelAttribute @Valid Product product,
                                 BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
-            return "/form";
+            //FIXME Не позволяет редиректить на get с тем же адресом, что и post
+            // возможно, потому что это post-запрос
+            // придется повторить вызов или новой формы или редактирования товара
+            // попробовать https://www.baeldung.com/spring-redirect-and-forward
+            return "redirect:/admin/product/form";
         }
         productService.save(product);
         return "redirect:/admin/product/all";

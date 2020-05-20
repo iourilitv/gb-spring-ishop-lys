@@ -32,7 +32,7 @@
         <div class="form-group col-md-12">
             <label for="inputTitle"><h5>Title</h5></label>
             <input name="title" class="form-control" id="inputTitle"
-                   type="text" th:value="${product.id != null} ? ${product.title}"
+                   type="text" th:value="*{id != null} ? *{title}"
                    placeholder="Input title" required>
         </div>
 

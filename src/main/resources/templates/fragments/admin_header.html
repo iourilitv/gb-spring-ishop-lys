@@ -19,13 +19,17 @@
         <div>
             <nav class="navbar navbar-dark">
                 <ul class="nav justify-content-center navbar-dark bg-dar">
-                    <li class="nav-item">
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" th:href="@{/admin/product/all}"-->
+<!--                        th:classappend="${activePage == 'Products' ? 'nav-item nav-pills' : 'nav-item'}">Products</a>-->
+<!--                    </li>-->
+                    <li th:class="${activePage == 'Products' ? 'nav-item nav-pills' : 'nav-item'}">
                         <a class="nav-link active" th:href="@{/admin/product/all}">Products</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/admin/category/all}">Categories</a>
+                    <li th:class="${activePage == 'Categories' ? 'nav-item nav-pills' : 'nav-item'}">
+                        <a class="nav-link active" th:href="@{/admin/product/category/all}">Categories</a>
                     </li>
-                    <li class="nav-item">
+                    <li th:class="nav-item">
                         <a class="nav-link active" th:href="@{/admin/user/all}">Users</a>
                     </li>
                     <li class="nav-item">

@@ -1,0 +1,102 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Admin product categories list</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+
+    <!-- full path: src\main\resources\static\css -->
+    <link rel="stylesheet" th:href="@{/css/admin_section.css}">
+</head>
+
+<div class="container">
+
+    <!-- в контроллере не определен атрибут activePage -->
+    <header th:replace="fragments/admin_header.html :: header(activePage=${activePage})"></header>
+
+    <!-- блок фильтрации -->
+    <form class="filter-form" th:action="@{/admin/product/category/all}" method="GET">
+        <div class="input-group">
+            <input class="form-control" th:value="${param.limit}" name="limit" type="number"
+                   placeholder="Категорий на странице"/>
+            <!-- выпадающий список направления сортировки -->
+            <label>
+                <select name="direction"
+                        class="btn btn-info dropdown-toggle catalog__filter__select">
+                    <option th:text="'По возрастанию id'"
+                            th:selected="${#strings.equals(param.direction, 'ASC')}" th:value="ASC"></option>
+                    <option th:text="'По убыванию id'"
+                            th:selected="${#strings.equals(param.direction, 'DESC')}" th:value="DESC"></option>
+                </select>
+            </label>
+        </div>
+
+        <div class="catalog__filter__btn-group">
+            <button type="submit" class="btn btn-info catalog__filter__btn">Применить</button>
+            <a class="btn btn-secondary" th:href="@{'/admin/product/category/all'}">Сбросить</a>
+        </div>
+    </form>
+
+    <!-- список категорий товаров -->
+    <section>
+        <h2>Список категорий товаров</h2>
+        <div>
+            <a class="btn btn-success products__btn-new-product" th:href="@{/admin/product/category/form}">create new category</a>
+        </div>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>id</th>
+                <th>title</th>
+                <th>operations</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="category : ${page.content}">
+                <td th:text="${category.id}"></td>
+                <td th:text="${category.title}"></td>
+                <td>
+                    <a class="btn btn-info" th:href="@{'/admin/product/category/' + ${category.id} + '/id/edit'}">edit</a>
+                    <a class="btn btn-warning" th:href="@{'/admin/product/category/' + ${category.id} + '/id/delete'}">delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- номерация страниц -->
+    <div class="catalog__pagination_div">
+        <nav aria-label="Pagination">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link"
+                       th:href="@{'/admin/product/category/all?page='
+                       + ${page.previousOrFirstPageable().getPageNumber() + 1}
+                       + ${filterDef}}">Previous</a>
+                </li>
+
+                <li class="page-item"
+                    th:classappend="${page.getNumber() + 1 == i ? 'active' : ''}"
+                    th:each="i : ${#numbers.sequence(1, page.getTotalPages())}">
+                    <a class="page-link" th:text="${i}"
+                       th:href="@{'/admin/product/category/all?page='
+                       + ${i} + ${filterDef}}"></a></li>
+
+                <li class="page-item">
+                    <a class="page-link"
+                       th:href="@{'/admin/product/category/all?page='
+                       + ${page.nextOrLastPageable().getPageNumber() + 1}
+                       + ${filterDef}}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <footer th:replace="fragments/footer.html"></footer>
+
+</div>
+
+</html>

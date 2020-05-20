@@ -1,5 +1,8 @@
 @import "style.css";
 
+.nav-item:active {
+    background-color: #fff;
+}
 .products__btn-new-product {
     margin: 0 0 10px 10px;
 }
