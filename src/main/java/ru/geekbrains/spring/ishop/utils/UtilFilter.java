@@ -7,12 +7,6 @@ import java.util.Map;
 
 @Component
 public class UtilFilter {
-//    //номер страницы
-//    private int pageIndex = 0;
-//    //количество объектов, выводимых на страницу
-//    private int limit = 3;
-//    //направление сортировки (по умолчанию "по возрастанию")
-//    private Sort.Direction direction = Sort.Direction.ASC;
     //номер страницы
     private int pageIndex;
     //количество объектов, выводимых на страницу
@@ -21,30 +15,6 @@ public class UtilFilter {
     private Sort.Direction direction;
     private StringBuilder filterDefinition;
 
-//    public UtilFilter(Map<String, String> params) {
-//        //инициируем объект билдера строки для сборки строки с параметрами фильтра,
-//        // добавляемыми к запросу
-//        this.filterDefinition = new StringBuilder();
-//        //если в запросе указан хотя бы один параметр, вынимаем параметры
-//        if(params != null && !params.isEmpty()) {
-//            //если указан номер страницы
-//            if(params.containsKey("page") && !params.get("page").isEmpty()) {
-//                pageIndex = Integer.parseInt(params.get("page")) - 1;
-//            }
-//            //если указан количество объектов, выводимых на страницу
-//            if(params.containsKey("limit") && !params.get("limit").isEmpty()) {
-//                limit = Integer.parseInt(params.get("limit"));
-//                //добавляем параметр к строке запроса
-//                filterDefinition.append("&limit=").append(limit);
-//            }
-//            //если указан направление сортировки
-//            if(params.containsKey("direction") && !params.get("direction").isEmpty()) {
-//                direction = params.get("direction").equals("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
-//                //добавляем параметр к строке запроса
-//                filterDefinition.append("&direction=").append(direction);
-//            }
-//        }
-//    }
     public void init(Map<String, String> params) {
         //инициируем объект билдера строки для сборки строки с параметрами фильтра,
         // добавляемыми к запросу

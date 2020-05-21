@@ -39,32 +39,12 @@ public class AdminProductController {
         return "redirect:/admin/product/all";
     }
 
-//    @GetMapping("/all")
-//    public String productList(@RequestParam Map<String, String> params, Model model) {
-//        //инициируем объект фильтра продуктов
-//        ProductFilter filter = new ProductFilter(params);
-//        //получаем объект страницы с применением фильтра
-//        Page<Product> page = productService.findAll(params, filter, "id");
-//        //получаем коллекцию всех категорий
-//        List<Category> categories = categoryService.findAll(
-//                Sort.by(Sort.Direction.ASC, "title"));
-//        //передаем в .html атрибуты:
-//        //часть строки запроса с параметрами фильтра
-//        model.addAttribute("filterDef", filter.getFilterDefinition());
-//        //коллекцию категорий
-//        model.addAttribute("categories", categories);
-//        //объект страницы продуктов
-//        model.addAttribute("page", page);
-//        //активную страницу
-//        model.addAttribute("activePage", "Products");
-//        return "products";
-//    }
     @GetMapping("/all")
     public String productList(@RequestParam Map<String, String> params, Model model) {
         //инициируем настройки фильтра
         productFilter.init(params);
         //получаем объект страницы с применением фильтра
-        Page<Product> page = productService.findAll(params, productFilter, "id");//TODO id -> константы
+        Page<Product> page = productService.findAll(productFilter, "id");//TODO id -> константы
         //получаем коллекцию всех категорий
         List<Category> categories = categoryService.findAll(
                 Sort.by(Sort.Direction.ASC, "title"));//TODO title -> константы

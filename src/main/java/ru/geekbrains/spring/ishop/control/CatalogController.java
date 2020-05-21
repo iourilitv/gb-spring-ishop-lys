@@ -41,7 +41,7 @@ public class CatalogController {
         //инициируем настройки фильтра
         productFilter.init(params);
         //получаем объект страницы с применением фильтра
-        Page<Product> page = productService.findAll(params, productFilter,"price");//TODO price -> константы
+        Page<Product> page = productService.findAll(productFilter,"price");//TODO price -> константы
         //получаем коллекцию всех категорий
         List<Category> categories = categoryService.findAll(
                 Sort.by(Sort.Direction.ASC, "title"));//TODO title -> константы
