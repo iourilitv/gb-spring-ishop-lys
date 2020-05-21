@@ -21,14 +21,17 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/admin/product")
 public class AdminProductController {
-    private ProductService productService;
-    private CategoryService categoryService;
+    private final ProductService productService;
+    private final CategoryService categoryService;
+    private final ProductFilter productFilter;
 
     @Autowired
     public AdminProductController(ProductService productService,
-                                  CategoryService categoryService) {
+                                  CategoryService categoryService,
+                                  ProductFilter productFilter) {
         this.productService = productService;
         this.categoryService = categoryService;
+        this.productFilter = productFilter;
     }
 
     @GetMapping
@@ -36,18 +39,38 @@ public class AdminProductController {
         return "redirect:/admin/product/all";
     }
 
+//    @GetMapping("/all")
+//    public String productList(@RequestParam Map<String, String> params, Model model) {
+//        //инициируем объект фильтра продуктов
+//        ProductFilter filter = new ProductFilter(params);
+//        //получаем объект страницы с применением фильтра
+//        Page<Product> page = productService.findAll(params, filter, "id");
+//        //получаем коллекцию всех категорий
+//        List<Category> categories = categoryService.findAll(
+//                Sort.by(Sort.Direction.ASC, "title"));
+//        //передаем в .html атрибуты:
+//        //часть строки запроса с параметрами фильтра
+//        model.addAttribute("filterDef", filter.getFilterDefinition());
+//        //коллекцию категорий
+//        model.addAttribute("categories", categories);
+//        //объект страницы продуктов
+//        model.addAttribute("page", page);
+//        //активную страницу
+//        model.addAttribute("activePage", "Products");
+//        return "products";
+//    }
     @GetMapping("/all")
     public String productList(@RequestParam Map<String, String> params, Model model) {
-        //инициируем объект фильтра продуктов
-        ProductFilter filter = new ProductFilter(params);
+        //инициируем настройки фильтра
+        productFilter.init(params);
         //получаем объект страницы с применением фильтра
-        Page<Product> page = productService.findAll(params, filter, "id");
+        Page<Product> page = productService.findAll(params, productFilter, "id");//TODO id -> константы
         //получаем коллекцию всех категорий
         List<Category> categories = categoryService.findAll(
-                Sort.by(Sort.Direction.ASC, "title"));
+                Sort.by(Sort.Direction.ASC, "title"));//TODO title -> константы
         //передаем в .html атрибуты:
         //часть строки запроса с параметрами фильтра
-        model.addAttribute("filterDef", filter.getFilterDefinition());
+        model.addAttribute("filterDef", productFilter.getFilterDefinition());
         //коллекцию категорий
         model.addAttribute("categories", categories);
         //объект страницы продуктов

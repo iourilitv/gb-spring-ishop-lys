@@ -22,11 +22,18 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/admin/product/category")
 public class AdminCategoryController {
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
+    private final CategoryFilter categoryFilter;
 
+//    @Autowired
+//    public AdminCategoryController(CategoryService categoryService) {
+//        this.categoryService = categoryService;
+//    }
     @Autowired
-    public AdminCategoryController(CategoryService categoryService) {
+    public AdminCategoryController(CategoryService categoryService,
+                                   CategoryFilter categoryFilter) {
         this.categoryService = categoryService;
+        this.categoryFilter = categoryFilter;
     }
 
     @GetMapping
@@ -34,15 +41,31 @@ public class AdminCategoryController {
         return "redirect:/admin/product/category/all";
     }
 
+//    @GetMapping("/all")
+//    public String categoriesList(@RequestParam Map<String, String> params, Model model) {
+//        //инициируем объект фильтра продуктов
+//        CategoryFilter filter = new CategoryFilter(params);
+//        //получаем объект страницы с применением фильтра
+//        Page<Category> page = categoryService.findAll(params, filter, "id");
+//        //передаем в .html атрибуты:
+//        //часть строки запроса с параметрами фильтра
+//        model.addAttribute("filterDef", filter.getFilterDefinition());
+//        //объект страницы продуктов
+//        model.addAttribute("page", page);
+//        //активную страницу
+//        model.addAttribute("activePage", "Categories");
+//        return "categories";
+//    }
     @GetMapping("/all")
-    public String categoriesList(@RequestParam Map<String, String> params, Model model) {
-        //инициируем объект фильтра продуктов
-        CategoryFilter filter = new CategoryFilter(params);
+    public String categoriesList(@RequestParam Map<String, String> params,
+                                 Model model) {
+        //инициируем настройки фильтра
+        categoryFilter.init(params);
         //получаем объект страницы с применением фильтра
-        Page<Category> page = categoryService.findAll(params, filter, "id");
+        Page<Category> page = categoryService.findAll(params, categoryFilter, "id");//TODO id -> константы
         //передаем в .html атрибуты:
         //часть строки запроса с параметрами фильтра
-        model.addAttribute("filterDef", filter.getFilterDefinition());
+        model.addAttribute("filterDef", categoryFilter.getFilterDefinition());
         //объект страницы продуктов
         model.addAttribute("page", page);
         //активную страницу
