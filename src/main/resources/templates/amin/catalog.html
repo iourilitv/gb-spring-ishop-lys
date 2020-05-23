@@ -234,7 +234,7 @@
     </header>
     <!-- Header End -->
 
-    <!-- Categories Grid Section Begin - Product cards -->
+    <!--  Product cards(was Categories Grid) Section Begin -->
     <section class="categories-grid-section spad">
         <div class="container">
             <div class="row">
@@ -243,18 +243,12 @@
                     <!-- cards line -->
                     <div class="row">
                         <!-- card item -->
-<!--                        <div class="col-lg-6" th:each="p : ${page}">-->
                         <div class="col-lg-4" th:each="p : ${page}">
                             <div class="cg-item">
                                 <!-- card img -->
-<!--                            <div class="cg-pic set-bg" th:data-setbg="@{/img/amin/categories-grid/cg-1.jpg}">-->
-<!--                                <div class="label" th:text="${p.category.title}"><span>Category</span></div>-->
-<!--                            </div>-->
                                 <a class="cg-pic set-bg">
-                                    <img th:src="@{/img/amin/categories-grid/cg-1.jpg}" alt="product card item image">
+                                    <img th:src="@{/img/amin/products/cg-2.jpg}" alt="product card item image">
                                 </a>
-                                <!-- product card category label -->
-<!--                                <div class="label" th:text="${p.category.title}"><span>Category</span></div>-->
                                 <div>
                                     <a class="catalog__product-card__category" th:href="@{'/catalog/all?category=' + ${p.category.id}}">
                                         <span th:text="${p.category.title}">Category</span>
@@ -322,7 +316,7 @@
             </div>
         </div>
     </section>
-    <!-- Categories Grid Section End -->
+    <!-- Product cards(was Categories Grid) Section End -->
 
     <!-- Footer Section Begin -->
     <footer class="footer-section">
