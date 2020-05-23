@@ -54,9 +54,6 @@ public class CatalogController {
         model.addAttribute("page", page);
         //активную страницу
         model.addAttribute("activePage", "Catalog");
-
-//        model.addAttribute("img_pathname", "/img/amin/products/cg-1.jpg");
-
         //вызываем файл catalog.html
         return "amin/catalog";
     }

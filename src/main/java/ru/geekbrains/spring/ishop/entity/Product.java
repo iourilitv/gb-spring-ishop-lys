@@ -26,7 +26,7 @@ public class Product {
     private Category category;
 
     @Column(name = "img_pathname")
-    public String img_pathname;
+    public String imgPathname;
 
     public Product() {
     }
@@ -71,12 +71,12 @@ public class Product {
         this.category = category;
     }
 
-    public String getImg_pathname() {
-        return img_pathname;
+    public String getImgPathname() {
+        return imgPathname;
     }
 
-    public void setImg_pathname(String img_pathname) {
-        this.img_pathname = img_pathname;
+    public void setImgPathname(String imgPathname) {
+        this.imgPathname = imgPathname;
     }
 
     @Override
