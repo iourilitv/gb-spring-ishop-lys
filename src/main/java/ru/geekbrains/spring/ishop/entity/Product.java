@@ -25,6 +25,9 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Column(name = "img_pathname")
+    public String img_pathname;
+
     public Product() {
     }
 
@@ -66,6 +69,14 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getImg_pathname() {
+        return img_pathname;
+    }
+
+    public void setImg_pathname(String img_pathname) {
+        this.img_pathname = img_pathname;
     }
 
     @Override

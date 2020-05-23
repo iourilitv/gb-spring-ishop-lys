@@ -1,6 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="zxx" xmlns:th="http://www.thymeleaf.org">-->
-
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
@@ -247,7 +244,7 @@
                             <div class="cg-item">
                                 <!-- card img -->
                                 <a class="cg-pic set-bg">
-                                    <img th:src="@{/img/amin/products/cg-2.jpg}" alt="product card item image">
+                                    <img th:src="@{${p.img_pathname}}" alt="product card item image">
                                 </a>
                                 <div>
                                     <a class="catalog__product-card__category" th:href="@{'/catalog/all?category=' + ${p.category.id}}">
@@ -268,7 +265,6 @@
                                     </ul>
 
                                     <!-- Product card Price -->
-<!--                                    <p th:text="${p.price} + ' руб.'">Price of product</p>-->
                                     <div>
                                         <div class="catalog__product-card__price">
                                             <span th:text="${p.price}">Price of product</span>
@@ -281,7 +277,6 @@
                                         <div class="catalog__product-card__price btn-to-cart">
                                             <a class="color-white"
                                                 th:href="@{''}" th:text="'В корзину'">
-<!--                                                <span th:text="'В корзину'">В корзину</span>-->
                                             </a>
                                         </div>
                                     </div>
