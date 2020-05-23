@@ -1,0 +1,441 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="zxx" xmlns:th="http://www.thymeleaf.org">-->
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | Catalog</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <!-- //TODO Не работает без .js -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Humberger Menu Begin - left pop up vertical menu -->
+    <!-- //TODO Не работает без .js -->
+    <div class="humberger-menu-overlay"></div>
+    <div class="humberger-menu-wrapper">
+        <div class="hw-logo">
+            <a href="#"><img th:src="@{/img/amin/f-logo.png}" alt="hw-logo"></a>
+        </div>
+        <div class="hw-menu mobile-menu">
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+
+                <li><a href="#">Pages <i class="fa fa-angle-down"></i></a>
+                    <ul class="dropdown">
+                        <li><a href="./categories-list.html">Categories</a></li>
+                        <li><a href="./categories-grid.html">Categories grid</a></li>
+                        <li><a href="./typography.html">Typography</a></li>
+                        <li><a href="./details-post-default.html">Post default</a></li>
+                        <li><a href="./details-post-gallery.html">Post gallery</a></li>
+                        <li><a href="./details-post-review.html">Post review</a></li>
+                        <li><a href="./contact.html">Contact</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#">Reviews <i class="fa fa-angle-down"></i></a>
+                    <ul class="dropdown">
+                        <li><a href="#">Playstation</a></li>
+                        <li><a href="#">Windows</a></li>
+                        <li><a href="#">Mobile</a></li>
+                        <li><a href="#">Xbox</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#">Windows <i class="fa fa-angle-down"></i></a>
+                    <ul class="dropdown">
+                        <li><a href="#">Playstation</a></li>
+                        <li><a href="#">Windows</a></li>
+                        <li><a href="#">Mobile</a></li>
+                        <li><a href="#">Xbox</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#">Videos <i class="fa fa-angle-down"></i></a>
+                    <ul class="dropdown">
+                        <li><a href="#">Playstation</a></li>
+                        <li><a href="#">Windows</a></li>
+                        <li><a href="#">Mobile</a></li>
+                        <li><a href="#">Xbox</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="hw-copyright">
+            Copyright © 2019 Colorlib Inc. All rights reserved
+        </div>
+        <div class="hw-social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-youtube-play"></i></a>
+            <a href="#"><i class="fa fa-instagram"></i></a>
+        </div>
+        <div class="hw-insta-media">
+            <div class="section-title">
+                <h5>Instagram</h5>
+            </div>
+            <div class="insta-pic">
+                <img th:src="@{/img/amin/instagram/ip-1.jpg}" alt="">
+                <img th:src="@{/img/amin/instagram/ip-2.jpg}" alt="">
+                <img th:src="@{/img/amin/instagram/ip-3.jpg}" alt="">
+                <img th:src="@{/img/amin/instagram/ip-4.jpg}" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- Humberger Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header-section">
+        <!-- overhead login line -->
+        <div class="ht-options">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-8">
+                        <div class="ht-widget">
+                            <ul>
+                                <li><i class="fa fa-sun-o"></i> <span>20<sup>c</sup></span> London</li>
+
+                                <li><i class="fa fa-clock-o"></i> May 21, 2020</li>
+
+                                <li class="signup-switch signup-open">
+                                    <a class="fa fa-sign-out login-link"
+                                       th:href="@{''}" th:text="' Login'"></a>
+                                </li>
+
+                                <li>
+                                    <a class="fa login-link"
+                                       th:href="@{''}" th:text="' Register'">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-4">
+                        <div class="ht-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-envelope-o"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Amin logo overhead line -->
+        <div class="logo">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                       <a href="./index.html"><img th:src="@{/img/amin/logo.png}" alt="Amin logo line"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- top navigation line -->
+        <div class="nav-options">
+            <div class="container">
+                <!-- on left: icon of Humberger Menu(left pop up vertical menu)  -->
+                <div class="humberger-menu humberger-open">
+                    <i class="fa fa-bars"></i>
+                </div>
+                <!-- on right: icon of searching pop up window  -->
+                <div class="nav-search search-switch">
+                    <i class="fa fa-search"></i>
+                </div>
+                <!-- center: the main navigation bar  -->
+                <div class="nav-menu">
+                    <ul>
+                        <!-- Home item in top menu -->
+                        <li th:class="${activePage == 'Home' ? 'mega-menu active' : 'mega-menu'}">
+                            <a th:href="@{''}"><span th:text="'Home '"></span></a>
+                        </li>
+                        <!-- Catalog item dropdown in top menu -->
+                        <li th:class="${activePage == 'Catalog' ? 'mega-menu active' : 'mega-menu'}">
+                            <a th:href="@{'/catalog/all'}">
+                            <span>Catalog <i class="fa fa-angle-down"></i></span></a>
+                            <div class="megamenu-wrapper">
+                                <ul class="mw-nav">
+                                    <li th:each="category : ${categories}">
+                                        <a th:href="@{'/catalog/all?category=' + ${category.id} + ${filterDef}}">
+                                            <span th:text="${category.title}"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- Filters item dropdown in top menu -->
+                        <li th:class="${!param.isEmpty() ? 'mega-menu active' : 'mega-menu'}">
+                            <a th:href="@{'/catalog/all'}">
+                                <span>Filters <i class="fa fa-angle-down"></i></span></a>
+                            <div class="megamenu-wrapper">
+                                <ul class="mw-nav">
+                                    <li th:each="category : ${categories}">
+                                        <a th:href="@{'/catalog/all?category=' + ${category.id} + ${filterDef}}">
+                                            <span th:text="${category.title}"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- Contacts item dropdown in top menu -->
+                        <li th:class="${activePage == 'Contacts' ? 'active' : ''}">
+                            <a th:href="@{/contacts}">
+                                <span>Contacts <i class="fa fa-angle-down"></i></span>
+                            </a>
+                            <ul class="dropdown">
+                                <li th:class="${activePage == 'How to pay' ? 'mega-menu active' : 'mega-menu'}">
+                                    <a th:href="@{/contacts/how_to_pay}">How to pay</a>
+                                </li>
+
+                                <li th:class="${activePage == 'Delivery' ? 'mega-menu active' : 'mega-menu'}">
+                                    <a th:href="@{/contacts/delivery}">Delivery</a>
+                                </li>
+
+                                <li th:class="${activePage == 'Contact' ? 'mega-menu active' : 'mega-menu'}">
+                                    <a th:href="@{/contacts/contact}">Contact</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Cart item in top menu -->
+                        <li th:class="${activePage == 'Cart' ? 'mega-menu active' : 'mega-menu'}">
+                            <a th:href="@{/cart}"><span>Cart </span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <!-- Categories Grid Section Begin - Product cards -->
+    <section class="categories-grid-section spad">
+        <div class="container">
+            <div class="row">
+                <!-- cards left part -->
+                <div class="col-lg-12 p-0">
+                    <!-- cards line -->
+                    <div class="row">
+                        <!-- card item -->
+<!--                        <div class="col-lg-6" th:each="p : ${page}">-->
+                        <div class="col-lg-4" th:each="p : ${page}">
+                            <div class="cg-item">
+                                <!-- card img -->
+<!--                            <div class="cg-pic set-bg" th:data-setbg="@{/img/amin/categories-grid/cg-1.jpg}">-->
+<!--                                <div class="label" th:text="${p.category.title}"><span>Category</span></div>-->
+<!--                            </div>-->
+                                <a class="cg-pic set-bg">
+                                    <img th:src="@{/img/amin/categories-grid/cg-1.jpg}" alt="product card item image">
+                                </a>
+                                <!-- product card category label -->
+<!--                                <div class="label" th:text="${p.category.title}"><span>Category</span></div>-->
+                                <div>
+                                    <a class="catalog__product-card__category" th:href="@{'/catalog/all?category=' + ${p.category.id}}">
+                                        <span th:text="${p.category.title}">Category</span>
+                                    </a>
+                                </div>
+                                <!-- card texts block -->
+                                <div class="cg-text">
+                                    <h5>
+                                        <a th:href="@{/catalog/{prod_id}/details(prod_id = ${p.id})}"
+                                           th:text="${p.title}"></a>
+                                    </h5>
+
+                                    <ul>
+                                        <li>by <span>Admin</span></li>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 20</li>
+                                    </ul>
+
+                                    <!-- Product card Price -->
+<!--                                    <p th:text="${p.price} + ' руб.'">Price of product</p>-->
+                                    <div>
+                                        <div class="catalog__product-card__price">
+                                            <span th:text="${p.price}">Price of product</span>
+                                        </div>
+
+                                        <div class="catalog__product-card__price">
+                                            <span th:text="'руб'">RUR</span>
+                                        </div>
+
+                                        <div class="catalog__product-card__price btn-to-cart">
+                                            <a class="color-white"
+                                                th:href="@{''}" th:text="'В корзину'">
+<!--                                                <span th:text="'В корзину'">В корзину</span>-->
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- pagination line -->
+                    <div class="row justify-content-center">
+                        <div th:if="${page.hasContent()}">
+                            <a th:class="pagination-item-a" th:href="@{'/catalog/all?page='
+                                   + ${page.previousOrFirstPageable().getPageNumber() + 1}
+                                   + ${filterDef}}">
+                                <span th:class="pagination-item-a-span">Previous</span></a>
+
+                            <a th:class="${page.getNumber() + 1 == i ?
+                                    'pagination-item-a pagination-item-active' :
+                                    'pagination-item-a'}"
+                               th:each="i : ${#numbers.sequence(1, page.getTotalPages())}"
+                               th:href="@{'/catalog/all?page='+ ${i} + ${filterDef}}">
+                                <span th:class="pagination-item-a-span" th:text="${i}"></span>
+                            </a>
+
+                            <a th:class="pagination-item-a" th:href="@{'/catalog/all?page='
+                                   + ${page.nextOrLastPageable().getPageNumber() + 1}
+                                   + ${filterDef}}">
+                                <span th:class="pagination-item-a-span">Next</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Categories Grid Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer-section">
+        <div class="container">
+            <!-- about row -->
+            <div class="row">
+                <!-- left column -->
+                <div class="col-lg-4">
+                    <div class="footer-about">
+                        <div class="fa-logo">
+                            <a href="#"><img th:src="@{/img/amin/f-logo.png}" alt="footer logo"></a>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua lacus vel facilisis.</p>
+
+                        <div>
+                            <a href="#"><i class="fa-social-a fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa-social-a fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa-social-a fa fa-youtube-play"></i></a>
+                            <a href="#"><i class="fa-social-a fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- middle column -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="editor-choice">
+                        <div class="section-title">
+                            <h5>Editor's Choice</h5>
+                        </div>
+                        <div class="ec-item">
+                            <div class="ec-pic">
+                                <img src="img/trending/editor-1.jpg" alt="">
+                            </div>
+                            <div class="ec-text">
+                                <h6><a href="#">A Monster Prom poster got hijacked for a Papa Roach concert...</a>
+                                </h6>
+                                <ul>
+                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ec-item">
+                            <div class="ec-pic">
+                                <img src="img/trending/editor-2.jpg" alt="">
+                            </div>
+                            <div class="ec-text">
+                                <h6><a href="#">Facebook wants to read your thoughts with its augmented...</a>
+                                </h6>
+                                <ul>
+                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- right column -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="tags-cloud">
+                        <div class="section-title">
+                            <h5>Tags Cloud</h5>
+                        </div>
+                        <div class="tag-list">
+                            <a href="#"><span>Gaming</span></a>
+                            <a href="#"><span>Platform</span></a>
+                            <a href="#"><span>Playstation</span></a>
+                            <a href="#"><span>Hardware</span></a>
+                            <a href="#"><span>Reviews</span></a>
+                            <a href="#"><span>Simulation</span></a>
+                            <a href="#"><span>Strategy</span></a>
+                            <a href="#"><span>Scientific</span></a>
+                            <a href="#"><span>References</span></a>
+                            <a href="#"><span>Role-playing</span></a>
+                            <a href="#"><span>Adventurea</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- copyright row -->
+            <div class="copyright-area">
+                <div class="row">
+                    <!-- copyright area -->
+                    <div class="col-lg-6">
+                        <div class="ca-text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
+                    </div>
+
+                    <!-- bottom menu area -->
+                    <div class="col-lg-6">
+                        <div class="ca-links">
+                            <a href="#">About</a>
+                            <a href="#">Subscribe</a>
+                            <a href="#">Contact</a>
+                            <a href="#">Support</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/amin/bootstrap.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/amin/circle-progress.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+    <script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+    <script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/amin/main.js}"></script>
+</body>
+
+</html>

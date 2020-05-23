@@ -55,7 +55,7 @@ public class CatalogController {
         //активную страницу
         model.addAttribute("activePage", "Catalog");
         //вызываем файл catalog.html
-        return "catalog";
+        return "amin/catalog";
     }
 
     @GetMapping("/{prod_id}/details")
