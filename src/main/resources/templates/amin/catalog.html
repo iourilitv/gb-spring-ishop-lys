@@ -28,7 +28,8 @@
 <body>
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
 <superheader th:replace="/amin/fragments/header.html :: header(
-    activePage=${activePage}, categories=${categories}, filterDef=${filterDef})"></superheader>
+    activePage=${activePage}, categories=${categories}, filterDef=${filterDef},
+    showFilters=true)"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
 
     <!--  Product cards(was Categories Grid) Section Begin -->
@@ -53,7 +54,7 @@
                                 </div>
                                 <!-- card texts block -->
                                 <div class="cg-text">
-                                    <h5>
+                                    <h5 class="min-height-85px">
                                         <a th:href="@{/catalog/{prod_id}/details(prod_id = ${p.id})}"
                                            th:text="${p.title}"></a>
                                     </h5>
@@ -76,7 +77,7 @@
 
                                         <div class="catalog__product-card__price btn-to-cart">
                                             <a class="color-white"
-                                                th:href="@{''}" th:text="'В корзину'">
+                                                th:href="@{''}" th:text="'To Cart'">
                                             </a>
                                         </div>
                                     </div>

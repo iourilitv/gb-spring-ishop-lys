@@ -3873,6 +3873,13 @@ ol {
 	line-height: 30px;
 }
 
+.details-h4 {
+	color: #ffffff;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin-bottom: 35px;
+}
+
 /*--------------------------------- Responsive Media Quaries -----------------------------*/
 
 @media only screen and (min-width: 1200px) {
@@ -4223,6 +4230,42 @@ ol {
 	color: white;
 }
 
+.font-size-36px {
+	font-size: 36px;
+}
+
+.font-weight-700 {
+	font-weight: 700;
+}
+
 .justify-content-center {
     justify-content: center;
+}
+
+.max-width-none {
+	max-width: none;
+}
+
+.min-height-85px {
+	min-height: 85px;
+}
+
+.margin-8px {
+	margin: 8px;
+}
+
+.margin-top-8px {
+	margin-top: 8px;
+}
+
+.margin-bottom-8px {
+	margin-bottom: 8px;
+}
+
+.margin-bottom-35px {
+	margin-bottom: 35px;
+}
+
+.margin-left-8px {
+	margin-left: 8px;
 }

@@ -1,7 +1,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<superheader th:fragment="header (activePage, categories, filterDef)">
+<superheader th:fragment="header (activePage, categories, filterDef, showFilters)">
 
 <!-- Page Preloder -->
 <!-- //TODO Не работает без .js -->
@@ -165,7 +165,7 @@
                         </div>
                     </li>
                     <!-- Filters item dropdown in top menu -->
-                    <li th:class="${!param.isEmpty() ? 'mega-menu active' : 'mega-menu'}">
+                    <li th:if="${showFilters} == true" th:class="${!param.isEmpty() ? 'mega-menu active' : 'mega-menu'}">
                         <a th:href="@{'/catalog/all'}">
                             <span>Filters <i class="fa fa-angle-down"></i></span></a>
                         <div class="megamenu-wrapper">

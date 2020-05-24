@@ -42,14 +42,11 @@ public class CatalogController {
         productFilter.init(params);
         //получаем объект страницы с применением фильтра
         Page<Product> page = productService.findAll(productFilter,"price");//TODO price -> константы
-        //получаем коллекцию всех категорий
-        List<Category> categories = categoryService.findAll(
-                Sort.by(Sort.Direction.ASC, "title"));//TODO title -> константы
         //передаем в .html атрибуты:
         //часть строки запроса с параметрами фильтра
         model.addAttribute("filterDef", productFilter.getFilterDefinition());
         //коллекцию категорий
-        model.addAttribute("categories", categories);
+        addToModelAttributeCategories(model);
         //объект страницы продуктов
         model.addAttribute("page", page);
         //активную страницу
@@ -61,8 +58,16 @@ public class CatalogController {
     @GetMapping("/{prod_id}/details")
     public String productDetails(@PathVariable(value = "prod_id") Long prod_id,
                                  Model model) {
+        addToModelAttributeCategories(model);
         model.addAttribute("product", productService.findById(prod_id));
-        return "product_details";
+        return "amin/product-details";
     }
 
+    private void addToModelAttributeCategories(Model model){
+        //получаем коллекцию всех категорий
+        List<Category> categories = categoryService.findAll(
+                Sort.by(Sort.Direction.ASC, "title"));//TODO title -> константы
+        //коллекцию категорий
+        model.addAttribute("categories", categories);
+    }
 }
