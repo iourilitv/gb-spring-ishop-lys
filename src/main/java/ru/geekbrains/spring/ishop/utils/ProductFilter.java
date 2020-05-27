@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import ru.geekbrains.spring.ishop.entity.Product;
-import ru.geekbrains.spring.ishop.repository.specifications.ProductSpecifications;
+import ru.geekbrains.spring.ishop.repository.specifications.ProductSpecification;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -37,7 +37,7 @@ public class ProductFilter {
                 //инициируем переменную минимальной цены из параметра
                 BigDecimal minPrice = new BigDecimal(params.get("minPrice"));
                 //добавляем по и условие фильтра в спецификацию фильтра
-                spec = spec.and(ProductSpecifications.priceGEThan(minPrice));
+                spec = spec.and(ProductSpecification.priceGEThan(minPrice));
                 //добавляем параметр фильтра к строке запроса
                 filterDefinition.append("&minPrice=").append(minPrice);
             }
@@ -47,7 +47,7 @@ public class ProductFilter {
                 //инициируем переменную минимальной цены из параметра
                 BigDecimal maxPrice = new BigDecimal(params.get("maxPrice"));
                 //добавляем по и условие фильтра в спецификацию фильтра
-                spec = spec.and(ProductSpecifications.priceLEThan(maxPrice));
+                spec = spec.and(ProductSpecification.priceLEThan(maxPrice));
                 //добавляем параметр фильтра к строке запроса
                 filterDefinition.append("&maxPrice=").append(maxPrice);
             }
@@ -57,7 +57,7 @@ public class ProductFilter {
                 //инициируем переменную из параметра
                 Short category_id = Short.parseShort(params.get("category"));
                 //добавляем по и условие фильтра в спецификацию фильтра
-                spec = spec.and(ProductSpecifications.categoryIdEquals(category_id));
+                spec = spec.and(ProductSpecification.categoryIdEquals(category_id));
                 //добавляем параметр фильтра к строке запроса
                 filterDefinition.append("&category=").append(category_id);
             }

@@ -34,11 +34,12 @@
 }
 
 .btn-reset {
+    font-weight: 600;
     width: 100%;
     color: #eaeaea;
-    background: #680606;
+    background: #680606;/* //TODO не применяется*/
 }
 
 .btn-reset:hover {
-    background: #a81d1d;
+    background: #a81d1d;/* //TODO не применяется*/
 }

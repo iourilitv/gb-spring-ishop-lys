@@ -5,7 +5,7 @@ import ru.geekbrains.spring.ishop.entity.Product;
 
 import java.math.BigDecimal;
 
-public class ProductSpecifications {
+public class ProductSpecification {
 
     //метод возвращает спецификацию для фильтра "больше минимальной цены"
     public static Specification<Product> priceGEThan(BigDecimal value) {
