@@ -2683,7 +2683,6 @@ ol {
 
 .details-post-section {
 	background: #0d0d0d;
-	/*padding: 70px 0;*/
 	padding: 30px 0;
 }
 
@@ -4224,49 +4223,4 @@ ol {
 	.search-model-form input {
 		font-size: 28px;
 	}
-}
-
-/* special */
-.color-white {
-	color: white;
-}
-
-.font-size-36px {
-	font-size: 36px;
-}
-
-.font-weight-700 {
-	font-weight: 700;
-}
-
-.justify-content-center {
-    justify-content: center;
-}
-
-.max-width-none {
-	max-width: none;
-}
-
-.min-height-85px {
-	min-height: 85px;
-}
-
-.margin-8px {
-	margin: 8px;
-}
-
-.margin-top-8px {
-	margin-top: 8px;
-}
-
-.margin-bottom-8px {
-	margin-bottom: 8px;
-}
-
-.margin-bottom-35px {
-	margin-bottom: 35px;
-}
-
-.margin-left-8px {
-	margin-left: 8px;
 }
