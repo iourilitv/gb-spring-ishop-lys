@@ -44,6 +44,15 @@
     background: #a81d1d;/* //TODO не применяется*/
 }
 
+/*---------------------
+  Cart
+-----------------------*/
+
+.cart-list-section {
+    background: #0d0d0d;
+    padding: 30px 0;
+}
+
 
 /* special */
 .color-white {

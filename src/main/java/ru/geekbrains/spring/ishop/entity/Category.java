@@ -12,7 +12,7 @@ public class Category {
     @Column(name = "id")
     private Short id;
 
-    @Column(name = "title")
+    @Column(name = "title", unique = true)
     private String title;
 
     @OneToMany(mappedBy = "category")

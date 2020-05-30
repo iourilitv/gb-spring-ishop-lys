@@ -33,4 +33,10 @@ Conclusion: Похоже flyway ругается на строку drop table pr
 Почему-то стили у button в style.css перебивают мои в my-changes.css, хотя ссылка 
 на мою таблицу стилей стоит и позже. Странно!?
 
+##4. Не работает ajax.
+Страница все равно обновляется при нажатии на кнопку Add To Cart в каталоге
+куда бы не добавить в catalog.html строку
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>.
+
+
   

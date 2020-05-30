@@ -2,20 +2,17 @@ package ru.geekbrains.spring.ishop.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.geekbrains.spring.ishop.entity.Category;
 import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.ProductService;
 import ru.geekbrains.spring.ishop.utils.ProductFilter;
 
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -46,7 +43,7 @@ public class CatalogController {
         //часть строки запроса с параметрами фильтра
         model.addAttribute("filterDef", productFilter.getFilterDefinition());
         //коллекцию категорий
-        addToModelAttributeCategories(model);
+        categoryService.addToModelAttributeCategories(model);
         //объект страницы продуктов
         model.addAttribute("page", page);
         //активную страницу
@@ -58,16 +55,16 @@ public class CatalogController {
     @GetMapping("/{prod_id}/details")
     public String productDetails(@PathVariable(value = "prod_id") Long prod_id,
                                  Model model) {
-        addToModelAttributeCategories(model);
+        categoryService.addToModelAttributeCategories(model);
         model.addAttribute("product", productService.findById(prod_id));
         return "amin/product-details";
     }
 
-    private void addToModelAttributeCategories(Model model){
-        //получаем коллекцию всех категорий
-        List<Category> categories = categoryService.findAll(
-                Sort.by(Sort.Direction.ASC, "title"));//TODO title -> константы
-        //коллекцию категорий
-        model.addAttribute("categories", categories);
-    }
+//    public void addToModelAttributeCategories(Model model){
+//        //получаем коллекцию всех категорий
+//        List<Category> categories = categoryService.findAll(
+//                Sort.by(Sort.Direction.ASC, "title"));//TODO title -> константы
+//        //коллекцию категорий
+//        model.addAttribute("categories", categories);
+//    }
 }

@@ -99,7 +99,7 @@
 
                             <div class="catalog__product-card__price btn-to-cart
                                     margin-8px">
-                                <a class="color-white" th:href="@{''}">
+                                <a class="color-white" th:href="@{'/cart/add/' + ${product.id} + '/prod_id'}">
                                     <span th:text="'To Cart'"
                                           style="font-size: 28px; font-weight: 700">
                                     </span>

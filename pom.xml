@@ -61,7 +61,7 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
 
-        <!-- обновление web-страницы без перезаргузки при изменения .html -->
+        <!-- обновление web-страницы без перезагрузки при изменения .html -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -98,6 +98,16 @@
 <!--            <artifactId>spring-security-test</artifactId>-->
 <!--            <scope>test</scope>-->
 <!--        </dependency>-->
+
+        <!-- Автоматически подставляет геттеры, сеттеры и конструктор -->
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+<!--            <version>1.18.12</version>--> <!-- Не нужно при spring-boot-starter-actuator -->
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import ru.geekbrains.spring.ishop.entity.Category;
 import ru.geekbrains.spring.ishop.repository.CategoryRepository;
 import ru.geekbrains.spring.ishop.utils.CategoryFilter;
@@ -54,4 +55,13 @@ public class CategoryService {
     public void delete(Category category) {
         repository.delete(category);
     }
+
+    public void addToModelAttributeCategories(Model model){
+        //получаем коллекцию всех категорий
+        List<Category> categories = findAll(
+                Sort.by(Sort.Direction.ASC, "title"));//TODO title -> константы
+        //коллекцию категорий
+        model.addAttribute("categories", categories);
+    }
+
 }

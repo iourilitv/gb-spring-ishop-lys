@@ -24,7 +24,6 @@
     <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
-
 </head>
 
 <body>
@@ -79,7 +78,7 @@
 
                                         <div class="catalog__product-card__price btn-to-cart">
                                             <a class="color-white"
-                                                th:href="@{''}" th:text="'To Cart'">
+                                                th:href="@{'/cart/add/' + ${p.id} + '/prod_id'}" th:text="'To Cart'">
                                             </a>
                                         </div>
                                     </div>
