@@ -6,7 +6,7 @@
 ##Tasks list.
 1. DONE.To use the flyway migration service for version control of db schema.
 
-2. DONE.To create sql requests for beginning db initialising in V1__initialise.sql.
+2. DONE.To create sql requests for beginning db initialising in V001.01__initialise.sql.
 
 3. DONE.To create an entity Product.
 
