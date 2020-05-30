@@ -33,9 +33,6 @@ public class Order {
     @Column(name = "total_items_costs")
     private BigDecimal totalItemsCosts;
 
-//    @Column(name = "delivery_costs")
-//    private BigDecimal deliveryCosts;
-
     @Column(name = "total_costs")
     private BigDecimal totalCosts;
 

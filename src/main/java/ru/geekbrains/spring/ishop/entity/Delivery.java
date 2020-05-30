@@ -15,9 +15,6 @@ public class Delivery {
     @Column(name = "id")
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
     @OneToOne
     @JoinColumn(name = "order_id")
     private User order;
