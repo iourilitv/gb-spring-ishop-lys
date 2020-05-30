@@ -14,13 +14,6 @@ import java.util.function.Supplier;
 @Component
 @Data
 public class ShoppingCartService {
-//    private ShoppingCart cart;
-
-//    @Autowired
-//    public void setCart(ShoppingCart cart) {
-//        this.cart = cart;
-//    }
-
     private ProductService productService;
 
     @Autowired

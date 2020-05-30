@@ -97,14 +97,11 @@
                                 </div>
                             </div>
 
-                            <div class="catalog__product-card__price btn-to-cart
-                                    margin-8px">
-                                <a class="color-white" th:href="@{'/cart/add/' + ${product.id} + '/prod_id'}">
-                                    <span th:text="'To Cart'"
-                                          style="font-size: 28px; font-weight: 700">
-                                    </span>
-                                </a>
-                            </div>
+                            <a class="catalog__product-card__price btn-to-cart margin-8px color-white"
+                                   th:href="@{'/cart/add/' + ${product.id} + '/prod_id'}"
+                                   th:text="'Add To Cart'"
+                                   style="font-size: 26px; font-weight: 700">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -301,25 +298,6 @@
                                     </ul>
                                 </div>
                             </div>
-
-<!--                            <div class="bp-item">-->
-<!--                                <div class="bp-loader">-->
-<!--                                    <div class="loader-circle-wrap">-->
-<!--                                        <div class="loader-circle">-->
-<!--                                            <span class="circle-progress-1" data-cpid="id-4" data-cpvalue="75"-->
-<!--                                                  data-cpcolor="#c20000"></span>-->
-<!--                                            <div class="review-point">7.5</div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="bp-text">-->
-<!--                                    <h6><a href="#">This gaming laptop with a GTX 1660...</a></h6>-->
-<!--                                    <ul>-->
-<!--                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>-->
-<!--                                        <li><i class="fa fa-comment-o"></i> 20</li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
                         </div>
                     </div>
                 </div>
