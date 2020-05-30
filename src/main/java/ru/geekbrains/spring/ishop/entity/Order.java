@@ -23,9 +23,9 @@ public class Order {
     @JoinColumn(name = "status_id")
     private OrderStatus orderStatus;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
@@ -33,11 +33,15 @@ public class Order {
     @Column(name = "total_items_costs")
     private BigDecimal totalItemsCosts;
 
-    @Column(name = "delivery_costs")
-    private BigDecimal deliveryCosts;
+//    @Column(name = "delivery_costs")
+//    private BigDecimal deliveryCosts;
 
     @Column(name = "total_costs")
     private BigDecimal totalCosts;
+
+    @OneToOne
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
 
     @Column(name = "created_at")
     @CreationTimestamp
