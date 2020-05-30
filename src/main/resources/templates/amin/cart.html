@@ -58,18 +58,23 @@
                     <tbody>
                         <tr th:each="cartItem, itrStat : ${cart.cartItems}">
                             <td th:text="${itrStat.index + 1}"></td>
+
                             <td th:text="${cartItem.product.id}"></td>
-<!--                            <td th:text="${cartItem.product.title}">-->
+
                             <td>
                                 <a th:href="@{/catalog/{prod_id}/details(prod_id = ${cartItem.product.id})}"
                                    th:text="${cartItem.product.title}">
                                 </a>
                             </td>
+
                             <td th:text="${cartItem.product.price}"></td>
+
                             <td th:text="${cartItem.quantity}">
                                 <!-- form input post? -->
                             </td>
+
                             <td th:text="${cartItem.itemCosts}"></td>
+
                             <td>
                                 <a class="btn btn-warning" th:href="@{'/cart/delete/' + ${cartItem.product.id} + '/prod_id'}">Delete</a>
 <!--                                <a class="btn btn-info" th:href="@{'/cart/saveForLater/' + ${product.id}}">Save for later</a>-->
@@ -78,18 +83,20 @@
 
                         <tr>
                             <th colspan="5">Total in cart:</th>
+
                             <td th:text="${cart.totalCost}"></td>
+
                             <td>
                                 <a class="btn btn-reset" th:href="@{'/cart/clear'}">Clear</a>
                             </td>
                         </tr>
                     </tbody>
-                    <div>
-                        <!-- button Proceed to checkout(.. items) -->
-                        <!-- button Clear the cart -->
-                    </div>
-
                 </table>
+
+                <div>
+                    <!-- button Proceed to checkout(.. items) -->
+                    <!-- button Clear the cart -->
+                </div>
             </div>
         </div>
     </section>
