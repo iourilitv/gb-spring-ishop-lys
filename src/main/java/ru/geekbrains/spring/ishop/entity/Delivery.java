@@ -32,4 +32,7 @@ public class Delivery {
     @Column(name = "delivered_at")
     private LocalDateTime deliveredAt;
 
+    @Column(name = "delivery_expected_at")
+    private LocalDateTime deliveryExpectedAt;
+
 }
