@@ -14,8 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,6 +41,21 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    //TODO переделать: вводить первого юзера
+    @Override
+    @Transactional
+    @PostConstruct
+    public void initSuperAdmin() {
+        if (findByUserName("superadmin") != null) {
+            return;
+        }
+        User user = new User("superadmin", passwordEncoder.encode("superadmin"),
+                "superadmin first_name", "superadmin last_name",
+                "+79991234567", "superadmin@mail.com");
+        user.setRoles((Collection<Role>) roleRepository.findAll());
+        userRepository.save(user);
+    }
+
     @Override
     @Transactional
     public User findByUserName(String username) {
@@ -60,7 +77,6 @@ public class UserServiceImpl implements UserService {
         user.setLastName(systemUser.getLastName());
         user.setPhoneNumber(systemUser.getPhoneNumber());
         user.setEmail(systemUser.getEmail());
-        user.setRoles(Collections.singletonList(roleRepository.findOneByName("ROLE_EMPLOYEE")));
         userRepository.save(user);
         return true;
     }
