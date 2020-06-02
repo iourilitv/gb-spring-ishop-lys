@@ -1,5 +1,6 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <superheader th:fragment="header (activePage, categories, filterDef, showFilters)">
 
@@ -98,13 +99,27 @@
                             <li><i class="fa fa-clock-o"></i> May 21, 2020</li>
 
                             <li class="signup-switch signup-open">
-                                <a class="fa fa-sign-out login-link"
-                                   th:href="@{''}" th:text="' Login'"></a>
+<!--                                <a class="fa fa-sign-out login-link"-->
+<!--                                   th:href="@{'/login'}" th:text="' Login'"></a>-->
+                                <a sec:authorize="isAnonymous()" class="fa fa-sign-out login-link"
+                                   th:href="@{'/login'}" th:text="' Login'"></a>
+                                <a sec:authorize="isAuthenticated()" class="fa fa-sign-out login-link"
+                                   th:href="@{'/logout'}" th:text="' Logout'"></a>
                             </li>
 
                             <li>
-                                <a class="fa login-link"
-                                   th:href="@{''}" th:text="' Register'">
+<!--                                <a class="fa login-link"-->
+<!--                                   th:href="@{'/register/showForm'}" th:text="' Register'">-->
+<!--                                </a>-->
+
+                                <a sec:authorize="isAnonymous()" class="fa login-link"
+                                   th:href="@{'/register/showForm'}" th:text="' Register'">
+                                </a>
+
+                                <a sec:authorize="isAuthenticated()" sec:authentication="principal.username"
+                                   class="fa login-link"
+                                   th:href="@{'/profile/form'}">
+<!--                                    <span sec:authentication="principal.username"></span>-->
                                 </a>
                             </li>
                         </ul>
@@ -203,7 +218,7 @@
                                             <!-- Items on page limit field of filter form -->
                                             <label class="filter-field-label">
                                                 <span>Elements on page</span>
-                                                <input name="limit"placeholder="Товаров на странице"
+                                                <input name="limit" placeholder="Товаров на странице"
                                                        th:value="${param.limit}" type="number">
                                             </label>
                                             <!-- выпадающий список направления сортировки -->
@@ -257,7 +272,7 @@
                     </li>
                     <!-- Cart item in top menu -->
                     <li th:class="${activePage == 'Cart' ? 'mega-menu active' : 'mega-menu'}">
-                        <a th:href="@{/cart}"><span>Cart </span></a>
+                        <a th:href="@{/profile/cart}"><span>Cart </span></a>
                     </li>
                 </ul>
             </div>

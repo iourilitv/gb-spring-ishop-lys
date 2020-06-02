@@ -1,0 +1,15 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile Form</title>
+</head>
+<body>
+    <h2>Profile Form of User</h2>
+    <h4 sec:authentication="principal.username"></h4>
+
+    <a th:href="@{/profile/form/change/password/showForm}" th:text="'Password Changing Form'"></a>
+
+</body>
+</html>

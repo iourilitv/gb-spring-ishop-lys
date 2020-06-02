@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<title th:text="${confirmationTitle}"></title>
+</head>
+
+<body>
+	<h2 th:text="${confirmationMessage}"></h2>
+	<hr>
+	<a th:href="@{${confirmationAHref}}" th:text="${confirmationAText}"></a>
+</body>
+</html>

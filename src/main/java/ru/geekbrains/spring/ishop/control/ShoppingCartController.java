@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Component
-@RequestMapping("/cart")
+@RequestMapping("/profile/cart")
 public class ShoppingCartController {
     private ShoppingCartService cartService;
 
@@ -45,7 +45,7 @@ public class ShoppingCartController {
     }
 
     //TODO for a future
-//    @GetMapping("/add/{prod_id}/prod_id/{quantity}/quantity")
+//    @GetMapping("/update/{prod_id}/prod_id/{quantity}/quantity")
 //    public void updateCartItemQuantity(@PathVariable Long prod_id,
 //                          @PathVariable Integer quantity, HttpSession session) {
 //    }
@@ -58,7 +58,7 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/clear")
-    public String removeFromCart(HttpServletRequest httpServletRequest) throws Throwable {
+    public String removeFromCart(HttpServletRequest httpServletRequest) {
         cartService.clearCart(httpServletRequest.getSession());
         String referrer = httpServletRequest.getHeader("referer");
         return "redirect:" + referrer;

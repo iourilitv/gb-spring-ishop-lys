@@ -1,6 +1,6 @@
 package ru.geekbrains.spring.ishop.control;
 
-import ru.geekbrains.spring.ishop.entity.SystemUser;
+import ru.geekbrains.spring.ishop.utils.SystemUser;
 import ru.geekbrains.spring.ishop.entity.User;
 import ru.geekbrains.spring.ishop.service.UserService;
 import org.slf4j.Logger;
@@ -33,19 +33,24 @@ public class RegistrationController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @GetMapping("/showRegistrationForm")
-    public String showMyLoginPage(Model theModel) {
+    @GetMapping("/showForm")
+    public String showRegistrationFormPage(Model theModel) {
         theModel.addAttribute("systemUser", new SystemUser());
-        return "amin/registration-form";
+//        return "amin/registration-form";
+        return "registration-form";
     }
 
     // Binding Result после @ValidModel !!!
-    @PostMapping("/processRegistrationForm")
-    public String processRegistrationForm(@Valid @ModelAttribute("systemUser") SystemUser theSystemUser, BindingResult theBindingResult, Model theModel) {
+    @PostMapping("/process")
+    public String processRegistrationForm(
+            @Valid @ModelAttribute("systemUser") SystemUser theSystemUser,
+            BindingResult theBindingResult, Model theModel) {
+
         String userName = theSystemUser.getUserName();
         logger.debug("Processing registration form for: " + userName);
         if (theBindingResult.hasErrors()) {
-            return "amin/registration-form";
+//            return "amin/registration-form";
+            return "registration-form";
         }
         User existing = userService.findByUserName(userName);
         if (existing != null) {
@@ -53,10 +58,17 @@ public class RegistrationController {
             theModel.addAttribute("systemUser", theSystemUser);
             theModel.addAttribute("registrationError", "User with current username already exists");
             logger.debug("User name already exists.");
-            return "amin/registration-form";
+//            return "amin/registration-form";
+            return "registration-form";
         }
         userService.save(theSystemUser);
         logger.debug("Successfully created user: " + userName);
-        return "amin/registration-confirmation";
+        theModel.addAttribute("confirmationTitle", "Registration Confirmation");
+        theModel.addAttribute("confirmationMessage", "You have been registered successfully!");
+        theModel.addAttribute("confirmationAHref", "/login");
+        theModel.addAttribute("confirmationAText", "Login with new user");
+//        return "amin/confirmation";
+        return "confirmation";
     }
+
 }

@@ -1,5 +1,6 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -76,8 +77,8 @@
                             <td th:text="${cartItem.itemCosts}"></td>
 
                             <td>
-                                <a class="btn btn-warning" th:href="@{'/cart/delete/' + ${cartItem.product.id} + '/prod_id'}">Delete</a>
-<!--                                <a class="btn btn-info" th:href="@{'/cart/saveForLater/' + ${product.id}}">Save for later</a>-->
+                                <a class="btn btn-warning" th:href="@{'/profile/cart/delete/' + ${cartItem.product.id} + '/prod_id'}">Delete</a>
+<!--                                <a class="btn btn-info" th:href="@{'/profile/cart/saveForLater/' + ${product.id}}">Save for later</a>-->
                             </td>
                         </tr>
 

@@ -1,7 +1,7 @@
 package ru.geekbrains.spring.ishop.service;
 
 import ru.geekbrains.spring.ishop.entity.Role;
-import ru.geekbrains.spring.ishop.entity.SystemUser;
+import ru.geekbrains.spring.ishop.utils.SystemUser;
 import ru.geekbrains.spring.ishop.entity.User;
 import ru.geekbrains.spring.ishop.repository.RoleRepository;
 import ru.geekbrains.spring.ishop.repository.UserRepository;
@@ -14,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -59,11 +58,21 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(systemUser.getPassword()));
         user.setFirstName(systemUser.getFirstName());
         user.setLastName(systemUser.getLastName());
+        user.setPhoneNumber(systemUser.getPhoneNumber());
         user.setEmail(systemUser.getEmail());
-
-//        user.setRoles(Arrays.asList(roleRepository.findOneByName("ROLE_EMPLOYEE")));
         user.setRoles(Collections.singletonList(roleRepository.findOneByName("ROLE_EMPLOYEE")));
+        userRepository.save(user);
+        return true;
+    }
 
+    @Override
+    @Transactional
+    public boolean updatePassword(String userName, String newPassword) {
+        User user = userRepository.findOneByUserName(userName);
+        if(user == null) {
+            return false;
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
         return true;
     }
@@ -75,8 +84,8 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
-                mapRolesToAuthorities(user.getRoles()));
+        return new org.springframework.security.core.userdetails.User(
+                user.getUserName(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
