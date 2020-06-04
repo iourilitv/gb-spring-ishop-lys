@@ -3,31 +3,33 @@ Means GET - if not specified.
 
 ##Home
 ##Contacts
-###/contacts
+###/{root}/contacts
 ####/how_to_pay
 ####/delivery
 ####/contact
 
 ##Catalog.
-###/catalog/all
-###/{prod_id}/details
+###/{root}/catalog
+####/all
+####/{prod_id}/details
 
 ##Authentication.
-###/login
-###/authenticateTheUser (POST)
+###/{root}/login
+###/{root}/authenticateTheUser (POST)
 
-###/register
+##Registration.
+###/{root}/register
 ####/showForm
-####/process
+####/process (POST)
 
 ##User profile.
-###/profile
-####/form
-#####/edit
+###/{root}/profile
 
-#####/change/password
+####/form
 ######/showForm
 ######/process (POST)
+#####/edit
+#####/change/password
 
 ####/cart
 #####/clear
@@ -44,7 +46,8 @@ Means GET - if not specified.
 #####/cancel/{order_id}/order_id
 
 ##Admin section.
-###/admin
+###/{root}/admin
+
 ####/user
 #####/all
 #####/create

@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.geekbrains.spring.ishop.entity.Delivery;
-import ru.geekbrains.spring.ishop.entity.Order;
-import ru.geekbrains.spring.ishop.entity.OrderItem;
-import ru.geekbrains.spring.ishop.entity.User;
+import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.repository.AddressRepository;
 import ru.geekbrains.spring.ishop.repository.OrderItemRepository;
 import ru.geekbrains.spring.ishop.repository.OrderRepository;
@@ -53,6 +50,10 @@ public class OrderService {
         return orderRepository.getOne(id);
     }
 
+    public OrderStatus findOrderStatusByTitle(String title) {
+        return orderStatusRepository.getOrderStatusByTitleEquals(title);
+    }
+
     //TODO с ним не сохраняет сущности в бд при даже если нет ошибки отображения страницы
     // java.lang.StackOverflowError
     // спринг создает сущности, дает им id и если ошибки нет,
@@ -92,7 +93,11 @@ public class OrderService {
         order.setOrderItems(saveOrderItems(cart.getCartItems(), order));
         //окончательно записываем заказ
         orderRepository.save(order);
-        return isOrderSavedCorrectly(order, cart);
+        if(isOrderSavedCorrectly(order, cart)) {
+            session.setAttribute("order", order);
+            return true;
+        }
+        return false;
     }
 
     private boolean isOrderSavedCorrectly(Order order, ShoppingCart cart) {
