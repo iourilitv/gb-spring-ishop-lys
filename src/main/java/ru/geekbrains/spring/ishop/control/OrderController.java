@@ -38,24 +38,6 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-//    @GetMapping("/create")
-//    public String createOrder(Model model, HttpServletRequest httpServletRequest) {
-//        ShoppingCart cart = cartService.getShoppingCartForSession(
-//                httpServletRequest.getSession());
-//        if(orderService.create(cart, httpServletRequest.getSession())) {
-//            cartService.clearCart(httpServletRequest.getSession());
-//            model.addAttribute("orderCreated", "The Order Has Been Created Successfully");
-//        } else {
-//            model.addAttribute("orderCreated", "Something Wrong With The Order Creating!");
-//        }
-//
-//        //FIXME не работает редирект!
-////        model.addAttribute("cart", cartService.getShoppingCartForSession(httpServletRequest.getSession()));
-////        categoryService.addToModelAttributeCategories(model);
-////        model.addAttribute("activePage", "Cart");
-//          return "amin/cart";
-////        return "redirect:/profile/cart";
-//    }
     @GetMapping("/create")
     public RedirectView createOrder(Model model, HttpServletRequest httpServletRequest) {
         ShoppingCart cart = cartService.getShoppingCartForSession(

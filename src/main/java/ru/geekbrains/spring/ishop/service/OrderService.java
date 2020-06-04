@@ -73,19 +73,18 @@ public class OrderService {
         //TODO temporarily - добавить выбор адреса
 //        delivery.setDeliveryAddress(user.getDeliveryAddress());
         delivery.setDeliveryAddress(addressRepository.getOne(1L));
-
-        delivery.setDeliveryCost(new BigDecimal(100));//TODO добавить сервис расчета стоимости доставки
-
+        //TODO добавить сервис расчета стоимости доставки
+        delivery.setDeliveryCost(new BigDecimal(100));
+        //TODO добавить ввод значений в интерфейс
         delivery.setDeliveryExpectedAt(LocalDateTime.of(
-                LocalDate.of(2020, 6, 3),//TODO добавить в интерфейс
+                LocalDate.of(2020, 6, 3),
                 LocalTime.of(14, 20)));
 
         order.setTotalCosts(order.getTotalItemsCosts().add(delivery.getDeliveryCost()));
         //Сохраняем сначала заготовку заказа, чтобы получить id
-        Order savedOrder = orderRepository.save(order);
+        orderRepository.save(order);
         //сохраняем объект доставки уже привязанный к заказу
         delivery.setOrder(order);
-//        delivery.setOrder(savedOrder);
         deliveryService.save(delivery);
         //дополняем заказ объектом доставки
         order.setDelivery(delivery);

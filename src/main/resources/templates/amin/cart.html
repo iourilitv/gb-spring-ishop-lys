@@ -58,9 +58,6 @@
                 <!--/*@thymesVar id="cart" type="ru.geekbrains.spring.ishop.utils.ShoppingCart"*/-->
                 <h4 th:if="${cart.cartItems.isEmpty()}"
                     class="color-white">The shopping cart is empty!</h4>
-<!--                <h4 th:if="${cart.cartItems.isEmpty()} and ${orderCreated} == null"-->
-<!--                    class="color-white">The shopping cart is empty!</h4>-->
-
                 <table th:unless="${cart.cartItems.isEmpty()}"
                         class="table color-white">
                     <thead>
