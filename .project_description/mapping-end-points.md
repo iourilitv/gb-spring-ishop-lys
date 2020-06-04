@@ -1,4 +1,4 @@
-#Mapping requests list.
+#Mapping requests and end points list.
 Means GET - if not specified.
 
 ##Home

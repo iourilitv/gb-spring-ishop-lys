@@ -1,6 +1,5 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -30,6 +29,7 @@
 <body>
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
     <!--/*@thymesVar id="categories" type=""*/-->
+<!--/*@thymesVar id="activePage" type="java.lang.String"*/-->
 <superheader th:replace="/amin/fragments/header.html :: header(
     activePage=${activePage}, categories=${categories}, filterDef='',
     showFilters=false)"></superheader>
@@ -38,10 +38,29 @@
     <!-- Items list Section Begin -->
     <section class="cart-list-section spad">
         <div class="container">
+            <!-- Блок Хлебные крошки and Product title Begin-->
+            <div class="row">
+                <div class="col-lg-12 p-0">
+                    <div class="details-text typography-page">
+                        <div class="dt-breadcrumb">
+                            <div class="dt-bread-option">
+                                <a class="color-white" th:href="@{'/catalog/all'}">Catalog</a>
+                                <span>Shopping Cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Блок Хлебные крошки and Product title  End -->
+
+            <!-- Table of CartItems list Begin -->
             <div class="col-lg-12 p-0">
                 <!--/*@thymesVar id="cart" type="ru.geekbrains.spring.ishop.utils.ShoppingCart"*/-->
                 <h4 th:if="${cart.cartItems.isEmpty()}"
                     class="color-white">The shopping cart is empty!</h4>
+<!--                <h4 th:if="${cart.cartItems.isEmpty()} and ${orderCreated} == null"-->
+<!--                    class="color-white">The shopping cart is empty!</h4>-->
+
                 <table th:unless="${cart.cartItems.isEmpty()}"
                         class="table color-white">
                     <thead>
@@ -86,7 +105,7 @@
                             <th colspan="5">Total in cart:</th>
 
                             <td th:text="${cart.totalCost}"></td>
-
+                            <!-- button Clear the cart -->
                             <td>
                                 <a class="btn btn-reset" th:href="@{'/cart/clear'}">Clear</a>
                             </td>
@@ -94,11 +113,12 @@
                     </tbody>
                 </table>
 
-                <div>
+                <div th:unless="${cart.cartItems.isEmpty()}">
                     <!-- button Proceed to checkout(.. items) -->
-                    <!-- button Clear the cart -->
+                    <a class="catalog__product-card__price btn-subscribe" th:href="@{'/profile/order/create'}">Proceed to checkout</a>
                 </div>
             </div>
+            <!-- Table of CartItems list End -->
         </div>
     </section>
     <!-- Items list Section End -->

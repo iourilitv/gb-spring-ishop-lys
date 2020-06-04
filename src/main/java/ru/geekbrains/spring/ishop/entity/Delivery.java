@@ -17,7 +17,7 @@ public class Delivery {
 
     @OneToOne
     @JoinColumn(name = "order_id")
-    private User order;
+    private Order order;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -35,4 +35,16 @@ public class Delivery {
     @Column(name = "delivery_expected_at")
     private LocalDateTime deliveryExpectedAt;
 
+    @Override
+    public String toString() {
+        return "Delivery{" +
+                "id=" + id +
+                ", orderId=" + order.getId() +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", deliveryAddress=" + deliveryAddress +
+                ", deliveryCost=" + deliveryCost +
+                ", deliveredAt=" + deliveredAt +
+                ", deliveryExpectedAt=" + deliveryExpectedAt +
+                '}';
+    }
 }

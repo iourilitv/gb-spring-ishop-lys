@@ -14,7 +14,7 @@ CREATE TABLE `roles` (
                          `description` varchar(5000) NOT NULL,
                          PRIMARY KEY (`id`),
                          UNIQUE KEY `UK_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `addresses` (
                              `id` bigint NOT NULL AUTO_INCREMENT,
@@ -23,7 +23,7 @@ CREATE TABLE `addresses` (
                              `address` varchar(500) NOT NULL,
                              PRIMARY KEY (`id`),
                              UNIQUE KEY `UK_city_address` (`city`, `address`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `users` (
                          `id` bigint NOT NULL AUTO_INCREMENT,
@@ -39,7 +39,7 @@ CREATE TABLE `users` (
                          UNIQUE KEY `UK_email` (`email`),
                          KEY `fk_users_delivery_address_id_idx` (`delivery_address_id`),
                          CONSTRAINT `fk_users_delivery_address_id` FOREIGN KEY (`delivery_address_id`) REFERENCES `addresses` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `users_roles` (
                                `user_id` bigint NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE `users_roles` (
                                CONSTRAINT `fk_ur_role_id` FOREIGN KEY (`role_id`)
                                    REFERENCES `roles` (`id`)
                                    ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `order_item` (
                               `id` bigint NOT NULL AUTO_INCREMENT,
@@ -65,7 +65,7 @@ CREATE TABLE `order_item` (
                               KEY `fk_oi_product_id_idx` (`product_id`),
                               CONSTRAINT `fk_oi_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
                               CONSTRAINT `fk_oi_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `deliveries` (
                               `id` bigint NOT NULL AUTO_INCREMENT,
@@ -80,7 +80,7 @@ CREATE TABLE `deliveries` (
                               KEY `fk_del_delivery_address_id01_idx` (`delivery_address_id`),
                               CONSTRAINT `fk_del_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
                               CONSTRAINT `fk_del_delivery_address_id` FOREIGN KEY (`delivery_address_id`) REFERENCES `addresses` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `orders` (
                           `id` bigint NOT NULL AUTO_INCREMENT,
@@ -88,7 +88,7 @@ CREATE TABLE `orders` (
                           `user_id` bigint NOT NULL,
                           `total_items_costs` decimal(19,2) NOT NULL,
                           `total_costs` decimal(19,2) NOT NULL,
-                          `delivery_id` bigint NULL DEFAULT NULL,
+                          `delivery_id` bigint NOT NULL,
                           `created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
                           `updated_at` TIMESTAMP NOT NULL DEFAULT NOW(),
                           PRIMARY KEY (`id`),
@@ -98,4 +98,4 @@ CREATE TABLE `orders` (
                           CONSTRAINT `fk_orders_status_id` FOREIGN KEY (`status_id`) REFERENCES `order_statuses` (`id`),
                           CONSTRAINT `fk_orders_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
                           CONSTRAINT `fk_orders_delivery_id` FOREIGN KEY (`delivery_id`) REFERENCES `deliveries` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

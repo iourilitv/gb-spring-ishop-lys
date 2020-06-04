@@ -48,4 +48,18 @@ public class Order {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", orderStatus=" + orderStatus +
+                ", user=" + user +
+                ", orderItems=" + orderItems +
+                ", totalItemsCosts=" + totalItemsCosts +
+                ", totalCosts=" + totalCosts +
+                ", delivery=" + delivery +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }
