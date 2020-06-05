@@ -2,7 +2,6 @@ package ru.geekbrains.spring.ishop.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.Order;
-import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.OrderService;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
@@ -38,21 +36,6 @@ public class OrderController {
         this.orderService = orderService;
         this.orderFilter = orderFilter;
     }
-
-//    @Autowired
-//    public void setCategoryService(CategoryService categoryService) {
-//        this.categoryService = categoryService;
-//    }
-//
-//    @Autowired
-//    public void setShoppingCartService(ShoppingCartService cartService) {
-//        this.cartService = cartService;
-//    }
-
-//    @Autowired
-//    public void setOrderService(OrderService orderService) {
-//        this.orderService = orderService;
-//    }
 
     @GetMapping("/all")
     public String allOrders(@RequestParam Map<String, String> params,
