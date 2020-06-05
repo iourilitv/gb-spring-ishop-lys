@@ -101,8 +101,11 @@
                             <li class="signup-switch signup-open">
                                 <a sec:authorize="isAnonymous()" class="fa fa-sign-out login-link"
                                    th:href="@{'/login'}" th:text="' Login'"></a>
-                                <a sec:authorize="isAuthenticated()" class="fa fa-sign-out login-link"
-                                   th:href="@{'/logout'}" th:text="' Logout'"></a>
+<!--                                <a sec:authorize="isAuthenticated()" class="fa fa-sign-out login-link"-->
+<!--                                   th:href="@{'/logout'}" th:text="' Logout'"></a>-->
+                                <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
+                                    <button class="fa fa-sign-out login-link cancel-button-style" type="submit">Logout</button>
+                                </form>
                             </li>
 
                             <li>
