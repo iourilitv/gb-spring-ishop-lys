@@ -2,7 +2,7 @@ package ru.geekbrains.spring.ishop.control;
 
 import ru.geekbrains.spring.ishop.utils.SystemUser;
 import ru.geekbrains.spring.ishop.entity.User;
-import ru.geekbrains.spring.ishop.service.UserService;
+import ru.geekbrains.spring.ishop.services.interfaces.IUserServiceSql2o;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,11 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/register")
 public class RegistrationController {
-    private UserService userService;
+    private IUserServiceSql2o IUserServiceSql2o;
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setIUserServiceSql2o(IUserServiceSql2o IUserServiceSql2o) {
+        this.IUserServiceSql2o = IUserServiceSql2o;
     }
 
     private final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
@@ -52,7 +52,7 @@ public class RegistrationController {
 //            return "amin/registration-form";
             return "registration-form";
         }
-        User existing = userService.findByUserName(userName);
+        User existing = IUserServiceSql2o.findByUserName(userName);
         if (existing != null) {
             // theSystemUser.setUserName(null);
             theModel.addAttribute("systemUser", theSystemUser);
@@ -61,7 +61,7 @@ public class RegistrationController {
 //            return "amin/registration-form";
             return "registration-form";
         }
-        userService.save(theSystemUser);
+        IUserServiceSql2o.save(theSystemUser);
         logger.debug("Successfully created user: " + userName);
         theModel.addAttribute("confirmationTitle", "Registration Confirmation");
         theModel.addAttribute("confirmationMessage", "You have been registered successfully!");

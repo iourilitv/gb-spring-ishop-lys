@@ -1,9 +1,8 @@
-package ru.geekbrains.spring.ishop.service;
+package ru.geekbrains.spring.ishop.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.repository.AddressRepository;
 import ru.geekbrains.spring.ishop.repository.OrderItemRepository;

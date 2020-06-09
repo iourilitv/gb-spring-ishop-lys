@@ -9,8 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.spring.ishop.entity.Category;
 import ru.geekbrains.spring.ishop.entity.Product;
-import ru.geekbrains.spring.ishop.service.CategoryService;
-import ru.geekbrains.spring.ishop.service.ProductService;
+import ru.geekbrains.spring.ishop.services.CategoryService;
+import ru.geekbrains.spring.ishop.services.ProductService;
 import ru.geekbrains.spring.ishop.utils.ProductFilter;
 
 import javax.validation.Valid;
