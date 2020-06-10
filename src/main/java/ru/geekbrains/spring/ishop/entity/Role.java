@@ -26,8 +26,8 @@ public class Role {
     static {
         COLUMN_MAPPINGS.put("user_id", "id");
         COLUMN_MAPPINGS.put("role_id", "id");
-//        COLUMN_MAPPINGS.put("name", "name");
-//        COLUMN_MAPPINGS.put("description", "description");
+        COLUMN_MAPPINGS.put("name", "name");
+        COLUMN_MAPPINGS.put("description", "description");
     }
 
     public Role() {
@@ -51,8 +51,7 @@ public class Role {
     @Override
     public String toString() {
         return "Role{" + "id=" + id + ", " +
-                "name='" + name + '\'' +
-                "description='" + description + '\'' +
-                '}';
+                "name='" + name + "', " +
+                "description='" + description + "'}";
     }
 }
