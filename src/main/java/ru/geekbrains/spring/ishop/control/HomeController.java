@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping
+    public String indexPage() {
+        return "redirect:/home";
+    }
+
+    @GetMapping("/home")
     public String homePage() {
         return "redirect:/catalog/all";//TODO
     }

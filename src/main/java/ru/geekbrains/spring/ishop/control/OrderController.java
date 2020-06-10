@@ -43,7 +43,8 @@ public class OrderController {
         //инициируем настройки фильтра
         orderFilter.init(params);
         //получаем объект страницы с применением фильтра
-        Page<Order> page = orderService.findAll(orderFilter,"createdAt");//TODO created_at -> константы
+        //TODO created_at -> константы
+        Page<Order> page = orderService.findAll(orderFilter,"createdAt");
         //передаем в .html атрибуты:
         //часть строки запроса с параметрами фильтра
         model.addAttribute("filterDef", orderFilter.getFilterDefinition());

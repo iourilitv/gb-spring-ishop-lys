@@ -15,7 +15,7 @@
 <div class="humberger-menu-overlay"></div>
 <div class="humberger-menu-wrapper">
     <div class="hw-logo">
-        <a href="#"><img th:src="@{/img/amin/f-logo.png}" alt="hw-logo"></a>
+        <a href="#"><img th:src="@{/img/amin/f-logo.png}" alt="hw-logo" src=""></a>
     </div>
     <div class="hw-menu mobile-menu">
         <ul>
@@ -76,10 +76,10 @@
             <h5>Instagram</h5>
         </div>
         <div class="insta-pic">
-            <img th:src="@{/img/amin/instagram/ip-1.jpg}" alt="">
-            <img th:src="@{/img/amin/instagram/ip-2.jpg}" alt="">
-            <img th:src="@{/img/amin/instagram/ip-3.jpg}" alt="">
-            <img th:src="@{/img/amin/instagram/ip-4.jpg}" alt="">
+            <img th:src="@{/img/amin/instagram/ip-1.jpg}" alt="instagram/ip-1.jpg" src="">
+            <img th:src="@{/img/amin/instagram/ip-2.jpg}" alt="instagram/ip-2.jpg" src="">
+            <img th:src="@{/img/amin/instagram/ip-3.jpg}" alt="instagram/ip-3.jpg" src="">
+            <img th:src="@{/img/amin/instagram/ip-4.jpg}" alt="instagram/ip-4.jpg" src="">
         </div>
     </div>
 </div>
@@ -112,7 +112,7 @@
                                 </a>
                                 <a sec:authorize="isAuthenticated()" sec:authentication="principal.username"
                                    class="fa login-link"
-                                   th:href="@{'/profile/form'}">
+                                   th:href="@{'/profile'}">
                                 </a>
                             </li>
                         </ul>
@@ -135,7 +135,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <a href="./index.html"><img th:src="@{/img/amin/logo.png}" alt="Amin logo line"></a>
+                    <a href="./index.html"><img th:src="@{/img/amin/logo.png}" alt="Amin logo line" src=""></a>
                 </div>
             </div>
         </div>
@@ -156,7 +156,7 @@
                 <ul>
                     <!-- Home item in top menu -->
                     <li th:class="${activePage == 'Home' ? 'mega-menu active' : 'mega-menu'}">
-                        <a th:href="@{''}"><span th:text="'Home '"></span></a>
+                        <a th:href="@{'/home'}"><span th:text="'Home '"></span></a>
                     </li>
                     <!-- Catalog item dropdown in top menu -->
                     <li th:class="${activePage == 'Catalog' ? 'mega-menu active' : 'mega-menu'}">
@@ -165,6 +165,7 @@
                         <div class="megamenu-wrapper">
                             <ul class="mw-nav">
                                 <li th:each="category : ${categories}">
+                                    <!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
                                     <a th:href="@{'/catalog/all?category=' + ${category.id} + ${filterDef}}">
                                         <span th:text="${category.title}"></span>
                                     </a>
@@ -190,6 +191,7 @@
                                                             th:text="'Все категории'"
                                                             th:selected="${param.category == null}" th:value="null"></option>
 
+                                                    <!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
                                                     <option class="dropdown-option"
                                                             th:each="category : ${categories}"
                                                             th:text="${category.title}"
