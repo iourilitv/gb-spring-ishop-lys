@@ -38,5 +38,24 @@ Conclusion: Похоже flyway ругается на строку drop table pr
 куда бы не добавить в catalog.html строку
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>.
 
-
-  
+##5. Не выводит roles у объекта User, добавленного как атрибут в сессию.
+В классе CustomAuthenticationSuccessHandler в методе onAuthenticationSuccess() получаем из БД 
+объект User theUser = userService.findByUserName(userName);.
+Добавляем его в сессию (точно добавляется, проверил).
+(Внимание! Над onAuthenticationSuccess() должна быть аннотация @Transactional,
+иначе роли не подгружаются.)
+Но в классе OrderController в методе allOrders() при попытке получить объект User 
+из сессии роли не подгружаются.
+User user = (User)session.getAttribute("user");
+System.out.println(user);
+//org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: ru.geekbrains.spring.ishop.entity.User.roles, could not initialize proxy - no Session
+Временное решение.
+Пришлось в сессию добавить атрибут с коллекцией ролей
+session.setAttribute("userRoles", theUser.getRoles());.
+И на приемной стороне получить его из сессии и добавить в User.
+Collection<Role> roles = (Collection<Role>) session.getAttribute("userRoles");
+user.setRoles(roles);
+System.out.println(user);
+Тогда объект User выводится полностью.
+//User{id=1, userName='superadmin', password='$2a$10$N.4huWiRfudeqp6xqPmCY..X0hk5Aw5J/y2OgHyPeCUnRpm07hO4S', firstName='superadmin first_name', lastName='superadmin last_name', phoneNumber='+79991234567', email='superadmin@mail.com', deliveryAddress=null, roles=[Role{id=1, name='ROLE_SUPERADMIN'description='Главный администратор интернет-магазина. Доступ ко всем разделам магазина и всем операциям'}, Role{id=2, name='ROLE_ADMIN'description='Администратор интернет-магазина. Доступ ко всем разделам магазина. Нет прав на создание и изменение администраторов'}, Role{id=3, name='ROLE_EMPLOYEE'description='Сотрудник организации. Общий уровень доступа к внутренним ресурсам интернет-магазина. Нет доступа к пользователям'}, Role{id=4, name='ROLE_MANAGER'description='Менеджер интернет-магазина. Доступ к заказам в магазине'}]}
+Не помогло выделение этого кода в отдельный метод с аннотацией @Transactional

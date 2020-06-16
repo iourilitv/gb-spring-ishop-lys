@@ -27,18 +27,48 @@ public class OrderService {
     private OrderRepository orderRepository;
     private UtilFilter utilFilter;
 
+//    @Autowired
+//    public OrderService(DeliveryService deliveryService, AddressRepository addressRepository,
+//                        OrderStatusRepository orderStatusRepository, OrderItemRepository orderItemRepository,
+//                        OrderRepository orderRepository, UtilFilter utilFilter) {
+//        this.deliveryService = deliveryService;
+//        this.addressRepository = addressRepository;
+//        this.orderStatusRepository = orderStatusRepository;
+//        this.orderItemRepository = orderItemRepository;
+//        this.orderRepository = orderRepository;
+//        this.utilFilter = utilFilter;
+//    }
     @Autowired
-    public OrderService(DeliveryService deliveryService, AddressRepository addressRepository,
-                        OrderStatusRepository orderStatusRepository, OrderItemRepository orderItemRepository,
-                        OrderRepository orderRepository, UtilFilter utilFilter) {
+    public void setDeliveryService(DeliveryService deliveryService) {
         this.deliveryService = deliveryService;
+    }
+
+    @Autowired
+    public void setAddressRepository(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
+    }
+
+    @Autowired
+    public void setOrderStatusRepository(OrderStatusRepository orderStatusRepository) {
         this.orderStatusRepository = orderStatusRepository;
+    }
+
+    @Autowired
+    public void setOrderItemRepository(OrderItemRepository orderItemRepository) {
         this.orderItemRepository = orderItemRepository;
+    }
+
+    @Autowired
+    public void setOrderRepository(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
+    }
+
+    @Autowired
+    public void setUtilFilter(UtilFilter utilFilter) {
         this.utilFilter = utilFilter;
     }
 
+    @Transactional
     public Page<Order> findAll(OrderFilter filter, String property) {
         //инициируем объект пагинации с сортировкой
         Pageable pageRequest = PageRequest.of(utilFilter.getPageIndex(),
@@ -46,6 +76,7 @@ public class OrderService {
         return orderRepository.findAll(filter.getSpec(), pageRequest);
     }
 
+    @Transactional
     public Order findById(Long id) {
         return orderRepository.getOne(id);
     }
@@ -109,11 +140,50 @@ public class OrderService {
     }
 
     public void save(Order order) {
-        orderRepository.save(order);
+        System.out.println(order);
+//        orderRepository.save(order);
     }
 
-    public void delete(Order order) {
-        orderRepository.delete(order);
+//    public void delete(Order order) {
+//        orderRepository.delete(order);
+//    }
+    public void delete(Long orderId) {
+        orderRepository.delete(findById(orderId));
+    }
+
+    public void cancelOrder(Long orderId) {
+        //просто меняем статус на "Canceled" и оставляем заказ в списке
+        Order order = findById(orderId);
+        order.setOrderStatus(findOrderStatusByTitle("Canceled"));
+//        save(order);
+        System.out.println("********* canceled order *********");
+        System.out.println(order);
+    }
+
+//    public void updateOrderDetails(Order formOrder) {
+//        Order existedOrder = findById(formOrder.getId());
+//        existedOrder.setOrderStatus(formOrder.getOrderStatus());
+//        existedOrder.setOrderItems(formOrder.getOrderItems());
+//        recalculate(existedOrder);
+//        existedOrder.setDelivery(formOrder.getDelivery());
+////        save(existedOrder);
+//        System.out.println("********* updated order *********");
+//        System.out.println(existedOrder);
+//    }
+    public Order recalculateOrderCosts(Order order, OrderItem orderItem) {
+        updateOrderItemQuantity(order, orderItem);
+        recalculate(order);
+        System.out.println("********* recalculated order *********");
+        System.out.println(order);
+        return order;
+    }
+
+    private void updateOrderItemQuantity(Order order, OrderItem orderItem) {
+        for (OrderItem o : order.getOrderItems()) {
+            if(o.getProduct().getId().equals(orderItem.getProduct().getId())) {
+                o.setQuantity(orderItem.getQuantity());
+            }
+        }
     }
 
     private List<OrderItem> saveOrderItems(List<OrderItem> cartItems, Order order) {
@@ -122,6 +192,38 @@ public class OrderService {
             orderItemRepository.save(i);
         }
         return orderItemRepository.findAllOrderItemsByOrder(order);
+    }
+
+    public List<OrderStatus> findAllOrderStatuses() {
+        return orderStatusRepository.findAll();
+    }
+
+    private void recalculate(Order order) {
+        BigDecimal totalItemsCost = BigDecimal.ZERO;
+        if(order.getOrderItems() != null && !order.getOrderItems().isEmpty()) {
+            for (OrderItem o : order.getOrderItems()) {
+                recalculateItemCosts(o);
+                totalItemsCost = totalItemsCost.add(o.getItemCosts());
+            }
+        }
+        order.setTotalItemsCosts(totalItemsCost);
+        order.setTotalCosts(totalItemsCost.add(order.getDelivery().getDeliveryCost()));
+    }
+
+    private void recalculateItemCosts(OrderItem orderItem) {
+        orderItem.setItemCosts(BigDecimal.ZERO);
+        orderItem.setItemCosts(orderItem.getItemPrice()
+                .multiply(BigDecimal.valueOf(orderItem.getQuantity())));
+    }
+
+    public OrderItem findOrderItemByProdId(List<OrderItem> orderItems, Long prodId) {
+        OrderItem orderItem = null;
+        for (OrderItem o : orderItems) {
+            if(o.getProduct().getId().equals(prodId)) {
+                orderItem = o;
+            }
+        }
+        return orderItem;
     }
 
 }

@@ -1,5 +1,6 @@
 package ru.geekbrains.spring.ishop.config;
 
+import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.spring.ishop.entity.User;
 import ru.geekbrains.spring.ishop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     }
 
     @Override
+    @Transactional
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException {
         String userName = authentication.getName();

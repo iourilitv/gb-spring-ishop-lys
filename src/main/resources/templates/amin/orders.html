@@ -44,7 +44,6 @@
                         <div class="dt-breadcrumb">
                             <div class="dt-bread-option">
                                 <a class="color-white" th:href="@{'/profile'}">Profile</a>
-<!--                                <a class="color-white" th:href="@{'/profile/order/all'}"> Orders</a>-->
                                 <span>Orders List</span>
                             </div>
                         </div>
@@ -54,68 +53,104 @@
             <!-- Блок Хлебные крошки and Product title  End -->
 
             <!-- Table of CartItems list Begin -->
+            <!--/*@thymesVar id="page" type="org.springframework.data.domain.Page"*/-->
             <div class="col-lg-12 p-0">
-                <!--/*@thymesVar id="cart" type="ru.geekbrains.spring.ishop.utils.ShoppingCart"*/-->
-<!--                <h4 th:if="${cart.cartItems.isEmpty()}"-->
-<!--                    class="color-white">The shopping cart is empty!</h4>-->
-<!--                <table th:unless="${cart.cartItems.isEmpty()}"-->
-<!--                       class="table color-white">-->
-<!--                    <thead>-->
-<!--                    <tr>-->
-<!--                        <th>#</th>-->
-<!--                        <th>id</th>-->
-<!--                        <th>title</th>-->
-<!--                        <th>price</th>-->
-<!--                        <th>quantity</th>-->
-<!--                        <th>cost</th>-->
-<!--                        <th>operations</th>-->
-<!--                    </tr>-->
-<!--                    </thead>-->
-<!--                    &lt;!&ndash;/*@thymesVar id="cartItem" type="ru.geekbrains.spring.ishop.entity.OrderItem"*/&ndash;&gt;-->
-<!--                    <tbody>-->
-<!--                    <tr th:each="cartItem, itrStat : ${cart.cartItems}">-->
-<!--                        <td th:text="${itrStat.index + 1}"></td>-->
+                <h4 th:if="${page.isEmpty()}"
+                    class="color-white">The orders list is empty!</h4>
+                <table th:if="${page.hasContent()}"
+                       class="table color-white">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>id</th>
+                        <th>order status</th>
+                        <th>user</th>
+<!--                        <th>order items details</th>-->
+                        <th>total items costs</th>
+                        <th>total costs</th>
+<!--                        <th>delivery details</th>-->
+                        <th>created at</th>
+                        <th>updated at</th>
+                        <th>operations</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order, itrStat : ${page}">
 
-<!--                        <td th:text="${cartItem.product.id}"></td>-->
+                        <td th:text="${itrStat.index + 1}"></td>
+                        <!--/*@thymesVar id="order" type="ru.geekbrains.spring.ishop.entity.Order"*/-->
+                        <!--/*@thymesVar id="orderItem" type="ru.geekbrains.spring.ishop.entity.OrderItem"*/-->
+                        <td th:text="${order.id}"></td>
+
+                        <td th:text="${order.orderStatus.title}"></td>
+
+                        <td th:text="${order.user.userName}"></td>
+
+<!--                        <td th:text="${order.orderItems}"></td>-->
+
+                        <td th:text="${order.totalItemsCosts}"></td>
+
+                        <td th:text="${order.totalCosts}"></td>
+
+<!--                        <td th:text="${order.delivery}"></td>-->
+
+                        <td th:text="${order.createdAt}"></td>
+
+                        <td th:text="${order.updatedAt}"></td>
+
+                        <td>
+                            <ul class="dropdown">
+                                <li>
+                                    <a th:href="@{'/profile/order/show/' + ${order.id} + '/order_id'}">Show</a>
+                                </li>
+
+                                <li th:class="${activePage == 'How to pay' ? 'mega-menu active' : 'mega-menu'}">
+                                    <a th:href="@{'/profile/order/edit/' + ${order.id} + '/order_id'}">Edit</a>
+                                </li>
+
+                                <li th:class="${activePage == 'Delivery' ? 'mega-menu active' : 'mega-menu'}">
+                                    <a th:href="@{'/profile/order/cancel/' + ${order.id} + '/order_id'}">Cancel</a>
+                                </li>
+
+                                <li th:class="${activePage == 'Contact' ? 'mega-menu active' : 'mega-menu'}">
+                                    <a th:href="@{'/profile/order/delete/' + ${order.id} + '/order_id'}">Delete</a>
+                                </li>
+                            </ul>
+                        </td>
 
 <!--                        <td>-->
-<!--                            <a th:href="@{/catalog/{prod_id}/details(prod_id = ${cartItem.product.id})}"-->
-<!--                               th:text="${cartItem.product.title}">-->
-<!--                            </a>-->
+<!--                            <a class="btn btn-warning" th:href="@{'/profile/order/delete/' + ${order.id} + '/order_id'}">Delete</a>-->
+                            <!--                                <a class="btn btn-info" th:href="@{'/profile/cart/saveForLater/' + ${product.id}}">Save for later</a>-->
 <!--                        </td>-->
-
-<!--                        <td th:text="${cartItem.product.price}"></td>-->
-
-<!--                        <td th:text="${cartItem.quantity}">-->
-<!--                            &lt;!&ndash; form input post? &ndash;&gt;-->
-<!--                        </td>-->
-
-<!--                        <td th:text="${cartItem.itemCosts}"></td>-->
-
-<!--                        <td>-->
-<!--                            <a class="btn btn-warning" th:href="@{'/profile/cart/delete/' + ${cartItem.product.id} + '/prod_id'}">Delete</a>-->
-<!--                            &lt;!&ndash;                                <a class="btn btn-info" th:href="@{'/profile/cart/saveForLater/' + ${product.id}}">Save for later</a>&ndash;&gt;-->
-<!--                        </td>-->
-<!--                    </tr>-->
-
-<!--                    <tr>-->
-<!--                        <th colspan="5">Total in cart:</th>-->
-
-<!--                        <td th:text="${cart.totalCost}"></td>-->
-<!--                        &lt;!&ndash; button Clear the cart &ndash;&gt;-->
-<!--                        <td>-->
-<!--                            <a class="btn btn-reset" th:href="@{'/cart/clear'}">Clear</a>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    </tbody>-->
-<!--                </table>-->
-
-<!--                <div th:unless="${cart.cartItems.isEmpty()}">-->
-<!--                    &lt;!&ndash; button Proceed to checkout(.. items) &ndash;&gt;-->
-<!--                    <a class="catalog__product-card__price btn-subscribe" th:href="@{'/profile/order/create'}">Proceed to checkout</a>-->
-<!--                </div>-->
+                    </tr>
+                    </tbody>
+                </table>
             </div>
             <!-- Table of CartItems list End -->
+            <!-- pagination line -->
+            <div class="row justify-content-center">
+                <!--/*@thymesVar id="page" type="org.springframework.data.domain.Page"*/-->
+                <div th:if="${page.hasContent()}">
+                    <a th:class="pagination-item-a" th:href="@{'/profile/order/all?page='
+                                   + ${page.previousOrFirstPageable().getPageNumber() + 1}
+                                   + ${filterDef}}">
+                        <span th:class="pagination-item-a-span">Previous</span></a>
+
+                    <a th:class="${page.getNumber() + 1 == i ?
+                                    'pagination-item-a pagination-item-active' :
+                                    'pagination-item-a'}"
+                       th:each="i : ${#numbers.sequence(1, page.getTotalPages())}"
+                       th:href="@{'/profile/order/all?page='+ ${i} + ${filterDef}}">
+                        <span th:class="pagination-item-a-span" th:text="${i}"></span>
+                    </a>
+
+                    <!--/*@thymesVar id="filterDef" type="java.lang.StringBuilder"*/-->
+                    <a th:class="pagination-item-a" th:href="@{'/profile/order/all?page='
+                                   + ${page.nextOrLastPageable().getPageNumber() + 1}
+                                   + ${filterDef}}">
+                        <span th:class="pagination-item-a-span">Next</span></a>
+                </div>
+            </div>
         </div>
     </section>
     <!-- Items list Section End -->
