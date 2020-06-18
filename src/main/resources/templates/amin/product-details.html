@@ -34,9 +34,6 @@
 <!-- example: details-post-default.html -->
 <body>
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-<!--<superheader th:replace="/amin/fragments/header.html :: header(-->
-<!--    activePage='', categories=${categories}, filterDef='',-->
-<!--    showFilters=false)"></superheader>-->
 <superheader th:replace="/amin/fragments/header.html :: header(
     activePage='', categories=${categories}, filterDef='',
     showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>
@@ -106,27 +103,15 @@
                                 </div>
                             </div>
 
-<!--                            <a class="catalog__product-card__price btn-to-cart margin-8px color-white"-->
-<!--                                   th:href="@{'/profile/cart/add/' + ${product.id} + '/prod_id'}"-->
-<!--                                   th:text="'Add To Cart'"-->
-<!--                                   style="font-size: 26px; font-weight: 700">-->
-<!--                            </a>-->
                             <a sec:authorize="isAnonymous()"
                                class="catalog__product-card__price btn-to-cart margin-8px color-white"
                                th:href="@{'/login'}"
                                th:text="'Add To Cart'"
-                               style="font-size: 26px; font-weight: 700">
-                            </a>
-<!--                            <a sec:authorize="isAuthenticated()" id="addToCartBtn" onclick="addToCart()" th:value="${product.id}"-->
-<!--                               class="catalog__product-card__price btn-to-cart margin-8px color-white"-->
-<!--                               th:text="${quantity} == 0 ? 'Add To Cart' : 'Add To Cart' + ${quantity}"-->
-<!--                               style="font-size: 26px; font-weight: 700; color: white">-->
-<!--                            </a>-->
+                               style="font-size: 26px; font-weight: 700"></a>
                             <a sec:authorize="isAuthenticated()" th:id="${product.id}" th:onclick="'addToCartByProdId('+${product.id}+')'"
                                class="catalog__product-card__price btn-to-cart margin-8px color-white"
                                th:text="${quantity} == 0 ? 'Add To Cart' : 'Add To Cart(' + ${quantity} + ')'"
-                               style="font-size: 26px; font-weight: 700; color: white">
-                            </a>
+                               style="font-size: 26px; font-weight: 700; color: white"></a>
                         </div>
                     </div>
                 </div>

@@ -26,14 +26,6 @@ public class CatalogController {
     private final CategoryService categoryService;
     private final ProductFilter productFilter;
 
-//    @Autowired
-//    public CatalogController(ProductService productService,
-//                             CategoryService categoryService,
-//                             ProductFilter productFilter) {
-//        this.productService = productService;
-//        this.categoryService = categoryService;
-//        this.productFilter  = productFilter;
-//    }
     @Autowired
     public CatalogController(ShoppingCartService cartService,
                              ProductService productService,
@@ -48,23 +40,6 @@ public class CatalogController {
     //http://localhost:8080/shop/catalog/all
     //http://localhost:8080/shop/catalog/all?page=1&limit=6&direction=DESC&minPrice=1000&maxPrice=10000
     @GetMapping("/all")
-//    public String allProducts(@RequestParam Map<String, String> params, Model model) {
-//        //инициируем настройки фильтра
-//        productFilter.init(params);
-//        //получаем объект страницы с применением фильтра
-//        Page<Product> page = productService.findAll(productFilter,"price");//TODO price -> константы
-//        //передаем в .html атрибуты:
-//        //часть строки запроса с параметрами фильтра
-//        model.addAttribute("filterDef", productFilter.getFilterDefinition());
-//        //коллекцию категорий
-//        categoryService.addToModelAttributeCategories(model);
-//        //объект страницы продуктов
-//        model.addAttribute("page", page);
-//        //активную страницу
-//        model.addAttribute("activePage", "Catalog");
-//        //вызываем файл catalog.html
-//        return "amin/catalog";
-//    }
     public String allProducts(@RequestParam Map<String, String> params,
                               Model model, HttpSession session) {
         //инициируем настройки фильтра
@@ -93,13 +68,6 @@ public class CatalogController {
         return "amin/catalog";
     }
 
-//    @GetMapping("/{prod_id}/details")
-//    public String productDetails(@PathVariable(value = "prod_id") Long prod_id,
-//                                 Model model) {
-//        categoryService.addToModelAttributeCategories(model);
-//        model.addAttribute("product", productService.findById(prod_id));
-//        return "amin/product-details";
-//    }
     @GetMapping("/{prod_id}/details")
     public String productDetails(@PathVariable(value = "prod_id") Long prod_id,
                                  Model model, HttpSession session) throws Throwable {
@@ -114,11 +82,4 @@ public class CatalogController {
         return "amin/product-details";
     }
 
-//    public void addToModelAttributeCategories(Model model){
-//        //получаем коллекцию всех категорий
-//        List<Category> categories = categoryService.findAll(
-//                Sort.by(Sort.Direction.ASC, "title"));//TODO title -> константы
-//        //коллекцию категорий
-//        model.addAttribute("categories", categories);
-//    }
 }

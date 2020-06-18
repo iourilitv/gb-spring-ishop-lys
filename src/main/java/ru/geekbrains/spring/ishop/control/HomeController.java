@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
-import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,11 +15,6 @@ public class HomeController {
     public void setShoppingCartService(ShoppingCartService cartService) {
         this.cartService = cartService;
     }
-
-//    @GetMapping
-//    public String homePage() {
-//        return "redirect:/catalog/all";//TODO
-//    }
 
     @GetMapping
     public String homePage(HttpSession session) {

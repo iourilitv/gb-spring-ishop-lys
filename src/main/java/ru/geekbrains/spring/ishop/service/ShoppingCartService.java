@@ -25,22 +25,6 @@ public class ShoppingCartService {
         this.productService = productService;
     }
 
-//    public void addToCart(HttpSession session, Long prod_id) throws Throwable {
-//        ShoppingCart cart = getShoppingCartForSession(session);
-//        Product product = productService.findById(prod_id);
-//        if(cart.getCartItems().isEmpty() || !cartContains(cart, product.getId())) {
-//            cart.getCartItems().add(newCartItem(product, 1));
-//        } else {
-//            OrderItem cartItem = findCartItemByProductId(cart, product.getId());
-//            increaseItemsQuantity(cartItem);
-//        }
-//        recalculate(cart);
-//    }
-//    public void addToCart(HttpSession session, Long prod_id) throws Throwable {
-//        ShoppingCart cart = getShoppingCartForSession(session);
-//        addToCart(cart, prod_id);
-//    }
-
     @Transactional
     public int addToCart(ShoppingCart cart, Long prod_id) throws Throwable {
         Product product = productService.findById(prod_id);
@@ -71,14 +55,6 @@ public class ShoppingCartService {
         recalculate(cart);
     }
 
-//    public void removeItemFromCartById(HttpSession session, Long prod_id) throws Throwable {
-//        ShoppingCart cart = getShoppingCartForSession(session);
-//        OrderItem item = cart.getCartItems().stream().filter(o ->
-//                o.getProduct().getId().equals(prod_id)).findAny()
-//                .orElseThrow((Supplier<Throwable>) () -> null);
-//        cart.getCartItems().remove(item);
-//        recalculate(cart);
-//    }
     public void removeItemFromCartById(HttpSession session, Long prod_id) throws Throwable {
         cart = getShoppingCartForSession(session);
         OrderItem item = cart.getCartItems().stream().filter(o ->
@@ -88,25 +64,11 @@ public class ShoppingCartService {
         recalculate(cart);
     }
 
-//    public void clearCart(HttpSession session) {
-//        ShoppingCart cart = getShoppingCartForSession(session);
-//        cart.getCartItems().clear();
-//    }
         public void clearCart(HttpSession session) {
         cart = getShoppingCartForSession(session);
         cart.getCartItems().clear();
     }
 
-//    public ShoppingCart getShoppingCartForSession(HttpSession session) {
-//        ShoppingCart cart;
-//        if (session.getAttribute("cart") == null) {
-//            cart = new ShoppingCart();
-//            session.setAttribute("cart", cart);
-//        } else {
-//            cart = (ShoppingCart) session.getAttribute("cart");
-//        }
-//        return cart;
-//    }
     public ShoppingCart getShoppingCartForSession(HttpSession session) {
         if (session.getAttribute("cart") == null) {
             cart = new ShoppingCart();
@@ -117,11 +79,6 @@ public class ShoppingCartService {
         return cart;
     }
 
-//    private OrderItem findCartItemByProductId(ShoppingCart cart, Long prod_id) throws Throwable {
-//        return cart.getCartItems().stream().filter(o ->
-//                o.getProduct().getId().equals(prod_id)).findAny()
-//                .orElseThrow((Supplier<Throwable>) () -> null);
-//    }
     private OrderItem findCartItemByProductId(ShoppingCart cart, Long prod_id) throws Throwable {
         return cart.getCartItems().stream().filter(o ->
                 o.getProduct().getId().equals(prod_id)).findAny()
@@ -175,29 +132,6 @@ public class ShoppingCartService {
         return cart;
     }
 
-    //does not work
-//    public Map<Long, Integer> getCartItemsQuantities(ShoppingCart cart) {
-//        Map<Long, Integer> quantities = new HashMap<>();
-//        if(cart != null && !cart.getCartItems().isEmpty()) {
-//            for (OrderItem i : cart.getCartItems()) {
-//                quantities.put(i.getProduct().getId(), i.getQuantity());
-//            }
-//        }
-//        return quantities;
-//    }
-    //works
-//    public Map<String, String> getCartItemsQuantities(ShoppingCart cart) {
-//        Map<String, String> quantities = new HashMap<>();
-//        if(cart != null && !cart.getCartItems().isEmpty()) {
-//            for (OrderItem i : cart.getCartItems()) {
-//                quantities.put(
-//                        String.valueOf(i.getProduct().getId()),
-//                        String.valueOf(i.getQuantity()));
-//            }
-//        }
-//        return quantities;
-//    }
-    //works
     public Map<String, Integer> getCartItemsQuantities(ShoppingCart cart) {
         Map<String, Integer> quantities = new HashMap<>();
         if(cart != null && !cart.getCartItems().isEmpty()) {
