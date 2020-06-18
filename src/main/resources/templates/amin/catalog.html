@@ -1,5 +1,6 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -24,13 +25,24 @@
     <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+
+    <!-- Подключаем скрипты для Websocket -->
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js}"></script>
+    <script type="text/javascript" th:src="@{/js/amin/topics/add-to-cart.js}"></script>
 </head>
 
 <body>
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-<superheader th:replace="/amin/fragments/header.html :: header(
-    activePage=${activePage}, categories=${categories}, filterDef=${filterDef},
-    showFilters=true)"></superheader>
+<!--<superheader th:replace="/amin/fragments/header.html :: header(-->
+<!--    activePage=${activePage}, categories=${categories}, filterDef=${filterDef},-->
+<!--    showFilters=true)"></superheader>-->
+<!--    <superheader th:replace="/amin/fragments/header.html :: header(-->
+<!--    activePage=${activePage}, categories=${categories}, filterDef=${filterDef},-->
+<!--    showFilters=true, model=${model}, quantities=${model['__quantities__']})"></superheader>-->
+    <superheader th:replace="/amin/fragments/header.html :: header(
+        activePage=${activePage}, categories=${categories}, filterDef=${filterDef},
+        showFilters=true, cartItemsQuantity=${cartItemsQuantity})"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
 
     <!--  Product cards(was Categories Grid) Section Begin -->
@@ -76,9 +88,32 @@
                                             <span th:text="'руб'">RUR</span>
                                         </div>
 
-                                        <a class="catalog__product-card__price btn-to-cart color-white"
-                                               th:href="@{'/profile/cart/add/' + ${p.id} + '/prod_id'}" th:text="'Add To Cart'">
+<!--                                        <a class="catalog__product-card__price btn-to-cart color-white"-->
+<!--                                               th:href="@{'/profile/cart/add/' + ${p.id} + '/prod_id'}" th:text="'Add To Cart'">-->
+<!--                                        </a>-->
+                                        <a sec:authorize="isAnonymous()"
+                                           class="catalog__product-card__price btn-to-cart color-white"
+                                           th:href="@{'/login'}"
+                                           th:text="'Add To Cart'">
                                         </a>
+<!--                                        <a sec:authorize="isAuthenticated()" th:id="addToCartBtn" onclick="addToCart()" th:value="${p.id}"-->
+<!--                                           class="catalog__product-card__price btn-to-cart color-white"-->
+<!--                                           th:text="'Add To Cart'">-->
+<!--                                        </a>-->
+                                        <!-- WORKS -->
+                                        <a sec:authorize="isAuthenticated()" th:id="${p.id}" th:onclick="'addToCartByProdId('+${p.id}+')'"
+                                           class="catalog__product-card__price btn-to-cart color-white"
+                                           th:text="${quantities['__${p.id}__']} == null or ${quantities['__${p.id}__']} == 0 ? 'Add To Cart' : 'Add To Cart(' + ${quantities['__${p.id}__']} + ')'"
+                                           style="color: white">
+                                        </a>
+                                        <!-- DOES NOT WORK -->
+<!--                                        <a sec:authorize="isAuthenticated()" th:id="${p.id}" th:onclick="'addToCartByProdId('+${p.id}+')'"-->
+<!--                                           class="catalog__product-card__price btn-to-cart color-white"-->
+<!--                                           th:text="${quantities.get('+${p.id}+')} == null or ${quantities.get('+${p.id}+')} == 0 ? 'Add To Cart' : 'Add To Cart(' + ${quantities.get('+${p.id}+')} + ')'"-->
+<!--                                           style="color: white">-->
+<!--                                        </a>-->
+                                        <!--                                           th:text="${#maps.containsKey(${quantities}, ${p.id})} or ${quantities['__${p.id}__']} == 0 ? 'Add To Cart' : 'Add To Cart' + ${quantities['__${p.id}__']}">-->
+                                        <!-- ${quantities.get(${p.id})} -->
                                     </div>
                                 </div>
                             </div>

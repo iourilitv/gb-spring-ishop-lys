@@ -2,7 +2,9 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<superheader th:fragment="header (activePage, categories, filterDef, showFilters)">
+<!--<superheader th:fragment="header (activePage, categories, filterDef, showFilters)">-->
+<!--<superheader th:fragment="header (activePage, categories, filterDef, showFilters, model)">-->
+<superheader th:fragment="header (activePage, categories, filterDef, showFilters, cartItemsQuantity)">
 
 <!-- Page Preloder -->
 <!-- //TODO Не работает без .js -->
@@ -264,8 +266,23 @@
                         </ul>
                     </li>
                     <!-- Cart item in top menu -->
+                    <!--/*@thymesVar id="quantities" type=""*/-->
                     <li th:class="${activePage == 'Cart' ? 'mega-menu active' : 'mega-menu'}">
-                        <a th:href="@{/profile/cart}"><span>Cart </span></a>
+<!--                        <a th:href="@{/profile/cart}"><span>Cart </span></a>-->
+                            <!-- DOES NOT WORK -->
+<!--                        <a th:object="${#maps.size(${model['__quantities__']})}"-->
+<!--                                th:href="@{/profile/cart}" th:text="'Cart(' + ${model['__quantities__']} + ')'"></a>-->
+                        <!-- DOES NOT WORK -->
+<!--                        <a th:href="@{/profile/cart}"-->
+<!--                           th:text="'Cart(' + ${#maps.size(${model['__quantities__']})} + ')'"></a>-->
+                        <a sec:authorize="isAnonymous()"
+                           th:href="@{/login}"><span>Cart </span></a>
+                        <a sec:authorize="isAuthenticated()"
+                           id="cart"
+                           th:href="@{/profile/cart}"
+                           th:text="${cartItemsQuantity} == null or ${cartItemsQuantity} == 0 ?
+                                            'Cart' : 'Cart(' + ${cartItemsQuantity} + ')'"></a>
+
                     </li>
                 </ul>
             </div>

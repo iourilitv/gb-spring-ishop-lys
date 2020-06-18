@@ -1,5 +1,6 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -24,13 +25,21 @@
     <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+
+    <!-- Подключаем скрипты для Websocket -->
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js}"></script>
+    <script type="text/javascript" th:src="@{/js/amin/topics/add-to-cart.js}"></script>
 </head>
 <!-- example: details-post-default.html -->
 <body>
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<!--<superheader th:replace="/amin/fragments/header.html :: header(-->
+<!--    activePage='', categories=${categories}, filterDef='',-->
+<!--    showFilters=false)"></superheader>-->
 <superheader th:replace="/amin/fragments/header.html :: header(
     activePage='', categories=${categories}, filterDef='',
-    showFilters=false)"></superheader>
+    showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
 
     <!-- Details Post Section Begin -->
@@ -45,7 +54,7 @@
                                 <a class="color-white" th:href="@{'/catalog/all'}">Catalog</a>
                                 <span>Product Details</span>
                             </div>
-                            <h3 th:text="${product.title}"></h3>
+                            <h3 th:text="${product.id} + '. ' + ${product.title}"></h3>
                         </div>
                     </div>
                 </div>
@@ -97,10 +106,26 @@
                                 </div>
                             </div>
 
-                            <a class="catalog__product-card__price btn-to-cart margin-8px color-white"
-                                   th:href="@{'/profile/cart/add/' + ${product.id} + '/prod_id'}"
-                                   th:text="'Add To Cart'"
-                                   style="font-size: 26px; font-weight: 700">
+<!--                            <a class="catalog__product-card__price btn-to-cart margin-8px color-white"-->
+<!--                                   th:href="@{'/profile/cart/add/' + ${product.id} + '/prod_id'}"-->
+<!--                                   th:text="'Add To Cart'"-->
+<!--                                   style="font-size: 26px; font-weight: 700">-->
+<!--                            </a>-->
+                            <a sec:authorize="isAnonymous()"
+                               class="catalog__product-card__price btn-to-cart margin-8px color-white"
+                               th:href="@{'/login'}"
+                               th:text="'Add To Cart'"
+                               style="font-size: 26px; font-weight: 700">
+                            </a>
+<!--                            <a sec:authorize="isAuthenticated()" id="addToCartBtn" onclick="addToCart()" th:value="${product.id}"-->
+<!--                               class="catalog__product-card__price btn-to-cart margin-8px color-white"-->
+<!--                               th:text="${quantity} == 0 ? 'Add To Cart' : 'Add To Cart' + ${quantity}"-->
+<!--                               style="font-size: 26px; font-weight: 700; color: white">-->
+<!--                            </a>-->
+                            <a sec:authorize="isAuthenticated()" th:id="${product.id}" th:onclick="'addToCartByProdId('+${product.id}+')'"
+                               class="catalog__product-card__price btn-to-cart margin-8px color-white"
+                               th:text="${quantity} == 0 ? 'Add To Cart' : 'Add To Cart(' + ${quantity} + ')'"
+                               style="font-size: 26px; font-weight: 700; color: white">
                             </a>
                         </div>
                     </div>
