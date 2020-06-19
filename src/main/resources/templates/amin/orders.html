@@ -32,7 +32,7 @@
     <!--/*@thymesVar id="activePage" type="java.lang.String"*/-->
     <superheader th:replace="/amin/fragments/header.html :: header(
         activePage=${activePage}, categories=${categories}, filterDef='',
-        showFilters=false)"></superheader>
+        showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
     <!-- Items list Section Begin -->
     <section class="cart-list-section spad">

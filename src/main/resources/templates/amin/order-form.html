@@ -31,7 +31,7 @@
     <!--/*@thymesVar id="activePage" type="java.lang.String"*/-->
     <superheader th:replace="/amin/fragments/header.html :: header(
         activePage='', categories=${categories}, filterDef='',
-        showFilters=false)"></superheader>
+        showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
 
     <!-- Order Form Section Begin -->

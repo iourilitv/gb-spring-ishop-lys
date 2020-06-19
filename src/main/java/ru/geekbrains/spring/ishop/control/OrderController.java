@@ -55,6 +55,12 @@ public class OrderController {
         model.addAttribute("page", page);
         //активную страницу
         model.addAttribute("activePage", "Profile");
+
+        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+        //добавляем общее количество товаров в корзине
+        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+
         //вызываем файл orders.html
         return "amin/orders";
     }
@@ -82,81 +88,36 @@ public class OrderController {
 
     @GetMapping("/show/{order_id}/order_id")
     public String showOrderDetails(@PathVariable Long order_id, ModelMap model,
-                                   HttpServletRequest httpServletRequest){
+                                   HttpSession session){
         //TODO наполнить модель атрибутами, в т.ч. editable=false
         // в order-details добавить кнопку "Edit Order" на edit/{order_id}/order_id
         Order order = orderService.findById(order_id);
         model.addAttribute("order", order);
+
+        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+        //добавляем общее количество товаров в корзине
+        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+
         return "amin/order-details";
     }
 
     @GetMapping("/edit/{order_id}/order_id")
     public String editOrder(@PathVariable Long order_id, Model model,
-                            HttpServletRequest httpServletRequest) {
+                            HttpSession session) {
         Order order = orderService.findById(order_id);
         model.addAttribute("order", order);
         List<OrderStatus> orderStatuses = orderService.findAllOrderStatuses();
         model.addAttribute("orderStatuses", orderStatuses);
+
+        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+        //добавляем общее количество товаров в корзине
+        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+
         return "amin/order-form";
     }
-//    @GetMapping("/edit/{order_id}/order_id")
-//    public String editOrder(@PathVariable Long order_id, ModelMap model,
-//                            HttpServletRequest httpServletRequest) {
-//        HttpSession session = httpServletRequest.getSession();
-//        if(session.getAttribute("model") == null) {
-//            Order order = orderService.findById(order_id);
-//            model.addAttribute("order", order);
-//
-//            List<OrderStatus> orderStatuses = orderService.findAllOrderStatuses();
-//            model.addAttribute("orderStatuses", orderStatuses);
-//
-//        } else {
-//            model = (ModelMap) session.getAttribute("model");
-//            model.addAttribute("order", model.getAttribute("order"));
-//        }
-//        session.setAttribute("model", model);
-//        System.out.println("********** model ***********");
-//        System.out.println(session.getAttribute("model"));
-//        System.out.println("********** order ***********");
-//        System.out.println(((Order) Objects.requireNonNull(model.getAttribute("order"))).getId());
-//        return "amin/order-form";
-//    }
 
-    //DOES NOT WORK
-//    @GetMapping("/edit/{order_id}/order_id/update/{prod_id}/prod_id/{quantity}/quantity")
-//    public ModelAndView updateOrderItemQuantity(
-//            @PathVariable Long order_id, @PathVariable Long prod_id,
-//            @PathVariable Integer quantity, HttpSession session) {
-//        ModelMap modelMap = (ModelMap) session.getAttribute("model");
-//        Order order = (Order) modelMap.getAttribute("order");
-//        assert order != null;
-//        List<OrderItem> orderItems = order.getOrderItems();
-//        BigDecimal totalItemsSum = BigDecimal.ZERO;
-//        orderItems.forEach(orderItem -> {
-//            if(orderItem.getProduct().getId().equals(prod_id)) {
-//                orderItem.setQuantity(quantity);
-//                orderItem.setItemCosts(orderItem.getItemPrice()
-//                                .multiply(BigDecimal.valueOf(quantity)));
-//            }
-//            order.setTotalItemsCosts(totalItemsSum.add(orderItem.getItemCosts()));
-//        });
-////        order.setTotalItemsCosts(totalItemsSum);
-//        order.setTotalCosts(order.getTotalItemsCosts().add(order.getDelivery().getDeliveryCost()));
-//        System.out.println("******** updateOrderItemQuantity - changing quantity **********");
-//        System.out.println(order);
-////        modelMap.addAttribute("order", order);
-////        session.setAttribute("model", modelMap);
-//
-////        return new ModelAndView("redirect:/profile/order/edit/" + order.getId() + "/order_id", modelMap);
-//        return new ModelAndView("redirect:/profile/order/edit/" + order_id + "/order_id", modelMap);
-//    }
-
-//    @GetMapping("/delete/{order_id}/order_id")
-//    public String removeOrder(@PathVariable Long order_id,  HttpServletRequest httpServletRequest) {
-//        orderService.delete(orderService.findById(order_id));
-//        String referrer = httpServletRequest.getHeader("referer");
-//        return "redirect:" + referrer;
-//    }
     @GetMapping("/delete/{order_id}/order_id")
     public RedirectView removeOrder(@PathVariable("order_id") Long orderId) {
         orderService.delete(orderId);
@@ -183,35 +144,20 @@ public class OrderController {
     @GetMapping("/edit/{order_id}/order_id/update/{prod_id}/prod_id")
     public Object editOrderItem(@PathVariable("order_id") Long orderId,
                                 @PathVariable("prod_id") Long prodId,
-                                Model model,
-                                HttpServletRequest httpServletRequest) {
+                                Model model, HttpSession session) {
         List<OrderItem> orderItems = orderService.findById(orderId).getOrderItems();
         model.addAttribute("orderId", orderId);
         OrderItem orderItem = orderService.findOrderItemByProdId(orderItems, prodId);
-//        OrderItem orderItem = null;
-//        for (OrderItem o : orderItems) {
-//            if(o.getProduct().getId().equals(prodId)) {
-//                orderItem = o;
-//            }
-//        }
         model.addAttribute("orderItem", orderItem);
+
+        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+        //добавляем общее количество товаров в корзине
+        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+
         return "amin/order-item-form";
     }
 
-//    @PostMapping("/process/edit/{order_id}/order_id/update/{prod_id}/prod_id")
-//    public RedirectView processEditOrderItem(
-//            @PathVariable("order_id") Long orderId,
-//            @PathVariable("prod_id") Long prodId,
-//            @Valid @ModelAttribute("orderItem") OrderItem orderItem,
-//            BindingResult theBindingResult, Model model) {
-////        System.out.println(model);
-////        System.out.println(orderItem);
-//        Order order = orderItem.getOrder();
-//        orderService.updateOrderDetails(order);
-//        model.addAttribute("order", order);
-//        return new RedirectView("/amin/profile/order/edit/" +
-//                orderId + "/order_id");
-//    }
     @PostMapping("/process/edit/{order_id}/order_id/update/{prod_id}/prod_id")
     public String processEditOrderItem(
             @PathVariable("order_id") Long orderId,

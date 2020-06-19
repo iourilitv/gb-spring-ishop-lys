@@ -22,18 +22,18 @@ public class HomeController {
         return "redirect:/home";
     }
 
-//    @GetMapping("/home")
-//    public String homePage(HttpSession session) {
-//        //создаем корзину, если нет и добавляем ее в сессию
-//        cartService.getShoppingCartForSession(session);
-//        return "redirect:/catalog/all";
-//    }
-    //TODO temporarily
     @GetMapping("/home")
-    public RedirectView homePage(HttpSession session) {
+    public String homePage(HttpSession session) {
         //создаем корзину, если нет и добавляем ее в сессию
         cartService.getShoppingCartForSession(session);
-        return new RedirectView("/amin/profile/order/all");
+        return "redirect:/catalog/all";
     }
+//    //TODO temporarily
+//    @GetMapping("/home")
+//    public RedirectView homePage(HttpSession session) {
+//        //создаем корзину, если нет и добавляем ее в сессию
+//        cartService.getShoppingCartForSession(session);
+//        return new RedirectView("/amin/profile/order/all");
+//    }
 
 }
