@@ -26,7 +26,7 @@ public class ShoppingCartService {
     }
 
     @Transactional
-    public int addToCart(ShoppingCart cart, Long prod_id) throws Throwable {
+    public int addToCart(ShoppingCart cart, Long prod_id) {
         Product product = productService.findById(prod_id);
         OrderItem cartItem;
         //если корзина пуста и такого товара нет в корзине
@@ -79,13 +79,13 @@ public class ShoppingCartService {
         return cart;
     }
 
-    private OrderItem findCartItemByProductId(ShoppingCart cart, Long prod_id) throws Throwable {
+    private OrderItem findCartItemByProductId(ShoppingCart cart, Long prod_id) {
         return cart.getCartItems().stream().filter(o ->
                 o.getProduct().getId().equals(prod_id)).findAny()
                 .orElse(null);
     }
 
-    public int getQuantityOfCartItemByProdId(ShoppingCart cart, Long prod_id) throws Throwable {
+    public int getQuantityOfCartItemByProdId(ShoppingCart cart, Long prod_id) {
         OrderItem orderItem = findCartItemByProductId(cart, prod_id);
         if(orderItem == null) {
             return 0;
@@ -109,7 +109,7 @@ public class ShoppingCartService {
         return cartItem;
     }
 
-    private void increaseItemsQuantity(OrderItem cartItem) {
+    private void increaseCartItemQuantity(OrderItem cartItem) {
         cartItem.setQuantity(cartItem.getQuantity() + 1);
     }
 

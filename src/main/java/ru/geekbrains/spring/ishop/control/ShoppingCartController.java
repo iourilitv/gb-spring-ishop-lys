@@ -32,7 +32,7 @@ public class ShoppingCartController {
 
     @GetMapping
     public String cartPage(Model model, HttpSession session) {
-        cart = cartService.getShoppingCartForSession(session);
+        ShoppingCart cart = cartService.getShoppingCartForSession(session);
         model.addAttribute("cart", cart);
         categoryService.addToModelAttributeCategories(model);
         model.addAttribute("activePage", "Cart");
