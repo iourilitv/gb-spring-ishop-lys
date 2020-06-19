@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
+import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,17 +32,14 @@ public class ShoppingCartController {
 
     @GetMapping
     public String cartPage(Model model, HttpSession session) {
-        model.addAttribute("cart", cartService.getShoppingCartForSession(session));
+        cart = cartService.getShoppingCartForSession(session);
+        model.addAttribute("cart", cart);
         categoryService.addToModelAttributeCategories(model);
         model.addAttribute("activePage", "Cart");
+        //добавляем общее количество товаров в корзине
+        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
         return "amin/cart";
-    }
-
-    @GetMapping("/add/{prod_id}/prod_id")
-    public String addProductToCart(@PathVariable Long prod_id, HttpServletRequest httpServletRequest) throws Throwable {
-        cartService.addToCart(httpServletRequest.getSession(), prod_id);
-        String referrer = httpServletRequest.getHeader("referer");
-        return "redirect:" + referrer;
     }
 
     //TODO for a future

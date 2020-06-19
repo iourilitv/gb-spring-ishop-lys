@@ -28,11 +28,9 @@
 
 <body>
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-    <!--/*@thymesVar id="categories" type=""*/-->
-<!--/*@thymesVar id="activePage" type="java.lang.String"*/-->
-<superheader th:replace="/amin/fragments/header.html :: header(
-    activePage=${activePage}, categories=${categories}, filterDef='',
-    showFilters=false)"></superheader>
+    <superheader th:replace="/amin/fragments/header.html :: header(
+        activePage=${activePage}, categories=${categories}, filterDef='',
+        showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
     
     <!-- Items list Section Begin -->
@@ -104,7 +102,7 @@
                             <td th:text="${cart.totalCost}"></td>
                             <!-- button Clear the cart -->
                             <td>
-                                <a class="btn btn-reset" th:href="@{'/cart/clear'}">Clear</a>
+                                <a class="btn btn-reset" th:href="@{'/profile/cart/clear'}">Clear</a>
                             </td>
                         </tr>
                     </tbody>

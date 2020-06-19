@@ -10,31 +10,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.service.CategoryService;
+import ru.geekbrains.spring.ishop.service.ShoppingCartService;
 import ru.geekbrains.spring.ishop.service.ProductService;
 import ru.geekbrains.spring.ishop.utils.ProductFilter;
+import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/catalog")
 public class CatalogController {
+    private final ShoppingCartService cartService;
     private final ProductService productService;
     private final CategoryService categoryService;
     private final ProductFilter productFilter;
 
     @Autowired
-    public CatalogController(ProductService productService,
+    public CatalogController(ShoppingCartService cartService,
+                             ProductService productService,
                              CategoryService categoryService,
                              ProductFilter productFilter) {
+        this.cartService = cartService;
         this.productService = productService;
         this.categoryService = categoryService;
-        this.productFilter  = productFilter;
+        this.productFilter = productFilter;
     }
 
     //http://localhost:8080/shop/catalog/all
     //http://localhost:8080/shop/catalog/all?page=1&limit=6&direction=DESC&minPrice=1000&maxPrice=10000
     @GetMapping("/all")
-    public String allProducts(@RequestParam Map<String, String> params, Model model) {
+    public String allProducts(@RequestParam Map<String, String> params,
+                              Model model, HttpSession session) {
         //инициируем настройки фильтра
         productFilter.init(params);
         //получаем объект страницы с применением фильтра
@@ -48,23 +55,31 @@ public class CatalogController {
         model.addAttribute("page", page);
         //активную страницу
         model.addAttribute("activePage", "Catalog");
+
+        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+        //добавляем множество количеств элементов в корзине
+        Map<String, Integer> quantities = cartService.getCartItemsQuantities(cart);
+        model.addAttribute("quantities", quantities);
+        //добавляем общее количество товаров в корзине
+        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+
         //вызываем файл catalog.html
         return "amin/catalog";
     }
 
     @GetMapping("/{prod_id}/details")
     public String productDetails(@PathVariable(value = "prod_id") Long prod_id,
-                                 Model model) {
+                                 Model model, HttpSession session) throws Throwable {
+        ShoppingCart cart = cartService.getShoppingCartForSession(session);
         categoryService.addToModelAttributeCategories(model);
         model.addAttribute("product", productService.findById(prod_id));
+        int quantity = cartService.getQuantityOfCartItemByProdId(cart, prod_id);
+        model.addAttribute("quantity", quantity);
+        //добавляем общее количество товаров в корзине
+        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
         return "amin/product-details";
     }
 
-//    public void addToModelAttributeCategories(Model model){
-//        //получаем коллекцию всех категорий
-//        List<Category> categories = categoryService.findAll(
-//                Sort.by(Sort.Direction.ASC, "title"));//TODO title -> константы
-//        //коллекцию категорий
-//        model.addAttribute("categories", categories);
-//    }
 }

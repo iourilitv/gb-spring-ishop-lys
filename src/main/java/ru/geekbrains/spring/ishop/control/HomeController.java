@@ -1,11 +1,21 @@
 package ru.geekbrains.spring.ishop.control;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.view.RedirectView;
+import ru.geekbrains.spring.ishop.service.ShoppingCartService;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
+    private ShoppingCartService cartService;
+
+    @Autowired
+    public void setShoppingCartService(ShoppingCartService cartService) {
+        this.cartService = cartService;
+    }
 
     @GetMapping
     public String indexPage() {
@@ -13,12 +23,16 @@ public class HomeController {
     }
 
 //    @GetMapping("/home")
-//    public String homePage() {
-//        return "redirect:/catalog/all";//TODO
+//    public String homePage(HttpSession session) {
+//        //создаем корзину, если нет и добавляем ее в сессию
+//        cartService.getShoppingCartForSession(session);
+//        return "redirect:/catalog/all";
 //    }
     //TODO temporarily
     @GetMapping("/home")
-    public RedirectView homePage() {
+    public RedirectView homePage(HttpSession session) {
+        //создаем корзину, если нет и добавляем ее в сессию
+        cartService.getShoppingCartForSession(session);
         return new RedirectView("/amin/profile/order/all");
     }
 
