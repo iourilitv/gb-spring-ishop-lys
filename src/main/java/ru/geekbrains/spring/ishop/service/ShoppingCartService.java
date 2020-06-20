@@ -46,8 +46,15 @@ public class ShoppingCartService {
         return cartItem.getQuantity();
     }
 
-    public void updateItemQuantity(HttpSession session, Long prod_id, int newQuantity) throws Throwable {
-        ShoppingCart cart = getShoppingCartForSession(session);
+//    public void updateItemQuantity(HttpSession session, Long prod_id, int newQuantity) throws Throwable {
+//        ShoppingCart cart = getShoppingCartForSession(session);
+//        cart.getCartItems().stream().filter(o ->
+//                o.getProduct().getId().equals(prod_id)).findFirst()
+//                .orElseThrow((Supplier<Throwable>) () -> null)
+//                .setQuantity(newQuantity);
+//        recalculate(cart);
+//    }
+    public void updateItemQuantityAndRecalculateCart(ShoppingCart cart, Long prod_id, int newQuantity) throws Throwable {
         cart.getCartItems().stream().filter(o ->
                 o.getProduct().getId().equals(prod_id)).findFirst()
                 .orElseThrow((Supplier<Throwable>) () -> null)
@@ -79,10 +86,36 @@ public class ShoppingCartService {
         return cart;
     }
 
-    private OrderItem findCartItemByProductId(ShoppingCart cart, Long prod_id) {
-        return cart.getCartItems().stream().filter(o ->
-                o.getProduct().getId().equals(prod_id)).findAny()
-                .orElse(null);
+    public Map<String, Integer> getCartItemsQuantities(ShoppingCart cart) {
+        Map<String, Integer> quantities = new HashMap<>();
+        if(cart != null && !cart.getCartItems().isEmpty()) {
+            for (OrderItem i : cart.getCartItems()) {
+                quantities.put(
+                        String.valueOf(i.getProduct().getId()),
+                        i.getQuantity());
+            }
+        }
+        return quantities;
+    }
+
+    public int getCartItemsQuantity(ShoppingCart cart) {
+        int cartItemsQuantity = 0;
+        if(cart != null && !cart.getCartItems().isEmpty()) {
+            for (OrderItem i : cart.getCartItems()) {
+                cartItemsQuantity += i.getQuantity();
+            }
+        }
+        return cartItemsQuantity;
+    }
+
+    public BigDecimal getCartItemCostByProdId(ShoppingCart cart, Long prodId) {
+        BigDecimal itemCost = BigDecimal.ZERO;
+        for (OrderItem cartItem : cart.getCartItems()) {
+            if(cartItem != null && cartItem.getProduct().getId().equals(prodId)) {
+                itemCost = cartItem.getItemCosts();
+            }
+        }
+        return itemCost;
     }
 
     public int getQuantityOfCartItemByProdId(ShoppingCart cart, Long prod_id) {
@@ -91,6 +124,12 @@ public class ShoppingCartService {
             return 0;
         }
         return orderItem.getQuantity();
+    }
+
+    private OrderItem findCartItemByProductId(ShoppingCart cart, Long prod_id) {
+        return cart.getCartItems().stream().filter(o ->
+                o.getProduct().getId().equals(prod_id)).findAny()
+                .orElse(null);
     }
 
     private boolean cartContains(ShoppingCart cart, Long prod_id){
@@ -132,25 +171,4 @@ public class ShoppingCartService {
         return cart;
     }
 
-    public Map<String, Integer> getCartItemsQuantities(ShoppingCart cart) {
-        Map<String, Integer> quantities = new HashMap<>();
-        if(cart != null && !cart.getCartItems().isEmpty()) {
-            for (OrderItem i : cart.getCartItems()) {
-                quantities.put(
-                        String.valueOf(i.getProduct().getId()),
-                        i.getQuantity());
-            }
-        }
-        return quantities;
-    }
-
-    public int getCartItemsQuantity(ShoppingCart cart) {
-        int cartItemsQuantity = 0;
-        if(cart != null && !cart.getCartItems().isEmpty()) {
-            for (OrderItem i : cart.getCartItems()) {
-                cartItemsQuantity += i.getQuantity();
-            }
-        }
-        return cartItemsQuantity;
-    }
 }

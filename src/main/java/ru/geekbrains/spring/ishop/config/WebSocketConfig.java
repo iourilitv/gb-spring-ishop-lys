@@ -24,7 +24,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // подключаем SockJS, как альтернативный вариант обмена сообщениями
         //регистрируем эндпоинт для обработки события "добавить в корзину"
         //обрабатываем в контроллере CartController
-        registry.addEndpoint("/add-to-cart").withSockJS();
+        registry.addEndpoint("/addToCart", "/changeQuantity").withSockJS();
     }
 
 }

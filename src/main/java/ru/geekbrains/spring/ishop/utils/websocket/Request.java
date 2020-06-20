@@ -1,10 +1,14 @@
 package ru.geekbrains.spring.ishop.utils.websocket;
 
 public class Request {
-    private String param;
+    private String prodId;
+    private String quantity;
 
-    public String getParam() {
-        return param;
+    public String getProdId() {
+        return prodId;
     }
 
+    public String getQuantity() {
+        return quantity;
+    }
 }
