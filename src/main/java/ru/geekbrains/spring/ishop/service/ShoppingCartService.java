@@ -46,15 +46,8 @@ public class ShoppingCartService {
         return cartItem.getQuantity();
     }
 
-//    public void updateItemQuantity(HttpSession session, Long prod_id, int newQuantity) throws Throwable {
-//        ShoppingCart cart = getShoppingCartForSession(session);
-//        cart.getCartItems().stream().filter(o ->
-//                o.getProduct().getId().equals(prod_id)).findFirst()
-//                .orElseThrow((Supplier<Throwable>) () -> null)
-//                .setQuantity(newQuantity);
-//        recalculate(cart);
-//    }
-    public void updateItemQuantityAndRecalculateCart(ShoppingCart cart, Long prod_id, int newQuantity) throws Throwable {
+    public void updateItemQuantityAndRecalculateCart(ShoppingCart cart, Long prod_id,
+                                                     int newQuantity) throws Throwable {
         cart.getCartItems().stream().filter(o ->
                 o.getProduct().getId().equals(prod_id)).findFirst()
                 .orElseThrow((Supplier<Throwable>) () -> null)
