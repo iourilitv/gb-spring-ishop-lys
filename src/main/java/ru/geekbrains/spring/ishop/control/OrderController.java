@@ -12,10 +12,10 @@ import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.OrderService;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
-import ru.geekbrains.spring.ishop.utils.OrderFilter;
+import ru.geekbrains.spring.ishop.utils.SystemOrder;
+import ru.geekbrains.spring.ishop.utils.filters.OrderFilter;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -65,26 +65,52 @@ public class OrderController {
         return "amin/orders";
     }
 
-    @GetMapping("/create")
-    public RedirectView createOrder(Model model, HttpServletRequest httpServletRequest) {
-        HttpSession session = httpServletRequest.getSession();
+    @GetMapping("/proceedToCheckout")
+    public String proceedToCheckoutOrder(Model model, HttpSession session) {
+        SystemOrder systemOrder = orderService.createSystemOrder(session);
+        model.addAttribute("order", systemOrder);
+        model.addAttribute("delivery", systemOrder.getSystemDelivery());
+
         ShoppingCart cart = cartService.getShoppingCartForSession(session);
-        if(orderService.create(cart, session)) {
-            cartService.clearCart(session);
-            Order order = (Order)session.getAttribute("order");
-            return new RedirectView("/amin/profile/order/show/" +
-                    order.getId() + "/order_id");
-        } else {
-            //TODO скорее всего не передастся при редиректе
-            model.addAttribute("orderCreated", "Something Wrong With The Order Creating!");
-            //FIXME переделать на с моделью
-            // url считается от корня, чтобы получилась:
-            // http://localhost:8080/amin/profile/cart
-            return new RedirectView("/amin/profile/cart");
-        }
+        //добавляем общее количество товаров в корзине
+        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+
+        return "amin/order-details";
     }
-    //https://www.baeldung.com/spring-redirect-and-forward
-    //return new ModelAndView("redirect:/redirectedUrl", model);
+
+    @GetMapping("/rollBack")
+    public RedirectView proceedToRollBackToCart(Model model, HttpSession session) {
+        orderService.rollBackToCart(session);
+        return new RedirectView("/amin/profile/cart");
+    }
+
+//    @GetMapping("/create")
+//    public RedirectView createOrder(Model model, HttpServletRequest httpServletRequest) {
+//        HttpSession session = httpServletRequest.getSession();
+//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+//        if(orderService.create(cart, session)) {
+//            cartService.clearCart(session);
+//            Order order = (Order)session.getAttribute("order");
+//            return new RedirectView("/amin/profile/order/show/" +
+//                    order.getId() + "/order_id");
+//        } else {
+//            //TODO скорее всего не передастся при редиректе
+//            model.addAttribute("orderCreated", "Something Wrong With The Order Creating!");
+//            //FIXME переделать на с моделью
+//            // url считается от корня, чтобы получилась:
+//            // http://localhost:8080/amin/profile/cart
+//            return new RedirectView("/amin/profile/cart");
+//        }
+//    }
+    @GetMapping("/create")
+    public RedirectView createOrder(Model model, HttpSession session) {
+        //TODO temporarily
+        System.out.println("****** Create Order *********");
+        System.out.println(session.getAttribute("order"));
+
+        return new RedirectView("/amin/profile/order/all");
+    }
 
     @GetMapping("/show/{order_id}/order_id")
     public String showOrderDetails(@PathVariable Long order_id, ModelMap model,
@@ -102,20 +128,29 @@ public class OrderController {
         return "amin/order-details";
     }
 
+//    @GetMapping("/edit/{order_id}/order_id")
+//    public String editOrder(@PathVariable Long order_id, Model model,
+//                            HttpSession session) {
+//        Order order = orderService.findById(order_id);
+//        model.addAttribute("order", order);
+//        List<OrderStatus> orderStatuses = orderService.findAllOrderStatuses();
+//        model.addAttribute("orderStatuses", orderStatuses);
+//
+//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+//        //добавляем общее количество товаров в корзине
+//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+//
+//        return "amin/order-form";
+//    }
     @GetMapping("/edit/{order_id}/order_id")
-    public String editOrder(@PathVariable Long order_id, Model model,
+    public RedirectView editOrder(@PathVariable Long order_id, Model model,
                             HttpSession session) {
-        Order order = orderService.findById(order_id);
-        model.addAttribute("order", order);
-        List<OrderStatus> orderStatuses = orderService.findAllOrderStatuses();
-        model.addAttribute("orderStatuses", orderStatuses);
-
-        ShoppingCart cart = cartService.getShoppingCartForSession(session);
-        //добавляем общее количество товаров в корзине
-        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
-        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-
-        return "amin/order-form";
+        //TODO Temporarily
+        System.out.println("********* Edit Order **********");
+        System.out.println(session.getAttribute("order"));
+        //TODO temporarily - вести на форму заказа
+        return new RedirectView("/amin/profile/order/all");
     }
 
     @GetMapping("/delete/{order_id}/order_id")

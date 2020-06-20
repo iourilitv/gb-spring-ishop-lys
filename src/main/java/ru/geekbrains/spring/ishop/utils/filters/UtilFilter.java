@@ -1,4 +1,4 @@
-package ru.geekbrains.spring.ishop.utils;
+package ru.geekbrains.spring.ishop.utils.filters;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;

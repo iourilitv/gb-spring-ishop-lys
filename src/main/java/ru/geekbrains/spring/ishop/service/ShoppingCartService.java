@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.spring.ishop.entity.OrderItem;
 import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
+import ru.geekbrains.spring.ishop.utils.SystemOrder;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
@@ -64,15 +65,29 @@ public class ShoppingCartService {
         recalculate(cart);
     }
 
-    public void clearCart(HttpSession session) {
-        cart = getShoppingCartForSession(session);
-        cart.getCartItems().clear();
+    @Transactional
+    public void rollBackToCart(HttpSession session) {
+        cart = getClearedCartForSession(session);
+        SystemOrder systemOrder = (SystemOrder)session.getAttribute("order");
+        cart.getCartItems().addAll(systemOrder.getOrderItems());
+        recalculate(cart);
+    }
+
+//    public void clearCart(HttpSession session) {
+//        cart = getShoppingCartForSession(session);
+//        cart.getCartItems().clear();
+//    }
+    public ShoppingCart getClearedCartForSession(HttpSession session) {
+        cart = new ShoppingCart();
+        session.setAttribute("cart", cart);
+        return cart;
     }
 
     public ShoppingCart getShoppingCartForSession(HttpSession session) {
         if (session.getAttribute("cart") == null) {
-            cart = new ShoppingCart();
-            session.setAttribute("cart", cart);
+//            cart = new ShoppingCart();
+//            session.setAttribute("cart", cart);
+            cart = getClearedCartForSession(session);
         } else {
             cart = (ShoppingCart) session.getAttribute("cart");
         }

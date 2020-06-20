@@ -1,14 +1,13 @@
-package ru.geekbrains.spring.ishop.utils;
+package ru.geekbrains.spring.ishop.utils.filters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-import ru.geekbrains.spring.ishop.entity.Address;
-
+import ru.geekbrains.spring.ishop.entity.Category;
 import java.util.Map;
 
 @Component
-public class AddressFilter {
+public class CategoryFilter {
     private UtilFilter utilFilter;
 
     @Autowired
@@ -16,7 +15,7 @@ public class AddressFilter {
         this.utilFilter = utilFilter;
     }
 
-    private Specification<Address> spec;
+    private Specification<Category> spec;
     private StringBuilder filterDefinition;
 
     public void init(Map<String, String> params) {
@@ -29,7 +28,7 @@ public class AddressFilter {
         this.filterDefinition = utilFilter.getFilterDefinition();
     }
 
-    public Specification<Address> getSpec() {
+    public Specification<Category> getSpec() {
         return spec;
     }
 

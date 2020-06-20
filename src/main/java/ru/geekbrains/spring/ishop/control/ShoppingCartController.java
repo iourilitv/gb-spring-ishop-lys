@@ -42,12 +42,6 @@ public class ShoppingCartController {
         return "amin/cart";
     }
 
-    //TODO for a future
-//    @GetMapping("/update/{prod_id}/prod_id/{quantity}/quantity")
-//    public void updateCartItemQuantity(@PathVariable Long prod_id,
-//                          @PathVariable Integer quantity, HttpSession session) {
-//    }
-
     @GetMapping("/delete/{prod_id}/prod_id")
     public String removeFromCart(@PathVariable Long prod_id,  HttpServletRequest httpServletRequest) throws Throwable {
         cartService.removeItemFromCartById(httpServletRequest.getSession(), prod_id);
@@ -57,7 +51,7 @@ public class ShoppingCartController {
 
     @GetMapping("/clear")
     public String removeFromCart(HttpServletRequest httpServletRequest) {
-        cartService.clearCart(httpServletRequest.getSession());
+        cartService.getClearedCartForSession(httpServletRequest.getSession());
         String referrer = httpServletRequest.getHeader("referer");
         return "redirect:" + referrer;
     }

@@ -9,9 +9,11 @@ import ru.geekbrains.spring.ishop.repository.AddressRepository;
 import ru.geekbrains.spring.ishop.repository.OrderItemRepository;
 import ru.geekbrains.spring.ishop.repository.OrderRepository;
 import ru.geekbrains.spring.ishop.repository.OrderStatusRepository;
-import ru.geekbrains.spring.ishop.utils.OrderFilter;
+import ru.geekbrains.spring.ishop.utils.SystemDelivery;
+import ru.geekbrains.spring.ishop.utils.SystemOrder;
+import ru.geekbrains.spring.ishop.utils.filters.OrderFilter;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
-import ru.geekbrains.spring.ishop.utils.UtilFilter;
+import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
@@ -20,6 +22,7 @@ import java.util.List;
 
 @Service
 public class OrderService {
+    private ShoppingCartService cartService;
     private DeliveryService deliveryService;
     private AddressRepository addressRepository;
     private OrderStatusRepository orderStatusRepository;
@@ -38,6 +41,11 @@ public class OrderService {
 //        this.orderRepository = orderRepository;
 //        this.utilFilter = utilFilter;
 //    }
+    @Autowired
+    public void setCartService(ShoppingCartService cartService) {
+        this.cartService = cartService;
+    }
+
     @Autowired
     public void setDeliveryService(DeliveryService deliveryService) {
         this.deliveryService = deliveryService;
@@ -131,12 +139,25 @@ public class OrderService {
         return false;
     }
 
-    private boolean isOrderSavedCorrectly(Order order, ShoppingCart cart) {
-        List<OrderItem> cartOrderItems = cart.getCartItems();
-        List<OrderItem> orderItems = orderItemRepository.findAllOrderItemsByOrder(order);
-        //простая проверка сохраненного заказа
-        return orderItems.size() == cartOrderItems.size() &&
-                order.getTotalItemsCosts().equals(cart.getTotalCost());
+    public SystemOrder createSystemOrder(HttpSession session) {
+        ShoppingCart cart = cartService.getShoppingCartForSession(session);;
+        User user = (User)session.getAttribute("user");
+        SystemDelivery systemDelivery = new SystemDelivery(user.getPhoneNumber(),
+                user.getDeliveryAddress(), BigDecimal.valueOf(100),
+                LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0)));
+        BigDecimal totalCosts = cart.getTotalCost().add(systemDelivery.getDeliveryCost());
+
+//        return new SystemOrder(user, cart.getCartItems(),
+//                cart.getTotalCost(), totalCosts, systemDelivery);
+        SystemOrder systemOrder = new SystemOrder(user, cart.getCartItems(),
+                cart.getTotalCost(), totalCosts, systemDelivery);
+        session.setAttribute("order", systemOrder);
+
+        return systemOrder;
+    }
+
+    public void rollBackToCart(HttpSession session) {
+        cartService.rollBackToCart(session);
     }
 
     public void save(Order order) {
@@ -176,6 +197,14 @@ public class OrderService {
         System.out.println("********* recalculated order *********");
         System.out.println(order);
         return order;
+    }
+
+    private boolean isOrderSavedCorrectly(Order order, ShoppingCart cart) {
+        List<OrderItem> cartOrderItems = cart.getCartItems();
+        List<OrderItem> orderItems = orderItemRepository.findAllOrderItemsByOrder(order);
+        //простая проверка сохраненного заказа
+        return orderItems.size() == cartOrderItems.size() &&
+                order.getTotalItemsCosts().equals(cart.getTotalCost());
     }
 
     private void updateOrderItemQuantity(Order order, OrderItem orderItem) {

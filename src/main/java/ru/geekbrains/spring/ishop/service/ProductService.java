@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.repository.ProductRepository;
-import ru.geekbrains.spring.ishop.utils.ProductFilter;
-import ru.geekbrains.spring.ishop.utils.UtilFilter;
+import ru.geekbrains.spring.ishop.utils.filters.ProductFilter;
+import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
 
 @Service
 public class ProductService {

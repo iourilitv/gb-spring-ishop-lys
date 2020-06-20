@@ -1,4 +1,4 @@
-package ru.geekbrains.spring.ishop.utils;
+package ru.geekbrains.spring.ishop.utils.filters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;

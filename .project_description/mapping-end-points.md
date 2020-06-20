@@ -39,6 +39,8 @@ Means GET - if not specified.
 
 ####/order
 #####/all
+#####/proceedToCheckout
+#####/rollBack
 #####/create
 #####/show/{order_id}/order_id
 

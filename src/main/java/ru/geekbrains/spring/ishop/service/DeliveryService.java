@@ -8,8 +8,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.Delivery;
 import ru.geekbrains.spring.ishop.repository.DeliveryRepository;
-import ru.geekbrains.spring.ishop.utils.DeliveryFilter;
-import ru.geekbrains.spring.ishop.utils.UtilFilter;
+import ru.geekbrains.spring.ishop.utils.filters.DeliveryFilter;
+import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;

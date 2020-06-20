@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import ru.geekbrains.spring.ishop.entity.Category;
 import ru.geekbrains.spring.ishop.repository.CategoryRepository;
-import ru.geekbrains.spring.ishop.utils.CategoryFilter;
-import ru.geekbrains.spring.ishop.utils.UtilFilter;
+import ru.geekbrains.spring.ishop.utils.filters.CategoryFilter;
+import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
 
 import java.util.List;
 

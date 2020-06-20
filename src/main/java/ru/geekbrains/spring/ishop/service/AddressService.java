@@ -8,8 +8,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.Address;
 import ru.geekbrains.spring.ishop.repository.AddressRepository;
-import ru.geekbrains.spring.ishop.utils.AddressFilter;
-import ru.geekbrains.spring.ishop.utils.UtilFilter;
+import ru.geekbrains.spring.ishop.utils.filters.AddressFilter;
+import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
 
 import java.util.List;
 

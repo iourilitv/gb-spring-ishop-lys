@@ -57,28 +57,25 @@
 
             <!-- Table of Order Details Begin -->
             <div class="col-lg-12 p-0">
-                <div th:if="${order.getId() != null}">
-                    <h5 class="color-white">Order Id</h5>
-                    <table class="table color-white">
-                        <tbody><tr><td th:text="${order.getId()}"></td></tr></tbody>
-                    </table>
-                </div>
 
-                <div th:if="${order.orderStatus != null}">
-                    <h5 class="color-white">Order Status</h5>
-                    <table class="table color-white">
-                        <thead><tr>
-                            <th>id</th>
-                            <th>title</th>
-                            <th>description</th>
-                        </tr></thead>
-                        <tbody><tr>
-                            <td th:text="${order.orderStatus.id}"></td>
-                            <td th:text="${order.orderStatus.title}"></td>
-                            <td th:text="${order.orderStatus.description}"></td>
-                        </tr></tbody>
-                    </table>
-                </div>
+                <h5 class="color-white">Order Id</h5>
+                <table class="table color-white">
+                    <tbody><tr><td th:text="${order.getId()}"></td></tr></tbody>
+                </table>
+
+                <h5 class="color-white">Order Status</h5>
+                <table class="table color-white">
+                    <thead><tr>
+                        <th>id</th>
+                        <th>title</th>
+                        <th>description</th>
+                    </tr></thead>
+                    <tbody><tr>
+                        <td th:text="${order.orderStatus.id}"></td>
+                        <td th:text="${order.orderStatus.title}"></td>
+                        <td th:text="${order.orderStatus.description}"></td>
+                    </tr></tbody>
+                </table>
 
                 <h5 class="color-white">User</h5>
                 <table class="table color-white">
@@ -129,6 +126,7 @@
 
                     <tr>
                         <th colspan="5">Total Cost of Order Items:</th>
+
                         <td th:text="${order.totalItemsCosts}"></td>
                     </tr>
                     </tbody>
@@ -136,10 +134,10 @@
                 <!-- Table of order items Begin -->
 
                 <h5 class="color-white">Delivery Details</h5>
-<!--                <h4 th:if="${order.delivery == null}"-->
-<!--                        class="color-white">Not specified</h4>-->
-<!--                <table th:if="${order.delivery != null}"-->
-                <table class="table color-white">
+                <h4 th:if="${order.delivery == null}"
+                        class="color-white">Not specified</h4>
+                <table th:if="${order.delivery != null}"
+                        class="table color-white">
                     <thead><tr>
                         <th>id</th>
                         <th>phone number</th>
@@ -149,12 +147,12 @@
                         <th>delivered time</th>
                     </tr></thead>
                     <tbody><tr>
-                        <td th:text="${delivery.id}"></td>
-                        <td th:text="${delivery.phoneNumber}"></td>
-                        <td th:text="${delivery.deliveryAddress}"></td>
-                        <td th:text="${delivery.deliveryCost}"></td>
-                        <td th:text="${delivery.deliveryExpectedAt}"></td>
-                        <td th:text="${delivery.deliveredAt}"></td>
+                        <td th:text="${order.delivery.id}"></td>
+                        <td th:text="${order.delivery.phoneNumber}"></td>
+                        <td th:text="${order.delivery.deliveryAddress}"></td>
+                        <td th:text="${order.delivery.deliveryCost}"></td>
+                        <td th:text="${order.delivery.deliveryExpectedAt}"></td>
+                        <td th:text="${order.delivery.deliveredAt}"></td>
                     </tr></tbody>
                 </table>
 
@@ -165,19 +163,11 @@
 
                 <div>
                     <!-- button "Confirm and close" -->
-                    <a class="catalog__product-card__price btn-subscribe" th:href="@{'/profile/order/create'}">Confirm and close</a>
-                    <!-- button "Roll Back To Cart" -->
-                    <a class="catalog__product-card__price btn-reset" th:href="@{'/profile/order/rollBack'}">Roll Back To Cart</a>
+                    <a class="catalog__product-card__price btn-subscribe" th:href="@{'/profile/order/all'}">Confirm and close</a>
+                    <!-- button "Cancel" -->
+                    <a class="catalog__product-card__price btn-reset" th:href="@{'/profile/order/cancel/' + ${order.getId()} + '/order_id'}">Cancel Order</a>
                     <!-- button "Edit" -->
-<!--                    <a class="catalog__product-card__price btn-info" th:href="@{'/profile/order/edit/' + ${order.getId()} + '/order_id'}">Edit Order</a>-->
-                    <a th:if="${order.getId()} == null" class="catalog__product-card__price btn-info"
-                       th:href="@{'/profile/order/edit/0/order_id'}">Edit Order</a>
-                    <a th:if="${order.getId()} != null" class="catalog__product-card__price btn-info"
-                       th:href="@{'/profile/order/edit/' + ${order.getId()} + '/order_id'}">Edit Order</a>
-
-                    <!-- Does not work -->
-<!--                    <a class="catalog__product-card__price btn-info" th:href="@{'/profile/order/edit/' + {orderId}(orderId=${${order.getId()} == null ? 0 : ${order.getId()}}) + '/order_id'}">Edit Order</a>-->
-<!--                    <a class="catalog__product-card__price btn-info" th:href="@{/profile/order/edit/{orderId}/order_id(orderId=${${order.getId()} == null ? 0 : ${order.getId()}})}">Edit Order</a>-->
+                    <a class="catalog__product-card__price btn-info" th:href="@{'/profile/order/edit/' + ${order.getId()} + '/order_id'}">Edit Order</a>
                 </div>
             </div>
             <!-- Table of Order Details End -->

@@ -33,13 +33,14 @@ public class OrderItem {
 
     @Override
     public String toString() {
+        long orderId = order == null ? 0 : order.getId();
         return "OrderItem{" +
                 "id=" + id +
                 ", product=" + product +
                 ", itemPrice=" + itemPrice +
                 ", quantity=" + quantity +
                 ", itemCosts=" + itemCosts +
-                ", orderId=" + order.getId() +
+                ", orderId=" + orderId +
                 '}';
     }
 }

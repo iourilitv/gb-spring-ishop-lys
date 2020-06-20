@@ -11,7 +11,7 @@ import ru.geekbrains.spring.ishop.entity.Category;
 import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.ProductService;
-import ru.geekbrains.spring.ishop.utils.ProductFilter;
+import ru.geekbrains.spring.ishop.utils.filters.ProductFilter;
 
 import javax.validation.Valid;
 import java.util.List;
