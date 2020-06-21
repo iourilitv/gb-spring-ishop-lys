@@ -5,9 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import ru.geekbrains.spring.ishop.entity.Order;
 import ru.geekbrains.spring.ishop.repository.specifications.OrderSpecification;
-import ru.geekbrains.spring.ishop.repository.specifications.ProductSpecification;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 @Component

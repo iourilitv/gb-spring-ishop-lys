@@ -121,6 +121,8 @@ public class OrderController {
     @GetMapping("/edit/{order_id}/order_id")
     public RedirectView editOrder(@PathVariable Long order_id, Model model,
                             HttpSession session) {
+        //TODO доделать/переделать
+
         //TODO Temporarily
         System.out.println("********* Edit Order **********");
         System.out.println(session.getAttribute("order"));
@@ -145,12 +147,14 @@ public class OrderController {
     public RedirectView processEditOrder(@PathVariable("order_id") Long orderId,
             @Valid @ModelAttribute("order") SystemOrder order,
                                    BindingResult theBindingResult) {
+        //TODO доделать
 //        System.out.println(order);
 
         orderService.save(order);
         return new RedirectView("/amin/profile/order/all");
     }
 
+    //TODO Надо ли?
     @GetMapping("/edit/{order_id}/order_id/update/{prod_id}/prod_id")
     public Object editOrderItem(@PathVariable("order_id") Long orderId,
                                 @PathVariable("prod_id") Long prodId,
@@ -168,6 +172,7 @@ public class OrderController {
         return "amin/order-item-form";
     }
 
+    //TODO Надо ли?
     @PostMapping("/process/edit/{order_id}/order_id/update/{prod_id}/prod_id")
     public String processEditOrderItem(
             @PathVariable("order_id") Long orderId,

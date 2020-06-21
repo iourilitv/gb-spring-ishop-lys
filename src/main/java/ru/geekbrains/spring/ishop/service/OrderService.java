@@ -184,9 +184,6 @@ public class OrderService {
         Order order = findById(orderId);
         order.setOrderStatus(findOrderStatusByTitle("Canceled"));
         orderRepository.save(order);
-//        save(order);
-        System.out.println("********* canceled order *********");
-        System.out.println(order);
     }
 
     public Order recalculateOrderCosts(Order order, OrderItem orderItem) {

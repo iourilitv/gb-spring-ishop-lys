@@ -71,7 +71,6 @@
                             <li th:class="${!param.isEmpty() ? 'mega-menu active' : 'mega-menu'}">
                                 <a style="padding: 12px 10px 12px 20px" th:href="@{'/profile/order/all'}">
                                     <span>Filters <i class="fa fa-angle-down"></i></span></a>
-<!--                                <div class="megamenu-wrapper col-lg-6">-->
                                 <div class="megamenu-wrapper col-lg-12">
                                     <div class="col-lg-12 col-md-7 p-0">
                                         <div class="sidebar-option">
@@ -79,7 +78,6 @@
                                                 <form th:action="@{/profile/order/all}" method="GET">
                                                     <div class="row justify-content-center">
                                                     <!-- Order Status field of filter form -->
-<!--                                                    <label class="filter-field-label">-->
                                                     <label class="filter-field-label col-lg-3">
                                                         <span>Order Status</span>
                                                         <select name="orderStatus"
@@ -95,14 +93,12 @@
                                                         </select>
                                                     </label>
                                                     <!-- Items on page limit field of filter form -->
-<!--                                                    <label class="filter-field-label">-->
                                                     <label class="filter-field-label col-lg-3">
                                                         <span>Elements on page</span>
                                                         <input name="limit" placeholder="Товаров на странице"
                                                                th:value="${param.limit}" type="number">
                                                     </label>
                                                     <!-- выпадающий список направления сортировки -->
-<!--                                                    <label class="filter-field-label">-->
                                                     <label class="filter-field-label col-lg-3">
                                                         <span>Sort direction</span>
                                                         <select name="direction" class="select-btn-dropdown-toggle">
@@ -117,13 +113,11 @@
                                                     </div>
 
                                                     <div class="row justify-content-center">
-<!--                                                        <button class="btn-subscribe" type="submit">-->
                                                         <button class="btn-subscribe col-lg-2" type="submit"
                                                                 style="padding: 12px 10px 12px 20px">
                                                             <span>Submit</span>
                                                         </button>
 
-<!--                                                        <div>-->
                                                         <div class="col-lg-2">
                                                             <a class="btn-reset" style="padding: 12px 10px 12px 20px"
                                                                th:href="@{'/profile/order/all'}">
@@ -208,10 +202,7 @@
                             </ul>
                         </td>
 
-<!--                        <td>-->
-<!--                            <a class="btn btn-warning" th:href="@{'/profile/order/delete/' + ${order.id} + '/order_id'}">Delete</a>-->
-                            <!--                                <a class="btn btn-info" th:href="@{'/profile/cart/saveForLater/' + ${product.id}}">Save for later</a>-->
-<!--                        </td>-->
+<!--                                <a class="btn btn-info" th:href="@{'/profile/cart/saveForLater/' + ${product.id}}">Save for later</a>-->
                     </tr>
                     </tbody>
                 </table>
