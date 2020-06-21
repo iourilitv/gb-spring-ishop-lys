@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import ru.geekbrains.spring.ishop.entity.Order;
+import ru.geekbrains.spring.ishop.repository.specifications.OrderSpecification;
+import ru.geekbrains.spring.ishop.repository.specifications.ProductSpecification;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 @Component
@@ -27,6 +30,19 @@ public class OrderFilter {
         //инициируем объект билдера строки для сборки строки с параметрами фильтра,
         // добавляемыми к запросу
         this.filterDefinition = utilFilter.getFilterDefinition();
+        //если есть хотя бы один параметр
+        if(params != null && !params.isEmpty()) {
+            //если в параметрах есть параметр категории товара
+            if(params.containsKey("orderStatus")
+                    && !params.get("orderStatus").isEmpty()) {
+                //инициируем переменную из параметра
+                Short orderStatusId = Short.parseShort(params.get("orderStatus"));
+                //добавляем по и условие фильтра в спецификацию фильтра
+                spec = spec.and(OrderSpecification.orderStatusIdEquals(orderStatusId));
+                //добавляем параметр фильтра к строке запроса
+                filterDefinition.append("&orderStatus=").append(orderStatusId);
+            }
+        }
     }
 
     public Specification<Order> getSpec() {

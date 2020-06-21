@@ -55,6 +55,8 @@ public class OrderController {
         model.addAttribute("page", page);
         //активную страницу
         model.addAttribute("activePage", "Profile");
+        //коллекцию статусов заказа
+        model.addAttribute("orderStatuses", orderService.findAllOrderStatuses());
 
         ShoppingCart cart = cartService.getShoppingCartForSession(session);
         //добавляем общее количество товаров в корзине

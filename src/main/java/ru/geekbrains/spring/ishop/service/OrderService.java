@@ -178,10 +178,12 @@ public class OrderService {
         orderRepository.deleteById(orderId);
     }
 
+    @Transactional
     public void cancelOrder(Long orderId) {
         //просто меняем статус на "Canceled" и оставляем заказ в списке
         Order order = findById(orderId);
         order.setOrderStatus(findOrderStatusByTitle("Canceled"));
+        orderRepository.save(order);
 //        save(order);
         System.out.println("********* canceled order *********");
         System.out.println(order);
