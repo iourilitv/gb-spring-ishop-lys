@@ -32,10 +32,13 @@
 </head>
 
 <body>
+<!--/*@thymesVar id="activePage" type="java.lang.String"*/-->
+<!--/*@thymesVar id="categories" type=""*/-->
+<!--/*@thymesVar id="cartItemsQuantity" type=""*/-->
+<!--/*@thymesVar id="cart" type="ru.geekbrains.spring.ishop.utils.ShoppingCart"*/-->
+<!--/*@thymesVar id="cartItem" type="ru.geekbrains.spring.ishop.entity.OrderItem"*/-->
+
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-    <!--/*@thymesVar id="activePage" type="java.lang.String"*/-->
-    <!--/*@thymesVar id="categories" type=""*/-->
-    <!--/*@thymesVar id="cartItemsQuantity" type=""*/-->
     <superheader th:replace="/amin/fragments/header.html :: header(
         activePage=${activePage}, categories=${categories}, filterDef='',
         showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>
@@ -61,7 +64,6 @@
 
             <!-- Table of CartItems list Begin -->
             <div class="col-lg-12 p-0">
-                <!--/*@thymesVar id="cart" type="ru.geekbrains.spring.ishop.utils.ShoppingCart"*/-->
                 <h4 th:if="${cart.cartItems.isEmpty()}"
                     class="color-white">The shopping cart is empty!</h4>
                 <table th:unless="${cart.cartItems.isEmpty()}"
@@ -77,7 +79,6 @@
                             <th>operations</th>
                         </tr>
                     </thead>
-                    <!--/*@thymesVar id="cartItem" type="ru.geekbrains.spring.ishop.entity.OrderItem"*/-->
                     <tbody>
                         <tr th:each="cartItem, itrStat : ${cart.cartItems}">
                             <td th:text="${itrStat.index + 1}"></td>

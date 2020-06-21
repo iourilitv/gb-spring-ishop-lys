@@ -100,6 +100,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="orderItem, itrStat : *{orderItems}">
+
                         <td th:text="${itrStat.index + 1}"></td>
 
                         <td th:text="${orderItem.product.id}"></td>

@@ -65,19 +65,6 @@ public class OrderController {
         return "amin/orders";
     }
 
-//    @GetMapping("/proceedToCheckout")
-//    public String proceedToCheckoutOrder(Model model, HttpSession session) {
-//        SystemOrder systemOrder = orderService.createSystemOrder(session);
-//        model.addAttribute("order", systemOrder);
-//        model.addAttribute("delivery", systemOrder.getSystemDelivery());
-//
-//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
-//        //добавляем общее количество товаров в корзине
-//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
-//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-//
-//        return "amin/order-details";
-//    }
     @GetMapping("/proceedToCheckout")
     public RedirectView proceedToCheckoutOrder(Model model, HttpSession session) {
         return new RedirectView("/amin/profile/order/show/0/order_id");
@@ -89,24 +76,6 @@ public class OrderController {
         return new RedirectView("/amin/profile/cart");
     }
 
-//    @GetMapping("/create")
-//    public RedirectView createOrder(Model model, HttpServletRequest httpServletRequest) {
-//        HttpSession session = httpServletRequest.getSession();
-//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
-//        if(orderService.create(cart, session)) {
-//            cartService.clearCart(session);
-//            Order order = (Order)session.getAttribute("order");
-//            return new RedirectView("/amin/profile/order/show/" +
-//                    order.getId() + "/order_id");
-//        } else {
-//            //TODO скорее всего не передастся при редиректе
-//            model.addAttribute("orderCreated", "Something Wrong With The Order Creating!");
-//            //FIXME переделать на с моделью
-//            // url считается от корня, чтобы получилась:
-//            // http://localhost:8080/amin/profile/cart
-//            return new RedirectView("/amin/profile/cart");
-//        }
-//    }
     @GetMapping("/create")
     public RedirectView createOrder(Model model, HttpSession session) {
         if(orderService.save((SystemOrder) session.getAttribute("order"))) {
@@ -120,10 +89,6 @@ public class OrderController {
     @GetMapping("/show/{order_id}/order_id")
     public String showOrderDetails(@PathVariable Long order_id, ModelMap model,
                                    HttpSession session){
-        //TODO наполнить модель атрибутами, в т.ч. editable=false
-        // в order-details добавить кнопку "Edit Order" на edit/{order_id}/order_id
-//        Order order = orderService.findById(order_id);
-//        model.addAttribute("order", order);
         SystemOrder systemOrder = orderService.getSystemOrderForSession(session, order_id);
         model.addAttribute("order", systemOrder);
         model.addAttribute("delivery", systemOrder.getSystemDelivery());

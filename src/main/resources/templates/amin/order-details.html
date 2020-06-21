@@ -26,12 +26,13 @@
     <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
 </head>
 
-<!--/*@thymesVar id="order" type="ru.geekbrains.spring.ishop.entity.Order"*/-->
 <body>
+<!--/*@thymesVar id="categories" type=""*/-->
+<!--/*@thymesVar id="cartItemsQuantity" type=""*/-->
+<!--/*@thymesVar id="order" type="ru.geekbrains.spring.ishop.entity.Order"*/-->
+<!--/*@thymesVar id="delivery" type="ru.geekbrains.spring.ishop.utils.SystemDelivery"*/-->
+
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-    <!--/*@thymesVar id="activePage" type="java.lang.String"*/-->
-    <!--/*@thymesVar id="categories" type=""*/-->
-    <!--/*@thymesVar id="cartItemsQuantity" type=""*/-->
     <superheader th:replace="/amin/fragments/header.html :: header(
         activePage='', categories=${categories}, filterDef='',
         showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>
@@ -134,7 +135,6 @@
                 </table>
                 <!-- Table of order items Begin -->
 
-                <!--/*@thymesVar id="delivery" type="ru.geekbrains.spring.ishop.utils.SystemDelivery"*/-->
                 <h5 class="color-white">Delivery Details</h5>
                 <table class="table color-white">
                     <thead><tr>
