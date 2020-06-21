@@ -16,19 +16,24 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    //NOT NULL
     private Product product;
 
     @Column(name = "item_price")
+    //NOT NULL
     private BigDecimal itemPrice;
 
     @Column(name = "quantity")
+    //NOT NULL
     private int quantity;
 
     @Column(name = "item_costs")
+    //NOT NULL
     private BigDecimal itemCosts;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    //NOT NULL
     private Order order;
 
     @Override

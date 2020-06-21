@@ -29,8 +29,9 @@
 <!--/*@thymesVar id="order" type="ru.geekbrains.spring.ishop.entity.Order"*/-->
 <body>
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-    <!--/*@thymesVar id="categories" type=""*/-->
     <!--/*@thymesVar id="activePage" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="categories" type=""*/-->
+    <!--/*@thymesVar id="cartItemsQuantity" type=""*/-->
     <superheader th:replace="/amin/fragments/header.html :: header(
         activePage='', categories=${categories}, filterDef='',
         showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>
@@ -113,11 +114,9 @@
 
                         <td th:text="${orderItem.product.id}"></td>
 
-                        <td>
+                        <td style="width: 70%">
                             <a th:href="@{/catalog/{prod_id}/details(prod_id = ${orderItem.product.id})}"
-                               target="_blank"
-                               th:text="${orderItem.product.title}">
-                            </a>
+                               target="_blank" th:text="${orderItem.product.title}"></a>
                         </td>
 
                         <td th:text="${orderItem.itemPrice}"></td>
@@ -135,10 +134,8 @@
                 </table>
                 <!-- Table of order items Begin -->
 
+                <!--/*@thymesVar id="delivery" type="ru.geekbrains.spring.ishop.utils.SystemDelivery"*/-->
                 <h5 class="color-white">Delivery Details</h5>
-<!--                <h4 th:if="${order.delivery == null}"-->
-<!--                        class="color-white">Not specified</h4>-->
-<!--                <table th:if="${order.delivery != null}"-->
                 <table class="table color-white">
                     <thead><tr>
                         <th>id</th>
@@ -148,14 +145,17 @@
                         <th>delivery expected time</th>
                         <th>delivered time</th>
                     </tr></thead>
-                    <tbody><tr>
-                        <td th:text="${delivery.id}"></td>
-                        <td th:text="${delivery.phoneNumber}"></td>
-                        <td th:text="${delivery.deliveryAddress}"></td>
-                        <td th:text="${delivery.deliveryCost}"></td>
-                        <td th:text="${delivery.deliveryExpectedAt}"></td>
-                        <td th:text="${delivery.deliveredAt}"></td>
-                    </tr></tbody>
+                    <tbody>
+                        <tr th:if="${delivery} != null">
+                            <td th:text="${delivery.id}"></td>
+                            <td th:text="${delivery.phoneNumber}"></td>
+                            <td th:text="${delivery.deliveryAddress}"></td>
+                            <td th:text="${delivery.deliveryCost}"></td>
+                            <td th:text="${delivery.deliveryExpectedAt}"></td>
+                            <td th:text="${delivery.deliveredAt}"></td>
+                        </tr>
+                        <tr th:if="${delivery} == null" ><th colspan="6">No data</th></tr>
+                    </tbody>
                 </table>
 
                 <h5 class="color-white">Total Order Cost</h5>
@@ -165,19 +165,19 @@
 
                 <div>
                     <!-- button "Confirm and close" -->
-                    <a class="catalog__product-card__price btn-subscribe" th:href="@{'/profile/order/create'}">Confirm and close</a>
+                    <a th:if="${order.orderStatus} == null" class="catalog__product-card__price btn-subscribe"
+                       th:href="@{'/profile/order/create'}">Confirm and close</a>
                     <!-- button "Roll Back To Cart" -->
-                    <a class="catalog__product-card__price btn-reset" th:href="@{'/profile/order/rollBack'}">Roll Back To Cart</a>
+                    <a  th:if="${order.orderStatus} == null" class="catalog__product-card__price btn-reset"
+                        th:href="@{'/profile/order/rollBack'}">Roll Back To Cart</a>
                     <!-- button "Edit" -->
-<!--                    <a class="catalog__product-card__price btn-info" th:href="@{'/profile/order/edit/' + ${order.getId()} + '/order_id'}">Edit Order</a>-->
                     <a th:if="${order.getId()} == null" class="catalog__product-card__price btn-info"
                        th:href="@{'/profile/order/edit/0/order_id'}">Edit Order</a>
                     <a th:if="${order.getId()} != null" class="catalog__product-card__price btn-info"
                        th:href="@{'/profile/order/edit/' + ${order.getId()} + '/order_id'}">Edit Order</a>
-
-                    <!-- Does not work -->
-<!--                    <a class="catalog__product-card__price btn-info" th:href="@{'/profile/order/edit/' + {orderId}(orderId=${${order.getId()} == null ? 0 : ${order.getId()}}) + '/order_id'}">Edit Order</a>-->
-<!--                    <a class="catalog__product-card__price btn-info" th:href="@{/profile/order/edit/{orderId}/order_id(orderId=${${order.getId()} == null ? 0 : ${order.getId()}})}">Edit Order</a>-->
+                    <!-- button "Close" -->
+                    <a th:if="${order.orderStatus} != null" class="catalog__product-card__price btn-subscribe"
+                       th:href="@{'/profile/order/all'}">Close</a>
                 </div>
             </div>
             <!-- Table of Order Details End -->

@@ -33,6 +33,9 @@
 
 <body>
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
+    <!--/*@thymesVar id="activePage" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="categories" type=""*/-->
+    <!--/*@thymesVar id="cartItemsQuantity" type=""*/-->
     <superheader th:replace="/amin/fragments/header.html :: header(
         activePage=${activePage}, categories=${categories}, filterDef='',
         showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>
@@ -81,7 +84,7 @@
 
                             <td th:text="${cartItem.product.id}"></td>
 
-                            <td>
+                            <td style="width: 50%">
                                 <a th:href="@{/catalog/{prod_id}/details(prod_id = ${cartItem.product.id})}"
                                    target="_blank" th:text="${cartItem.product.title}">
                                 </a>
@@ -90,8 +93,10 @@
                             <td th:text="${cartItem.product.price}"></td>
 
                             <td>
-                                <input type="number" th:id="'quantity' + ${cartItem.product.id}"
-                                       th:value="${cartItem.quantity}" style="width: 100px">
+                                <label>
+                                    <input type="number" th:id="'quantity' + ${cartItem.product.id}"
+                                           th:value="${cartItem.quantity}" style="width: 100px">
+                                </label>
                             </td>
 
                             <td th:id="'cartItemCost' + ${cartItem.product.id}" th:text="${cartItem.itemCosts}"></td>
@@ -119,7 +124,6 @@
 
                 <div th:unless="${cart.cartItems.isEmpty()}">
                     <!-- button Proceed to checkout(.. items) -->
-<!--                    <a class="catalog__product-card__price btn-subscribe" th:href="@{'/profile/order/create'}">Proceed to checkout</a>-->
                     <a class="catalog__product-card__price btn-subscribe" th:href="@{'/profile/order/proceedToCheckout'}">Proceed to checkout</a>
                 </div>
             </div>

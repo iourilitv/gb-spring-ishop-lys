@@ -24,10 +24,10 @@ import java.util.Map;
 @Component
 @RequestMapping("/profile/order")
 public class OrderController {
-    private CategoryService categoryService;
-    private ShoppingCartService cartService;
-    private OrderService orderService;
-    private OrderFilter orderFilter;
+    private final CategoryService categoryService;
+    private final ShoppingCartService cartService;
+    private final OrderService orderService;
+    private final OrderFilter orderFilter;
 
     @Autowired
     public OrderController(CategoryService categoryService, ShoppingCartService cartService,
@@ -65,18 +65,22 @@ public class OrderController {
         return "amin/orders";
     }
 
+//    @GetMapping("/proceedToCheckout")
+//    public String proceedToCheckoutOrder(Model model, HttpSession session) {
+//        SystemOrder systemOrder = orderService.createSystemOrder(session);
+//        model.addAttribute("order", systemOrder);
+//        model.addAttribute("delivery", systemOrder.getSystemDelivery());
+//
+//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+//        //добавляем общее количество товаров в корзине
+//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+//
+//        return "amin/order-details";
+//    }
     @GetMapping("/proceedToCheckout")
-    public String proceedToCheckoutOrder(Model model, HttpSession session) {
-        SystemOrder systemOrder = orderService.createSystemOrder(session);
-        model.addAttribute("order", systemOrder);
-        model.addAttribute("delivery", systemOrder.getSystemDelivery());
-
-        ShoppingCart cart = cartService.getShoppingCartForSession(session);
-        //добавляем общее количество товаров в корзине
-        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
-        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-
-        return "amin/order-details";
+    public RedirectView proceedToCheckoutOrder(Model model, HttpSession session) {
+        return new RedirectView("/amin/profile/order/show/0/order_id");
     }
 
     @GetMapping("/rollBack")
@@ -105,11 +109,12 @@ public class OrderController {
 //    }
     @GetMapping("/create")
     public RedirectView createOrder(Model model, HttpSession session) {
-        //TODO temporarily
-        System.out.println("****** Create Order *********");
-        System.out.println(session.getAttribute("order"));
-
-        return new RedirectView("/amin/profile/order/all");
+        if(orderService.save((SystemOrder) session.getAttribute("order"))) {
+            cartService.getClearedCartForSession(session);
+            session.removeAttribute("order");
+            return new RedirectView("/amin/profile/order/all");
+        }
+        return new RedirectView("/amin/profile/rollBack");
     }
 
     @GetMapping("/show/{order_id}/order_id")
@@ -117,8 +122,11 @@ public class OrderController {
                                    HttpSession session){
         //TODO наполнить модель атрибутами, в т.ч. editable=false
         // в order-details добавить кнопку "Edit Order" на edit/{order_id}/order_id
-        Order order = orderService.findById(order_id);
-        model.addAttribute("order", order);
+//        Order order = orderService.findById(order_id);
+//        model.addAttribute("order", order);
+        SystemOrder systemOrder = orderService.getSystemOrderForSession(session, order_id);
+        model.addAttribute("order", systemOrder);
+        model.addAttribute("delivery", systemOrder.getSystemDelivery());
 
         ShoppingCart cart = cartService.getShoppingCartForSession(session);
         //добавляем общее количество товаров в корзине
@@ -168,7 +176,7 @@ public class OrderController {
     // Binding Result после @ValidModel !!!
     @PostMapping("/process/edit/{order_id}/order_id")
     public RedirectView processEditOrder(@PathVariable("order_id") Long orderId,
-            @Valid @ModelAttribute("order") Order order,
+            @Valid @ModelAttribute("order") SystemOrder order,
                                    BindingResult theBindingResult) {
 //        System.out.println(order);
 

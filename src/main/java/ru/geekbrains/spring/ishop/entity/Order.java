@@ -21,31 +21,38 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "status_id")
+    //NotNull
     private OrderStatus orderStatus;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    //NotNull
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
 
     @Column(name = "total_items_costs")
+    //NotNull
     private BigDecimal totalItemsCosts;
 
     @Column(name = "total_costs")
+    //NotNull
     private BigDecimal totalCosts;
 
     @OneToOne
     @JoinColumn(name = "delivery_id")
+    //NULL DEFAULT NULL
     private Delivery delivery;
 
     @Column(name = "created_at")
     @CreationTimestamp
+    //TIMESTAMP NOT NULL DEFAULT NOW(),
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     @UpdateTimestamp
+    //TIMESTAMP NOT NULL DEFAULT NOW(),
     private LocalDateTime updatedAt;
 
     @Override
@@ -53,7 +60,7 @@ public class Order {
         return "Order{" +
                 "id=" + id +
                 ", orderStatus=" + orderStatus +
-                ", user=" + user +
+                ", userId=" + user.getId() +
                 ", orderItems=" + orderItems +
                 ", totalItemsCosts=" + totalItemsCosts +
                 ", totalCosts=" + totalCosts +

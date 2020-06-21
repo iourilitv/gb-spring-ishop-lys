@@ -17,23 +17,29 @@ public class Delivery {
 
     @OneToOne
     @JoinColumn(name = "order_id")
+    //NOT NULL
     private Order order;
 
     @Column(name = "phone_number")
+    //NOT NULL
     private String phoneNumber;
 
     @ManyToOne
     @JoinColumn(name = "delivery_address_id")
+    //NOT NULL
     private Address deliveryAddress;
 
     @Column(name = "delivery_cost")
+    //NULL DEFAULT NULL
     private BigDecimal deliveryCost;
 
-    @Column(name = "delivered_at")
-    private LocalDateTime deliveredAt;
-
     @Column(name = "delivery_expected_at")
+    //TIMESTAMP NULL DEFAULT NULL
     private LocalDateTime deliveryExpectedAt;
+
+    @Column(name = "delivered_at")
+    //TIMESTAMP NULL DEFAULT NULL
+    private LocalDateTime deliveredAt;
 
     @Override
     public String toString() {
@@ -43,8 +49,8 @@ public class Delivery {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", deliveryAddress=" + deliveryAddress +
                 ", deliveryCost=" + deliveryCost +
-                ", deliveredAt=" + deliveredAt +
                 ", deliveryExpectedAt=" + deliveryExpectedAt +
+                ", deliveredAt=" + deliveredAt +
                 '}';
     }
 }

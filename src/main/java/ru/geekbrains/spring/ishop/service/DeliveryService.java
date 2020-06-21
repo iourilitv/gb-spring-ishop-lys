@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.Delivery;
+import ru.geekbrains.spring.ishop.entity.Order;
 import ru.geekbrains.spring.ishop.repository.DeliveryRepository;
 import ru.geekbrains.spring.ishop.utils.filters.DeliveryFilter;
 import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
@@ -48,6 +49,10 @@ public class DeliveryService {
         return deliveryRepository.getOne(id);
     }
 
+    public Delivery findByOrder(Order order) {
+        return deliveryRepository.findByOrder(order);
+    }
+
     public Delivery getDeliveryForSession(HttpSession session) {
         Delivery delivery;
         if (session.getAttribute("delivery") == null) {
@@ -67,5 +72,7 @@ public class DeliveryService {
         deliveryRepository.delete(delivery);
     }
 
-
+    public void deleteByOrderId(Long orderId) {
+        deliveryRepository.deleteByOrderId(orderId);
+    }
 }

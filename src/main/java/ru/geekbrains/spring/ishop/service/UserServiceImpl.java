@@ -20,9 +20,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private AddressService addressService;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    public void setAddressService(AddressService addressService) {
+        this.addressService = addressService;
+    }
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -50,6 +56,7 @@ public class UserServiceImpl implements UserService {
         User user = new User("superadmin", passwordEncoder.encode("superadmin"),
                 "superadmin first_name", "superadmin last_name",
                 "+79991234567", "superadmin@mail.com");
+        user.setDeliveryAddress(addressService.findById(1L));
         user.setRoles((Collection<Role>) roleRepository.findAll());
         userRepository.save(user);
     }

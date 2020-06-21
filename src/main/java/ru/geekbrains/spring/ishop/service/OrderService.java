@@ -24,6 +24,7 @@ import java.util.List;
 public class OrderService {
     private ShoppingCartService cartService;
     private DeliveryService deliveryService;
+    private UserService userService;
     private AddressRepository addressRepository;
     private OrderStatusRepository orderStatusRepository;
     private OrderItemRepository orderItemRepository;
@@ -49,6 +50,11 @@ public class OrderService {
     @Autowired
     public void setDeliveryService(DeliveryService deliveryService) {
         this.deliveryService = deliveryService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Autowired
@@ -93,64 +99,88 @@ public class OrderService {
         return orderStatusRepository.getOrderStatusByTitleEquals(title);
     }
 
-    //TODO с ним не сохраняет сущности в бд при даже если нет ошибки отображения страницы
-    // java.lang.StackOverflowError
-    // спринг создает сущности, дает им id и если ошибки нет,
-    // то сохраняет их в бд с этим id. Но при ошибке - уничтожает созданные сущности и
-    // эти id уже не используются!
-//    @Transactional
-    public boolean create(ShoppingCart cart, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        Order order = new Order();
-        order.setOrderStatus(orderStatusRepository
-                .getOrderStatusByTitleEquals("Created"));
-        order.setUser(user);
-        order.setTotalItemsCosts(cart.getTotalCost());
+//    //TODO с ним не сохраняет сущности в бд при даже если нет ошибки отображения страницы
+//    // java.lang.StackOverflowError
+//    // спринг создает сущности, дает им id и если ошибки нет,
+//    // то сохраняет их в бд с этим id. Но при ошибке - уничтожает созданные сущности и
+//    // эти id уже не используются!
+////    @Transactional
+//    public boolean create(ShoppingCart cart, HttpSession session) {
+//        User user = (User) session.getAttribute("user");
+//        Order order = new Order();
+//        order.setOrderStatus(orderStatusRepository
+//                .getOrderStatusByTitleEquals("Created"));
+//        order.setUser(user);
+//        order.setTotalItemsCosts(cart.getTotalCost());
+//
+//        Delivery delivery = deliveryService.getDeliveryForSession(session);
+//        delivery.setPhoneNumber(user.getPhoneNumber());
+//
+//        //TODO temporarily - добавить выбор адреса
+////        delivery.setDeliveryAddress(user.getDeliveryAddress());
+//        delivery.setDeliveryAddress(addressRepository.getOne(1L));
+//        //TODO добавить сервис расчета стоимости доставки
+//        delivery.setDeliveryCost(new BigDecimal(100));
+//        //TODO добавить ввод значений в интерфейс
+//        delivery.setDeliveryExpectedAt(LocalDateTime.of(
+//                LocalDate.of(2020, 6, 3),
+//                LocalTime.of(14, 20)));
+//
+//        order.setTotalCosts(order.getTotalItemsCosts().add(delivery.getDeliveryCost()));
+//        //Сохраняем сначала заготовку заказа, чтобы получить id
+//        orderRepository.save(order);
+//        //сохраняем объект доставки уже привязанный к заказу
+//        delivery.setOrder(order);
+//        deliveryService.save(delivery);
+//        //дополняем заказ объектом доставки
+//        order.setDelivery(delivery);
+//        //сохраняем объекты элементов заказа и добавляем его в заказ
+//        order.setOrderItems(saveOrderItems(cart.getCartItems(), order));
+//        //окончательно записываем заказ
+//        orderRepository.save(order);
+//        if(isOrderSavedCorrectly(order, cart)) {
+//            session.setAttribute("order", order);
+//            return true;
+//        }
+//        return false;
+//    }
 
-        Delivery delivery = deliveryService.getDeliveryForSession(session);
-        delivery.setPhoneNumber(user.getPhoneNumber());
-
-        //TODO temporarily - добавить выбор адреса
-//        delivery.setDeliveryAddress(user.getDeliveryAddress());
-        delivery.setDeliveryAddress(addressRepository.getOne(1L));
-        //TODO добавить сервис расчета стоимости доставки
-        delivery.setDeliveryCost(new BigDecimal(100));
-        //TODO добавить ввод значений в интерфейс
-        delivery.setDeliveryExpectedAt(LocalDateTime.of(
-                LocalDate.of(2020, 6, 3),
-                LocalTime.of(14, 20)));
-
-        order.setTotalCosts(order.getTotalItemsCosts().add(delivery.getDeliveryCost()));
-        //Сохраняем сначала заготовку заказа, чтобы получить id
-        orderRepository.save(order);
-        //сохраняем объект доставки уже привязанный к заказу
-        delivery.setOrder(order);
-        deliveryService.save(delivery);
-        //дополняем заказ объектом доставки
-        order.setDelivery(delivery);
-        //сохраняем объекты элементов заказа и добавляем его в заказ
-        order.setOrderItems(saveOrderItems(cart.getCartItems(), order));
-        //окончательно записываем заказ
-        orderRepository.save(order);
-        if(isOrderSavedCorrectly(order, cart)) {
-            session.setAttribute("order", order);
-            return true;
-        }
-        return false;
-    }
-
-    public SystemOrder createSystemOrder(HttpSession session) {
-        ShoppingCart cart = cartService.getShoppingCartForSession(session);;
-        User user = (User)session.getAttribute("user");
-        SystemDelivery systemDelivery = new SystemDelivery(user.getPhoneNumber(),
-                user.getDeliveryAddress(), BigDecimal.valueOf(100),
-                LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0)));
-        BigDecimal totalCosts = cart.getTotalCost().add(systemDelivery.getDeliveryCost());
-
-//        return new SystemOrder(user, cart.getCartItems(),
+//    public SystemOrder createSystemOrder(HttpSession session) {
+//        ShoppingCart cart = cartService.getShoppingCartForSession(session);;
+//        User user = (User)session.getAttribute("user");
+//        SystemDelivery systemDelivery = new SystemDelivery(user.getPhoneNumber(),
+//                user.getDeliveryAddress(), BigDecimal.valueOf(100),
+//                LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0)));
+//        BigDecimal totalCosts = cart.getTotalCost().add(systemDelivery.getDeliveryCost());
+//
+////        return new SystemOrder(user, cart.getCartItems(),
+////                cart.getTotalCost(), totalCosts, systemDelivery);
+//        SystemOrder systemOrder = new SystemOrder(user, cart.getCartItems(),
 //                cart.getTotalCost(), totalCosts, systemDelivery);
-        SystemOrder systemOrder = new SystemOrder(user, cart.getCartItems(),
-                cart.getTotalCost(), totalCosts, systemDelivery);
+//        session.setAttribute("order", systemOrder);
+//
+//        return systemOrder;
+//    }
+    public SystemOrder getSystemOrderForSession(HttpSession session, Long orderId) {
+        SystemOrder systemOrder;
+        //если в сессии нет текущего заказа(формируем новый заказ)
+        if(orderId == 0) {
+            ShoppingCart cart = cartService.getShoppingCartForSession(session);
+            User user = (User)session.getAttribute("user");
+            SystemDelivery systemDelivery = new SystemDelivery(user.getPhoneNumber(),
+                    user.getDeliveryAddress(), BigDecimal.valueOf(100),
+                    LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0)));
+            BigDecimal totalCosts = cart.getTotalCost().add(systemDelivery.getDeliveryCost());
+            systemOrder = new SystemOrder(user, cart.getCartItems(),
+                    cart.getTotalCost(), totalCosts, systemDelivery);
+        //если вызываем существующий заказ
+        } else {
+            //клонируем заказ в объект текущего заказа
+            systemOrder = new SystemOrder(orderRepository.getOne(orderId));
+        }
+
+        //        return new SystemOrder(user, cart.getCartItems(),
+        //                cart.getTotalCost(), totalCosts, systemDelivery);
         session.setAttribute("order", systemOrder);
 
         return systemOrder;
@@ -160,16 +190,93 @@ public class OrderService {
         cartService.rollBackToCart(session);
     }
 
-    public void save(Order order) {
+//    public void save(Order order) {
+//        System.out.println(order);
+////        orderRepository.save(order);
+//    }
+    @Transactional
+    public boolean save(SystemOrder systemOrder) {
+        //создаем черновик заказа
+        Order order = createNewDraftOrUpdateOrder(systemOrder);
+        //если это новый заказ
+        if(systemOrder.getId() == null) {
+            //сохраняем черновик заказа, чтобы получить orderId
+            orderRepository.save(order);
+        //если обновляется существующий заказ
+        } else {
+            //удаляем предыдущий список товаров заказа
+            orderItemRepository.deleteOrderItemsByOrderId(order.getId());
+        }
+        //сохраняем в БД и записываем в заказ обновленные объекты элементов заказа
+        order.setOrderItems(saveOrderItems(systemOrder.getOrderItems(), order));
+        //создаем новый объект доставки
+        Delivery delivery = createDelivery(systemOrder.getSystemDelivery(), order);
+        //сохраняем объект доставка в БД
+        deliveryService.save(delivery);
+        //записываем в заказ обновленный объект доставки
+        order.setDelivery(delivery);
         System.out.println(order);
-//        orderRepository.save(order);
+        return isOrderSavedCorrectly(orderRepository.save(order), systemOrder);
     }
 
-//    public void delete(Order order) {
+//    private Delivery saveDelivery(SystemDelivery systemDelivery, Order order) {
+//        Delivery delivery;
+//        if(systemDelivery.getId() == null) {
+//            delivery = new Delivery();
+//            delivery.setOrder(order);
+//        } else {
+//            delivery = deliveryService.findById(systemDelivery.getId());
+//        }
+//        delivery.setPhoneNumber(systemDelivery.getPhoneNumber());
+//        delivery.setDeliveryAddress(systemDelivery.getDeliveryAddress());
+//        delivery.setDeliveryCost(systemDelivery.getDeliveryCost());
+//        delivery.setDeliveryExpectedAt(systemDelivery.getDeliveryExpectedAt());
+//        delivery.setDeliveredAt(systemDelivery.getDeliveredAt());
+//        deliveryService.save(delivery);
+////        return deliveryService.findById(delivery.getId());
+//        return delivery;
+//    }
+    private Delivery createDelivery(SystemDelivery systemDelivery, Order order) {
+        Delivery delivery;
+        if(systemDelivery.getId() == null) {
+            delivery = new Delivery();
+            delivery.setOrder(order);
+        } else {
+            delivery = deliveryService.findById(systemDelivery.getId());
+        }
+        delivery.setPhoneNumber(systemDelivery.getPhoneNumber());
+        delivery.setDeliveryAddress(systemDelivery.getDeliveryAddress());
+        delivery.setDeliveryCost(systemDelivery.getDeliveryCost());
+        delivery.setDeliveryExpectedAt(systemDelivery.getDeliveryExpectedAt());
+        delivery.setDeliveredAt(systemDelivery.getDeliveredAt());
+        return delivery;
+    }
+
+    Order createNewDraftOrUpdateOrder(SystemOrder systemOrder) {
+        Order order;
+        if(systemOrder.getId() == null) {
+            order = new Order();
+            order.setOrderStatus(orderStatusRepository
+                    .getOrderStatusByTitleEquals("Created"));
+        } else {
+            order = orderRepository.getOne(systemOrder.getId());
+            order.setOrderStatus(systemOrder.getOrderStatus());
+        }
+        User user = userService.findByUserName(systemOrder.getUser().getUserName());
+        order.setUser(user);
+        order.setTotalItemsCosts(systemOrder.getTotalItemsCosts());
+        order.setTotalCosts(systemOrder.getTotalCosts());
+        return order;
+    }
+
+    //    public void delete(Order order) {
 //        orderRepository.delete(order);
 //    }
+    @Transactional
     public void delete(Long orderId) {
-        orderRepository.delete(findById(orderId));
+        orderItemRepository.deleteOrderItemsByOrderId(orderId);
+        deliveryService.deleteByOrderId(orderId);
+        orderRepository.deleteById(orderId);
     }
 
     public void cancelOrder(Long orderId) {
@@ -199,12 +306,18 @@ public class OrderService {
         return order;
     }
 
-    private boolean isOrderSavedCorrectly(Order order, ShoppingCart cart) {
-        List<OrderItem> cartOrderItems = cart.getCartItems();
-        List<OrderItem> orderItems = orderItemRepository.findAllOrderItemsByOrder(order);
+//    private boolean isOrderSavedCorrectly(Order order, ShoppingCart cart) {
+//        List<OrderItem> cartOrderItems = cart.getCartItems();
+//        List<OrderItem> orderItems = orderItemRepository.findAllOrderItemsByOrder(order);
+//        //простая проверка сохраненного заказа
+//        return orderItems.size() == cartOrderItems.size() &&
+//                order.getTotalItemsCosts().equals(cart.getTotalCost());
+//    }
+    private boolean isOrderSavedCorrectly(Order order, SystemOrder systemOrder) {
         //простая проверка сохраненного заказа
-        return orderItems.size() == cartOrderItems.size() &&
-                order.getTotalItemsCosts().equals(cart.getTotalCost());
+        return order.getOrderItems().size() == systemOrder.getOrderItems().size() &&
+                order.getTotalItemsCosts().equals(systemOrder.getTotalItemsCosts()) &&
+                order.getTotalCosts().equals(systemOrder.getTotalCosts());
     }
 
     private void updateOrderItemQuantity(Order order, OrderItem orderItem) {
