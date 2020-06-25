@@ -114,18 +114,11 @@ public class OrderService {
     }
 
     @Transactional
-    public boolean save(SystemOrder systemOrder) {
+    public boolean saveNewOrder(SystemOrder systemOrder) {
         //создаем черновик заказа
         Order order = createNewDraftOrUpdateOrder(systemOrder);
-        //если это новый заказ
-        if(systemOrder.getId() == null) {
-            //сохраняем черновик заказа, чтобы получить orderId
-            orderRepository.save(order);
-        //если обновляется существующий заказ
-        } else {
-            //удаляем предыдущий список товаров заказа
-            orderItemRepository.deleteOrderItemsByOrderId(order.getId());
-        }
+        //сохраняем черновик заказа, чтобы получить orderId
+        orderRepository.save(order);
         //сохраняем в БД и записываем в заказ обновленные объекты элементов заказа
         order.setOrderItems(saveOrderItems(systemOrder.getOrderItems(), order));
         //создаем новый объект доставки
@@ -134,8 +127,46 @@ public class OrderService {
         deliveryService.save(delivery);
         //записываем в заказ обновленный объект доставки
         order.setDelivery(delivery);
-        System.out.println(order);
         return isOrderSavedCorrectly(orderRepository.save(order), systemOrder);
+    }
+
+    @Transactional
+    public boolean updateOrderStatus(SystemOrder systemOrder) {
+        //получаем экземпляр заказа из БД
+        Order order = orderRepository.getOne(systemOrder.getId());
+        //записываем в заказ обновленный объект статуса
+        order.setOrderStatus(systemOrder.getOrderStatus());
+        //сохраняем обновленный заказ в БД
+        orderRepository.save(order);
+        return true;
+    }
+
+    @Transactional
+    public boolean updateDelivery(SystemOrder systemOrder) {
+        //получаем экземпляр заказа из БД
+        Order order = orderRepository.getOne(systemOrder.getId());
+        //получаем экземпляр объекта доставка из БД и изменяем его
+        Delivery delivery = createDelivery(systemOrder.getSystemDelivery(), order);
+        //сохраняем объект доставка в БД
+        deliveryService.save(delivery);
+        //записываем в заказ обновленный объект доставки
+        order.setDelivery(delivery);
+        //сохраняем обновленный заказ в БД
+        orderRepository.save(order);
+        return true;
+    }
+
+    @Transactional
+    public boolean updateOrderItems(SystemOrder systemOrder) {
+        //получаем экземпляр заказа из БД
+        Order order = orderRepository.getOne(systemOrder.getId());
+        //удаляем предыдущий список товаров заказа
+        orderItemRepository.deleteOrderItemsByOrderId(order.getId());
+        //сохраняем в БД и записываем в заказ обновленные объекты элементов заказа
+        order.setOrderItems(saveOrderItems(systemOrder.getOrderItems(), order));
+        //сохраняем обновленный заказ в БД
+        orderRepository.save(order);
+        return true;
     }
 
     private Delivery createDelivery(SystemDelivery systemDelivery, Order order) {

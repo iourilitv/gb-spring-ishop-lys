@@ -43,12 +43,15 @@ Means GET - if not specified.
 #####/rollBack
 #####/create
 #####/show/{order_id}/order_id
-
 #####/edit/{order_id}/order_id
-#####/process/edit/{order_id}/order_id (POST)
+//#####/process/edit/{order_id}/order_id (POST)
 
 #####/delete/{order_id}/order_id
 #####/cancel/{order_id}/order_id
+
+#####/process/update/orderStatus (POST)
+#####/process/update/delivery (POST)
+#####/process/update/orderItems (POST)
 
 ##Admin section.
 ###/{root}/admin

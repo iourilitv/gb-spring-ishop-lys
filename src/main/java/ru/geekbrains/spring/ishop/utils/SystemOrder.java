@@ -19,6 +19,9 @@ public class SystemOrder {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    public SystemOrder() {
+    }
+
     public SystemOrder(Order order) {
         this.id = order.getId();
         this.orderStatus = order.getOrderStatus();

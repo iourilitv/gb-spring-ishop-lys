@@ -18,6 +18,9 @@ public class SystemDelivery {
     private LocalDateTime deliveredAt;
     private LocalDateTime deliveryExpectedAt;
 
+    public SystemDelivery() {
+    }
+
     public SystemDelivery(Delivery delivery) {
         this.id = delivery.getId();
         this.order = delivery.getOrder();

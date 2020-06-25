@@ -31,6 +31,8 @@
 <!--/*@thymesVar id="order" type="ru.geekbrains.spring.ishop.entity.Order"*/-->
 <!--/*@thymesVar id="orderStatuses" type="java.util.List"*/-->
 <!--/*@thymesVar id="orderStatus" type="ru.geekbrains.spring.ishop.entity.OrderStatus"*/-->
+<!--/*@thymesVar id="delivery" type="ru.geekbrains.spring.ishop.utils.SystemDelivery"*/-->
+<!--/*@thymesVar id="orderItem" type="ru.geekbrains.spring.ishop.entity.OrderItem"*/-->
 
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
     <superheader th:replace="/amin/fragments/header.html :: header(
@@ -38,7 +40,7 @@
         showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
 
-    <!-- Order Form Section Begin -->
+    <!-- Order Details Section Begin -->
     <section class="cart-list-section spad">
         <div class="container">
             <!-- Блок Хлебные крошки Begin-->
@@ -57,34 +59,51 @@
             </div>
             <!-- Блок Хлебные крошки End -->
 
-            <!-- Order Form Begin -->
-            <form th:action="@{'/profile/order/process/edit/' + ${order.id} + '/order_id'}"
-                  th:object="${order}" method="POST">
-
-                <!-- Id hidden field -->
+            <!-- Order Form Block Begin -->
+            <div class="row">
+                <!-- Id uneditable field Begin -->
                 <h5 class="color-white">Order Id</h5>
                 <label>
-                    <input type="text" th:field="*{id}" th:hidden="true" th:text="*{id}">
+                    <input type="text" th:field="${order.id}" th:hidden="true" th:text="${order.id}">
                 </label>
+                <!-- Id uneditable field End -->
 
-                <!-- Order Status field -->
-                <h5 class="color-white">Order Status</h5>
-                <label class="filter-field-label">
-                    <select th:field="*{orderStatus}" class="select-btn-dropdown-toggle">
-                        <option class="dropdown-option"
-                                th:each="orderStatus : ${orderStatuses}"
-                                th:text="${orderStatus.title}"
-                                th:selected="${#strings.equals(order.orderStatus.id, orderStatus.id)}" th:value="${orderStatus.id}"></option>
-                    </select>
-                </label>
+                <!-- Form: Order Status Begin -->
+                <form th:action="@{'/profile/order/process/update/orderStatus'}"
+                      th:object="${orderStatus}" method="POST">
+                    <h5 class="color-white">Order Status</h5>
+                    <label class="filter-field-label">
+                        <select th:field="*{id}" class="select-btn-dropdown-toggle">
+                            <option class="dropdown-option"
+                                    th:each="orderStatus : ${orderStatuses}"
+                                    th:text="${orderStatus.title}"
+                                    th:selected="${#strings.equals(order.orderStatus.id, orderStatus.id)}" th:value="${orderStatus.id}"></option>
+                        </select>
+                    </label>
+                    <!-- Buttons -->
+                    <div class="user_form__buttons__div">
+                        <button type="submit" class="catalog__product-card__price btn-subscribe">Confirm and close</button>
+                    </div>
+                </form>
+                <!-- Form: Order Status End -->
 
-                <!-- User hidden field -->
+                <!-- User uneditable field Begin -->
                 <h5 class="color-white">User</h5>
-                <label>
-                    <input type="text" th:field="*{user}" th:hidden="true" th:text="*{user.id + ', ' + user.firstName + ' ' + user.lastName}">
-                </label>
+                <table class="table color-white">
+                    <thead><tr>
+                        <th>id</th>
+                        <th>first name</th>
+                        <th>last name</th>
+                    </tr></thead>
+                    <tbody><tr>
+                        <td th:text="${order.user.id}"></td>
+                        <td th:text="${order.user.firstName}"></td>
+                        <td th:text="${order.user.lastName}"></td>
+                    </tr></tbody>
+                </table>
+                <!-- User uneditable field End -->
 
-                <!-- Table of orderItems field Begin -->
+                <!-- Form: Table of orderItems field Begin -->
                 <h5 class="color-white">Order Items List</h5>
                 <table class="table color-white">
                     <thead>
@@ -94,12 +113,12 @@
                         <th>product title</th>
                         <th>order item price</th>
                         <th>quantity</th>
-                        <th>order items costs</th>
+                        <th>order item costs</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="orderItem, itrStat : *{orderItems}">
+                    <tr th:each="orderItem, itrStat : ${order.orderItems}">
                         <td th:text="${itrStat.index + 1}"></td>
 
                         <td th:text="${orderItem.product.id}"></td>
@@ -124,56 +143,95 @@
 
                     <tr>
                         <th colspan="5">Total Cost of Order Items:</th>
-
-                        <td th:text="*{totalItemsCosts}"></td>
+                        <td th:text="${order.totalItemsCosts}"></td>
                         <td></td>
                     </tr>
                     </tbody>
                 </table>
-                <!-- Table of orderItems field Begin -->
+                <!-- Form: Table of orderItems field Begin -->
 
-                <!-- orderItems hidden field(duplicate in table) -->
-                <label>
-                    <input th:field="*{orderItems}" th:hidden="true" th:text="*{orderItems}">
-                </label>
+                <!-- //TODO totalItemsCosts hidden field(duplicate in table) -->
+<!--                <label>-->
+<!--                    <input th:field="*{totalItemsCosts}" th:hidden="true">-->
+<!--                </label>-->
 
-                <!-- totalItemsCosts hidden field(duplicate in table) -->
-                <label>
-                    <input th:field="*{totalItemsCosts}" th:hidden="true">
-                </label>
+                <!-- Form: Delivery Begin -->
+                <form th:action="@{'/profile/order/process/update/delivery'}"
+                      th:object="${delivery}" method="POST">
+                    <h5 class="color-white">Order Status</h5>
+                    <table class="table color-white">
+                        <thead><tr>
+                            <th>id</th>
+                            <th>order</th>
+                            <th>phoneNumber</th>
+                            <th>deliveryAddress</th>
+                            <th>deliveryCost</th>
+                            <th>deliveryExpectedAt</th>
+                            <th>deliveredAt</th>
+                        </tr></thead>
+                        <tbody><tr>
+                            <td><label>
+                                    <input type="text" th:field="*{id}" th:hidden="true" th:text="*{id}">
+                                </label></td>
 
-                <!-- totalCosts hidden field -->
-                <h5 class="color-white">Total Costs</h5>
-                <label>
-                    <input type="text" th:field="*{totalCosts}" th:hidden="true" th:text="*{totalCosts}">
-                </label>
+                            <td><label>
+                                    <input type="text" th:field="*{order}" th:hidden="true" th:text="*{order}">
+                                </label></td>
 
-                <!-- delivery hidden field -->
-                <h5 class="color-white">Delivery</h5>
-                <label>
-                    <input type="text" th:field="*{delivery}" th:hidden="true" th:text="*{delivery}">
-                </label>
+                            <td><label>
+                                <input type="text" th:field="*{phoneNumber}" th:hidden="true" th:text="*{phoneNumber}">
+                            </label></td>
 
-                <!-- createdAt hidden field -->
-                <label>
-                    <input type="text" th:field="*{createdAt}" th:hidden="true">
-                </label>
+                            <td><label>
+                                <input type="text" th:field="*{deliveryAddress}" th:hidden="true" th:text="*{deliveryAddress}">
+                            </label></td>
+
+                            <td><label>
+    <!--                            <input type="text" th:field="*{deliveryCost}" th:hidden="true" th:text="*{deliveryCost}">-->
+                                <input type="number" th:field="*{deliveryCost}">
+                            </label></td>
+
+                            <td><label>
+                                <input type="text" th:field="*{deliveryExpectedAt}" th:hidden="true" th:text="*{deliveryExpectedAt}">
+                            </label></td>
+
+                            <td><label>
+                                <input type="text" th:field="*{deliveredAt}" th:hidden="true" th:text="*{deliveredAt}">
+                            </label></td>
+                        </tr></tbody>
+                    </table>
+                    <!-- Buttons -->
+                    <div class="user_form__buttons__div">
+                        <button type="submit" class="catalog__product-card__price btn-subscribe">Confirm and close</button>
+                    </div>
+                </form>
+                <!-- Form: Delivery End -->
+
+                <!-- Total Order Cost uneditable field Begin -->
+                <h5 class="color-white">Total Order Cost</h5>
+                <table class="table color-white">
+                    <tbody><tr><td th:text="${order.totalCosts}"></td></tr></tbody>
+                </table>
+                <!-- Total Order Cost uneditable field End -->
+
+                <!-- CreatedAt uneditable field Begin -->
+                <h5 class="color-white">CreatedAt</h5>
+                <table class="table color-white">
+                    <tbody><tr><td th:text="${order.createdAt}"></td></tr></tbody>
+                </table>
+                <!-- CreatedAt uneditable field End -->
 
                 <!-- Buttons -->
                 <div class="user_form__buttons__div">
-                    <button type="submit" class="catalog__product-card__price btn-subscribe">Confirm and close</button>
-<!--                    <button type="reset" class="catalog__product-card__price btn-reset">Close form</button>-->
-                    <div>
-                        <a class="catalog__product-card__price btn-reset" th:href="@{'/profile/order/all'}">
-                            <span>Close form</span>
-                        </a>
-                    </div>
+                    <a class="catalog__product-card__price btn-reset" th:href="@{'/profile/order/all'}">
+                        <span>Close form</span>
+                    </a>
                 </div>
-            </form>
-            <!-- Order Form End -->
+            </div>
+            <!-- Order Form Block End -->
         </div>
     </section>
-    <!-- Order Form Section End -->
+    <!-- Order Details Section End -->
 
     <!-- Footer Section Begin -->
     <footer th:replace="/amin/fragments/footer.html"></footer>
