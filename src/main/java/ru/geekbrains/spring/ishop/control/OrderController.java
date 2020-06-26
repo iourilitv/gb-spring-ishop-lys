@@ -19,7 +19,6 @@ import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Map;
 
 @Component
@@ -106,21 +105,6 @@ public class OrderController {
         return "amin/order-details";
     }
 
-//    @GetMapping("/edit/{order_id}/order_id")
-//    public String editOrder(@PathVariable Long order_id, Model model,
-//                            HttpSession session) {
-//        Order order = orderService.findById(order_id);
-//        model.addAttribute("order", order);
-//        List<OrderStatus> orderStatuses = orderService.findAllOrderStatuses();
-//        model.addAttribute("orderStatuses", orderStatuses);
-//
-//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
-//        //добавляем общее количество товаров в корзине
-//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
-//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-//
-//        return "amin/order-form";
-//    }
     @GetMapping("/edit/{order_id}/order_id")
     public String editOrder(@PathVariable Long order_id, Model model,
                             HttpSession session) {
@@ -150,55 +134,6 @@ public class OrderController {
         return new RedirectView("/amin/profile/order/all");
     }
 
-    // Binding Result после @ValidModel !!!
-//    @PostMapping("/process/edit/{order_id}/order_id")
-//    public RedirectView processEditOrder(@PathVariable("order_id") Long orderId,
-//            @Valid @ModelAttribute("order") SystemOrder systemOrder,
-//                                   BindingResult theBindingResult,
-//                                         HttpSession session) {
-//        if (theBindingResult.hasErrors()) {
-//            return new RedirectView("/amin/profile/edit/" + orderId + "order_id");
-//        }
-//        //TODO доделать
-//        System.out.println(systemOrder);
-//
-////        orderService.save(systemOrder);
-//        return new RedirectView("/amin/profile/order/all");
-//    }
-
-//    //TODO Надо ли?
-//    @GetMapping("/edit/{order_id}/order_id/update/{prod_id}/prod_id")
-//    public Object editOrderItem(@PathVariable("order_id") Long orderId,
-//                                @PathVariable("prod_id") Long prodId,
-//                                Model model, HttpSession session) {
-//        List<OrderItem> orderItems = orderService.findById(orderId).getOrderItems();
-//        model.addAttribute("orderId", orderId);
-//        OrderItem orderItem = orderService.findOrderItemByProdId(orderItems, prodId);
-//        model.addAttribute("orderItem", orderItem);
-//
-//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
-//        //добавляем общее количество товаров в корзине
-//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
-//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-//
-//        return "amin/order-item-form";
-//    }
-
-//    //TODO Надо ли?
-//    @PostMapping("/process/edit/{order_id}/order_id/update/{prod_id}/prod_id")
-//    public String processEditOrderItem(
-//            @PathVariable("order_id") Long orderId,
-//            @PathVariable("prod_id") Long prodId,
-//            @Valid @ModelAttribute("orderItem") OrderItem orderItem,
-//            BindingResult theBindingResult, Model model) {
-//        Order order = orderItem.getOrder();
-//        order = orderService.recalculateOrderCosts(order, orderItem);
-//        model.addAttribute("order", order);
-//        List<OrderStatus> orderStatuses = orderService.findAllOrderStatuses();
-//        model.addAttribute("orderStatuses", orderStatuses);
-//        return "amin/order-form";
-//    }
-
     @PostMapping("/process/update/orderStatus")
     public RedirectView processUpdateOrderStatus(@Valid @ModelAttribute("orderStatus") OrderStatus orderStatus,
                                               BindingResult theBindingResult,
@@ -212,38 +147,6 @@ public class OrderController {
                 systemOrder.getId() + "/order_id");
     }
 
-//    @PostMapping("/process/update/orderItems")
-//    public RedirectView processUpdateOrderItems(@Valid @ModelAttribute("orderItems") List<OrderItem> orderItems,
-//                                              BindingResult theBindingResult, HttpSession session) {
-//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
-//        if (!theBindingResult.hasErrors()) {
-//            systemOrder.setOrderItems(orderItems);
-//            //сохраняем изменение в БД
-////            orderService.updateOrderItems(systemOrder);
-//        }
-//        //TODO temporarily
-//        System.out.println(orderItems);
-//
-//        return new RedirectView("/amin/profile/order/edit/" +
-//                systemOrder.getId() + "/order_id");
-//    }
-
-//    @PostMapping("/process/update/delivery")
-//    public RedirectView processUpdateDelivery(@Valid @ModelAttribute("delivery") SystemDelivery systemDelivery,
-//                                              BindingResult theBindingResult,
-//                                              HttpSession session) {
-//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
-//        if (!theBindingResult.hasErrors()) {
-//            systemOrder.setSystemDelivery(systemDelivery);
-//            //если это редактирование сохраненного заказа
-//            if(systemOrder.getId() != null) {
-//                //сохраняем изменение в БД
-//                orderService.updateDelivery(systemOrder);
-//            }
-//        }
-//        return new RedirectView("/amin/profile/order/edit/" +
-//                systemOrder.getId() + "/order_id");
-//    }
     @PostMapping("/process/update/delivery")
     public RedirectView processUpdateDelivery(@Valid @ModelAttribute("delivery") SystemDelivery systemDelivery,
                                               BindingResult theBindingResult,
