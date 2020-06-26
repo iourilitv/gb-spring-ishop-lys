@@ -34,11 +34,11 @@ public class Delivery {
     private BigDecimal deliveryCost;
 
     @Column(name = "delivery_expected_at")
-    //TIMESTAMP NULL DEFAULT NULL
+    //DATETIME NULL DEFAULT NULL
     private LocalDateTime deliveryExpectedAt;
 
     @Column(name = "delivered_at")
-    //TIMESTAMP NULL DEFAULT NULL
+    //DATETIME NULL DEFAULT NULL
     private LocalDateTime deliveredAt;
 
     @Override

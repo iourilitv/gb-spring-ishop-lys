@@ -126,14 +126,8 @@ public class OrderController {
                             HttpSession session) {
         SystemOrder systemOrder = orderService.getSystemOrderForSession(session, order_id);
         model.addAttribute("order", systemOrder);
-
-//        SystemDelivery sessionDelivery = (SystemDelivery) session.getAttribute("delivery");
-//        if(sessionDelivery != null) {
-//            model.addAttribute("delivery", sessionDelivery);
-//        } else {
-//            model.addAttribute("delivery", systemOrder.getSystemDelivery());
-//        }
         model.addAttribute("orderStatuses", orderService.findAllOrderStatuses());
+        model.addAttribute("orderStatus", systemOrder.getOrderStatus());
         model.addAttribute("delivery", systemOrder.getSystemDelivery());
 
         ShoppingCart cart = cartService.getShoppingCartForSession(session);
@@ -209,61 +203,57 @@ public class OrderController {
     public RedirectView processUpdateOrderStatus(@Valid @ModelAttribute("orderStatus") OrderStatus orderStatus,
                                               BindingResult theBindingResult,
                                               HttpSession session) {
-        SystemOrder systemOrder = null;
+        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
         if (!theBindingResult.hasErrors()) {
-            systemOrder = (SystemOrder) session.getAttribute("order");
-            //если сохранение изменения в БД прошло успешно обновляем системный заказ
-            if(orderService.updateOrderStatus(systemOrder)) {
-                systemOrder.setOrderStatus(orderStatus);
-                session.setAttribute("order", systemOrder);
-            }
+            systemOrder.setOrderStatus(orderStatus);
+            orderService.updateOrderStatus(systemOrder);
         }
-        //TODO temporarily
-        System.out.println(orderStatus);
-
-        assert systemOrder != null;
         return new RedirectView("/amin/profile/order/edit/" +
                 systemOrder.getId() + "/order_id");
     }
 
+//    @PostMapping("/process/update/orderItems")
+//    public RedirectView processUpdateOrderItems(@Valid @ModelAttribute("orderItems") List<OrderItem> orderItems,
+//                                              BindingResult theBindingResult, HttpSession session) {
+//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
+//        if (!theBindingResult.hasErrors()) {
+//            systemOrder.setOrderItems(orderItems);
+//            //сохраняем изменение в БД
+////            orderService.updateOrderItems(systemOrder);
+//        }
+//        //TODO temporarily
+//        System.out.println(orderItems);
+//
+//        return new RedirectView("/amin/profile/order/edit/" +
+//                systemOrder.getId() + "/order_id");
+//    }
+
+//    @PostMapping("/process/update/delivery")
+//    public RedirectView processUpdateDelivery(@Valid @ModelAttribute("delivery") SystemDelivery systemDelivery,
+//                                              BindingResult theBindingResult,
+//                                              HttpSession session) {
+//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
+//        if (!theBindingResult.hasErrors()) {
+//            systemOrder.setSystemDelivery(systemDelivery);
+//            //если это редактирование сохраненного заказа
+//            if(systemOrder.getId() != null) {
+//                //сохраняем изменение в БД
+//                orderService.updateDelivery(systemOrder);
+//            }
+//        }
+//        return new RedirectView("/amin/profile/order/edit/" +
+//                systemOrder.getId() + "/order_id");
+//    }
     @PostMapping("/process/update/delivery")
     public RedirectView processUpdateDelivery(@Valid @ModelAttribute("delivery") SystemDelivery systemDelivery,
-                                         BindingResult theBindingResult,
-                                         HttpSession session) {
-        SystemOrder systemOrder = null;
-        if (!theBindingResult.hasErrors()) {
-            systemOrder = (SystemOrder) session.getAttribute("order");
-            //если сохранение изменения в БД прошло успешно обновляем системный заказ
-            if(orderService.updateDelivery(systemOrder)) {
-                systemOrder.setSystemDelivery(systemDelivery);
-                session.setAttribute("order", systemOrder);
-            }
-        }
-        //TODO temporarily
-        System.out.println(systemDelivery);
-
-        assert systemOrder != null;
-        return new RedirectView("/amin/profile/order/edit/" +
-                systemOrder.getId() + "/order_id");
-    }
-
-    @PostMapping("/process/update/orderItems")
-    public RedirectView processUpdateOrderItems(@Valid @ModelAttribute("orderItems") List<OrderItem> orderItems,
                                               BindingResult theBindingResult,
                                               HttpSession session) {
-        SystemOrder systemOrder = null;
+        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
         if (!theBindingResult.hasErrors()) {
-            systemOrder = (SystemOrder) session.getAttribute("order");
-            //если сохранение изменения в БД прошло успешно обновляем системный заказ
-            if(orderService.updateOrderItems(systemOrder)) {
-                systemOrder.setOrderItems(orderItems);
-                session.setAttribute("order", systemOrder);
-            }
+            systemOrder.setSystemDelivery(systemDelivery);
+            //сохраняем изменение в БД
+            orderService.updateDelivery(systemOrder);
         }
-        //TODO temporarily
-        System.out.println(orderItems);
-
-        assert systemOrder != null;
         return new RedirectView("/amin/profile/order/edit/" +
                 systemOrder.getId() + "/order_id");
     }

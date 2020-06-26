@@ -167,14 +167,11 @@
                     <!-- button "Confirm and close" -->
                     <a th:if="${order.orderStatus} == null" class="catalog__product-card__price btn-subscribe"
                        th:href="@{'/profile/order/create'}">Confirm and close</a>
+
                     <!-- button "Roll Back To Cart" -->
                     <a  th:if="${order.orderStatus} == null" class="catalog__product-card__price btn-reset"
                         th:href="@{'/profile/order/rollBack'}">Roll Back To Cart</a>
-                    <!-- button "Edit" -->
-                    <a th:if="${order.getId()} == null" class="catalog__product-card__price btn-info"
-                       th:href="@{'/profile/order/edit/0/order_id'}">Edit Order</a>
-                    <a th:if="${order.getId()} != null" class="catalog__product-card__price btn-info"
-                       th:href="@{'/profile/order/edit/' + ${order.getId()} + '/order_id'}">Edit Order</a>
+
                     <!-- button "Close" -->
                     <a th:if="${order.orderStatus} != null" class="catalog__product-card__price btn-subscribe"
                        th:href="@{'/profile/order/all'}">Close</a>

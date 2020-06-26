@@ -88,6 +88,7 @@ public class OrderService {
         return orderStatusRepository.getOrderStatusByTitleEquals(title);
     }
 
+    @Transactional
     public SystemOrder getSystemOrderForSession(HttpSession session, Long orderId) {
         SystemOrder systemOrder;
         //если в сессии нет текущего заказа(формируем новый заказ)
@@ -103,6 +104,7 @@ public class OrderService {
         //если вызываем существующий заказ
         } else {
             //клонируем заказ в объект текущего заказа
+
             systemOrder = new SystemOrder(orderRepository.getOne(orderId));
         }
         session.setAttribute("order", systemOrder);
@@ -131,29 +133,13 @@ public class OrderService {
     }
 
     @Transactional
-    public boolean updateOrderStatus(SystemOrder systemOrder) {
+    public void updateOrderStatus(SystemOrder systemOrder) {
         //получаем экземпляр заказа из БД
         Order order = orderRepository.getOne(systemOrder.getId());
         //записываем в заказ обновленный объект статуса
         order.setOrderStatus(systemOrder.getOrderStatus());
         //сохраняем обновленный заказ в БД
         orderRepository.save(order);
-        return true;
-    }
-
-    @Transactional
-    public boolean updateDelivery(SystemOrder systemOrder) {
-        //получаем экземпляр заказа из БД
-        Order order = orderRepository.getOne(systemOrder.getId());
-        //получаем экземпляр объекта доставка из БД и изменяем его
-        Delivery delivery = createDelivery(systemOrder.getSystemDelivery(), order);
-        //сохраняем объект доставка в БД
-        deliveryService.save(delivery);
-        //записываем в заказ обновленный объект доставки
-        order.setDelivery(delivery);
-        //сохраняем обновленный заказ в БД
-        orderRepository.save(order);
-        return true;
     }
 
     @Transactional
@@ -167,6 +153,20 @@ public class OrderService {
         //сохраняем обновленный заказ в БД
         orderRepository.save(order);
         return true;
+    }
+
+    @Transactional
+    public void updateDelivery(SystemOrder systemOrder) {
+        //получаем экземпляр заказа из БД
+        Order order = orderRepository.getOne(systemOrder.getId());
+        //получаем экземпляр объекта доставка из БД и изменяем его
+        Delivery delivery = createDelivery(systemOrder.getSystemDelivery(), order);
+        //сохраняем объект доставка в БД
+        deliveryService.save(delivery);
+        //записываем в заказ обновленный объект доставки
+        order.setDelivery(delivery);
+        //сохраняем обновленный заказ в БД
+        orderRepository.save(order);
     }
 
     private Delivery createDelivery(SystemDelivery systemDelivery, Order order) {

@@ -15,8 +15,8 @@ public class SystemDelivery {
     private String phoneNumber;
     private Address deliveryAddress;
     private BigDecimal deliveryCost;
-    private LocalDateTime deliveredAt;
     private LocalDateTime deliveryExpectedAt;
+    private LocalDateTime deliveredAt;
 
     public SystemDelivery() {
     }
@@ -27,8 +27,8 @@ public class SystemDelivery {
         this.phoneNumber = delivery.getPhoneNumber();
         this.deliveryAddress = delivery.getDeliveryAddress();
         this.deliveryCost = delivery.getDeliveryCost();
-        this.deliveredAt = delivery.getDeliveredAt();
         this.deliveryExpectedAt = delivery.getDeliveryExpectedAt();
+        this.deliveredAt = delivery.getDeliveredAt();
     }
 
     public SystemDelivery(String phoneNumber, Address deliveryAddress,
@@ -48,8 +48,8 @@ public class SystemDelivery {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", deliveryAddress=" + deliveryAddress +
                 ", deliveryCost=" + deliveryCost +
-                ", deliveredAt=" + deliveredAt +
                 ", deliveryExpectedAt=" + deliveryExpectedAt +
+                ", deliveredAt=" + deliveredAt +
                 '}';
     }
 }
