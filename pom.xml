@@ -196,6 +196,13 @@
             <artifactId>jquery</artifactId>
             <version>RELEASE</version>
         </dependency>
+
+        <!-- 19.RabbitMQ для взаимодействия с другими сервисами -->
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>5.7.0</version>
+        </dependency>
     </dependencies>
 
     <build>
