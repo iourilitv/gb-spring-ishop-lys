@@ -155,6 +155,19 @@ public class OrderService {
         return true;
     }
 
+//    @Transactional
+//    public void updateDelivery(SystemOrder systemOrder) {
+//        //получаем экземпляр заказа из БД
+//        Order order = orderRepository.getOne(systemOrder.getId());
+//        //получаем экземпляр объекта доставка из БД и изменяем его
+//        Delivery delivery = createDelivery(systemOrder.getSystemDelivery(), order);
+//        //сохраняем объект доставка в БД
+//        deliveryService.save(delivery);
+//        //записываем в заказ обновленный объект доставки
+//        order.setDelivery(delivery);
+//        //сохраняем обновленный заказ в БД
+//        orderRepository.save(order);
+//    }
     @Transactional
     public void updateDelivery(SystemOrder systemOrder) {
         //получаем экземпляр заказа из БД
@@ -165,6 +178,8 @@ public class OrderService {
         deliveryService.save(delivery);
         //записываем в заказ обновленный объект доставки
         order.setDelivery(delivery);
+        //пересчитываем totalCosts
+        order.setTotalCosts(order.getTotalItemsCosts().add(delivery.getDeliveryCost()));
         //сохраняем обновленный заказ в БД
         orderRepository.save(order);
     }
@@ -217,13 +232,13 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public Order recalculateOrderCosts(Order order, OrderItem orderItem) {
-        updateOrderItemQuantity(order, orderItem);
-        recalculate(order);
-        System.out.println("********* recalculated order *********");
-        System.out.println(order);
-        return order;
-    }
+//    public Order recalculateOrderCosts(Order order, OrderItem orderItem) {
+//        updateOrderItemQuantity(order, orderItem);
+//        recalculate(order);
+//        System.out.println("********* recalculated order *********");
+//        System.out.println(order);
+//        return order;
+//    }
 
     private boolean isOrderSavedCorrectly(Order order, SystemOrder systemOrder) {
         //простая проверка сохраненного заказа
@@ -232,13 +247,13 @@ public class OrderService {
                 order.getTotalCosts().equals(systemOrder.getTotalCosts());
     }
 
-    private void updateOrderItemQuantity(Order order, OrderItem orderItem) {
-        for (OrderItem o : order.getOrderItems()) {
-            if(o.getProduct().getId().equals(orderItem.getProduct().getId())) {
-                o.setQuantity(orderItem.getQuantity());
-            }
-        }
-    }
+//    private void updateOrderItemQuantity(Order order, OrderItem orderItem) {
+//        for (OrderItem o : order.getOrderItems()) {
+//            if(o.getProduct().getId().equals(orderItem.getProduct().getId())) {
+//                o.setQuantity(orderItem.getQuantity());
+//            }
+//        }
+//    }
 
     private List<OrderItem> saveOrderItems(List<OrderItem> cartItems, Order order) {
         for (OrderItem i : cartItems) {

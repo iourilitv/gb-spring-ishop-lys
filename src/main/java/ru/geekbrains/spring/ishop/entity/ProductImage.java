@@ -1,11 +1,7 @@
 package ru.geekbrains.spring.ishop.entity;
 
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "products_images")
@@ -22,5 +18,14 @@ public class ProductImage {
 
     @Column(name = "path")
     private String path;
+
+    @Override
+    public String toString() {
+        return "ProductImage{" +
+                "id=" + id +
+                ", productId=" + product.getId() +
+                ", path='" + path + '\'' +
+                '}';
+    }
 }
 

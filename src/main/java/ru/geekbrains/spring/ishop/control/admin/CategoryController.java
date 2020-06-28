@@ -1,4 +1,4 @@
-package ru.geekbrains.spring.ishop.control;
+package ru.geekbrains.spring.ishop.control.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,13 +16,13 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/product/category")
-public class AdminCategoryController {
+public class CategoryController {
     private final CategoryService categoryService;
     private final CategoryFilter categoryFilter;
 
     @Autowired
-    public AdminCategoryController(CategoryService categoryService,
-                                   CategoryFilter categoryFilter) {
+    public CategoryController(CategoryService categoryService,
+                              CategoryFilter categoryFilter) {
         this.categoryService = categoryService;
         this.categoryFilter = categoryFilter;
     }

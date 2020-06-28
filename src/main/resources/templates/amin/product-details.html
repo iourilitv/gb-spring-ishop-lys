@@ -33,7 +33,9 @@
 </head>
 <!-- example: details-post-default.html -->
 <body>
-    <!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<!--/*@thymesVar id="categories" type=""*/-->
+
+<!-- Page Preloder, Humberger Menu, Header Section Begin -->
 <superheader th:replace="/amin/fragments/header.html :: header(
     activePage='', categories=${categories}, filterDef='',
     showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>
@@ -64,7 +66,9 @@
                 <div class="col-lg-2 p-0">
                     <div class="cl-item">
                         <div class="cl-pic">
-                            <img th:src="@{${product.imgPathname}}" alt="product image">
+<!--                            <img th:src="@{${product.imgPathname}}" alt="product image">-->
+                            <!-- //TODO p.images[0] - Убрать жесткую привязку к позиции картинки в коллекции -->
+                            <img th:src="@{'/img/amin/' + ${product.images[0].path}}" alt="product image" src="">
                         </div>
                     </div>
                 </div>
@@ -72,7 +76,10 @@
                 <div class="col-lg-6 p-0">
                     <div class="cl-item">
                         <div class="cl-pic" style="max-width:none">
-                            <img style="height: calc(256px * 2); width: calc(385px * 2);" th:src="@{${product.imgPathname}}" alt="product image">
+<!--                            <img style="height: calc(256px * 2); width: calc(385px * 2);" th:src="@{${product.imgPathname}}" alt="product image">-->
+                            <!-- //TODO p.images[0] - Убрать жесткую привязку к позиции картинки в коллекции -->
+                            <img style="height: calc(256px * 2); width: calc(385px * 2);"
+                                 th:src="@{'/img/amin/' + ${product.images[0].path}}" alt="product image" src="">
                         </div>
                     </div>
                 </div>
@@ -124,7 +131,9 @@
                     <div class="details-text">
                         <h4 class="details-h4">Description</h4>
                         <div class="dt-last-desc">
-                            <p th:text="${product.description}"></p>
+<!--                            <p th:text="${product.description}"></p>-->
+                            <p th:text="${product.shortDescription}"></p>
+                            <p th:text="${product.fullDescription}"></p>
                         </div>
 
                         <!-- Блок Комментариев Begin -->
@@ -133,7 +142,7 @@
                             <h4>3 comment</h4>
                             <div class="dc-item">
                                 <div class="dc-pic">
-                                    <img th:src="@{/img/amin/products/details/comment/comment-1.jpg}" alt="">
+                                    <img th:src="@{/img/amin/products/details/comment/comment-1.jpg}" alt="" src="">
                                 </div>
                                 <div class="dc-text">
                                     <h5>Brandon Kelley</h5>
@@ -146,7 +155,7 @@
                             </div>
                             <div class="dc-item reply-item">
                                 <div class="dc-pic">
-                                    <img th:src="@{/img/amin/products/details/comment/comment-2.jpg}" alt="">
+                                    <img th:src="@{/img/amin/products/details/comment/comment-2.jpg}" alt="" src="">
                                 </div>
                                 <div class="dc-text">
                                     <h5>Brandon Kelley</h5>
@@ -159,7 +168,7 @@
                             </div>
                             <div class="dc-item">
                                 <div class="dc-pic">
-                                    <img th:src="@{/img/amin/products/details/comment/comment-3.jpg}" alt="">
+                                    <img th:src="@{/img/amin/products/details/comment/comment-3.jpg}" alt="" src="">
                                 </div>
                                 <div class="dc-text">
                                     <h5>Matthew Nelson</h5>
@@ -175,15 +184,22 @@
                             <h4>Leave a comment</h4>
                             <form action="#">
                                 <div class="input-list">
-                                    <input type="text" placeholder="Name">
-                                    <input type="text" placeholder="Email">
-                                    <input type="text" placeholder="Website">
+                                    <label>
+                                        <input type="text" placeholder="Name">
+                                    </label>
+                                    <label>
+                                        <input type="text" placeholder="Email">
+                                    </label>
+                                    <label>
+                                        <input type="text" placeholder="Website">
+                                    </label>
                                 </div>
-                                <textarea placeholder="Message"></textarea>
+                                <label>
+                                    <textarea placeholder="Message"></textarea>
+                                </label>
                                 <button type="submit">Submit</button>
                             </form>
                         </div>
-
                     </div>
                 </div>
 
@@ -196,7 +212,7 @@
                             </div>
                             <div class="trending-item">
                                 <div class="ti-pic">
-                                    <img th:src="@{/img/amin/trending/trending-1.jpg}" alt="trending-1.jpg">
+                                    <img th:src="@{/img/amin/trending/trending-1.jpg}" alt="trending-1.jpg" src="">
                                 </div>
                                 <div class="ti-text">
                                     <h6><a href="#">A Monster Prom poster got hijacked for a Papa Roach concert...</a>
@@ -210,7 +226,7 @@
 
                             <div class="trending-item">
                                 <div class="ti-pic">
-                                    <img th:src="@{/img/amin/trending/trending-2.jpg}" alt="trending-2.jpg">
+                                    <img th:src="@{/img/amin/trending/trending-2.jpg}" alt="trending-2.jpg" src="">
                                 </div>
                                 <div class="ti-text">
                                     <h6><a href="#">Facebook wants to read your thoughts with its augmented...</a></h6>
@@ -223,7 +239,7 @@
 
                             <div class="trending-item">
                                 <div class="ti-pic">
-                                    <img th:src="@{/img/amin/trending/trending-3.jpg}" alt="trending-3.jpg">
+                                    <img th:src="@{/img/amin/trending/trending-3.jpg}" alt="trending-3.jpg" src="">
                                 </div>
                                 <div class="ti-text">
                                     <h6><a href="#">This gaming laptop with a GTX 1660 Ti and 32GB of RAM is down...</a>
@@ -241,10 +257,10 @@
                                 <h5>Instagram</h5>
                             </div>
                             <div class="insta-pic">
-                                <img th:src="@{/img/amin/instagram/ip-1.jpg}" alt="instagram ip-1.jpg">
-                                <img th:src="@{/img/amin/instagram/ip-2.jpg}" alt="instagram ip-2.jpg">
-                                <img th:src="@{/img/amin/instagram/ip-3.jpg}" alt="instagram ip-3.jpg">
-                                <img th:src="@{/img/amin/instagram/ip-4.jpg}" alt="instagram ip-4.jpg">
+                                <img th:src="@{/img/amin/instagram/ip-1.jpg}" alt="instagram ip-1.jpg" src="">
+                                <img th:src="@{/img/amin/instagram/ip-2.jpg}" alt="instagram ip-2.jpg" src="">
+                                <img th:src="@{/img/amin/instagram/ip-3.jpg}" alt="instagram ip-3.jpg" src="">
+                                <img th:src="@{/img/amin/instagram/ip-4.jpg}" alt="instagram ip-4.jpg" src="">
                             </div>
                         </div>
 

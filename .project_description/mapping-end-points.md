@@ -62,9 +62,10 @@ Means GET - if not specified.
 ####/product
 #####/all
 #####/create
-#####/show/{prod_id}/prod_id
 #####/edit/{prod_id}/prod_id
 #####/delete/{prod_id}/prod_id
+#####/process/create (POST)
+#####/process/edit (POST)
 
 ####/category
 #####/all

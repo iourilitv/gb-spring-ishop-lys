@@ -6,9 +6,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.Product;
+import ru.geekbrains.spring.ishop.entity.ProductImage;
 import ru.geekbrains.spring.ishop.repository.ProductRepository;
 import ru.geekbrains.spring.ishop.utils.filters.ProductFilter;
 import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
+
+import java.util.ArrayList;
 
 @Service
 public class ProductService {
@@ -42,5 +45,16 @@ public class ProductService {
 
     public void delete(Product product) {
         repository.delete(product);
+    }
+
+    public void addImage(Product product, ProductImage productImage) {
+        if (product.getImages() == null) {
+            product.setImages(new ArrayList<>());
+        }
+        product.getImages().add(productImage);
+    }
+
+    public boolean isProductWithTitleExists(String title) {
+        return repository.findFirstByTitle(title) != null;
     }
 }
