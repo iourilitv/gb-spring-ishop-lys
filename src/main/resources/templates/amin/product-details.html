@@ -66,7 +66,6 @@
                 <div class="col-lg-2 p-0">
                     <div class="cl-item">
                         <div class="cl-pic">
-<!--                            <img th:src="@{${product.imgPathname}}" alt="product image">-->
                             <!-- //TODO p.images[0] - Убрать жесткую привязку к позиции картинки в коллекции -->
                             <img th:src="@{'/img/amin/' + ${product.images[0].path}}" alt="product image" src="">
                         </div>
@@ -76,7 +75,6 @@
                 <div class="col-lg-6 p-0">
                     <div class="cl-item">
                         <div class="cl-pic" style="max-width:none">
-<!--                            <img style="height: calc(256px * 2); width: calc(385px * 2);" th:src="@{${product.imgPathname}}" alt="product image">-->
                             <!-- //TODO p.images[0] - Убрать жесткую привязку к позиции картинки в коллекции -->
                             <img style="height: calc(256px * 2); width: calc(385px * 2);"
                                  th:src="@{'/img/amin/' + ${product.images[0].path}}" alt="product image" src="">
@@ -131,7 +129,6 @@
                     <div class="details-text">
                         <h4 class="details-h4">Description</h4>
                         <div class="dt-last-desc">
-<!--                            <p th:text="${product.description}"></p>-->
                             <p th:text="${product.shortDescription}"></p>
                             <p th:text="${product.fullDescription}"></p>
                         </div>

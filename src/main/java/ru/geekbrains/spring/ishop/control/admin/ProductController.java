@@ -32,14 +32,6 @@ public class ProductController {
     private final ProductFilter productFilter;
     private final ImageSaverService imageSaverService;
 
-//    @Autowired
-//    public ProductController(ProductService productService,
-//                             CategoryService categoryService,
-//                             ProductFilter productFilter) {
-//        this.productService = productService;
-//        this.categoryService = categoryService;
-//        this.productFilter = productFilter;
-//    }
     @Autowired
     public ProductController(ProductService productService, CategoryService categoryService,
                              ProductFilter productFilter, ImageSaverService imageSaverService) {
