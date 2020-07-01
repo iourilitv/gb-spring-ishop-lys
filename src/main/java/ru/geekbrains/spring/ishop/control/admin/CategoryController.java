@@ -46,20 +46,20 @@ public class CategoryController {
         model.addAttribute("page", page);
         //активную страницу
         model.addAttribute("activePage", "Categories");
-        return "categories";
+        return "amin/admin/categories";
     }
 
     @GetMapping("/form")
     public String categoryForm(Model model) {
         model.addAttribute("category", new Category());
-        return "category_form";
+        return "amin/admin/category_form";
     }
 
     @GetMapping("/{id}/id/edit")
     public String editCategory(@PathVariable Optional<Short> id, Model model) {
         Category category = categoryService.findById(id.orElseThrow(() -> new RuntimeException("There is no id presented!")));
         model.addAttribute("category", category);
-        return "category_form";
+        return "amin/admin/category_form";
     }
 
     @GetMapping("/{id}/id/delete")

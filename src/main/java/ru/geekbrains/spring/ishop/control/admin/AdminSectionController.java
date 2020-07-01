@@ -17,7 +17,14 @@ public class AdminSectionController {
     //FIXME сделать индексную страницу для раздела admin
     @GetMapping
     public String adminSection() {
-        return "redirect:/admin/product/all";
+//        return "redirect:/admin/product/all";
+//        return "amin/admin-index";
+        return "redirect:/admin/index";
+    }
+
+    @GetMapping("/index")
+    public String adminIndexPage() {
+        return "amin/admin/admin-index";
     }
 
 }

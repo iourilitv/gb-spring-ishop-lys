@@ -22,7 +22,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/product")
@@ -64,7 +63,7 @@ public class ProductController {
         model.addAttribute("page", page);
         //активную страницу
         model.addAttribute("activePage", "Products");
-        return "amin/products";
+        return "amin/admin/products";
     }
 
     @GetMapping("/create")
@@ -88,7 +87,7 @@ public class ProductController {
                 Sort.by(Sort.Direction.ASC, "title"));
         model.addAttribute("product", product);
         model.addAttribute("categories", categories);
-        return "amin/product-form";
+        return "amin/admin/product-form";
     }
 
     @GetMapping("/delete/{prod_id}/prod_id")

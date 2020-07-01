@@ -118,8 +118,17 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-4">
-                    <div class="ht-social">
+
+                <div class="col-lg-6 col-md-4" style="display: flex">
+                    <div sec:authorize="hasRole('EMPLOYEE')" style="width: 50%">
+                        <a class="fa login-link" th:href="@{'/admin'}"
+                           style="padding-top: 5px; color: steelblue">Admin Mode</a>
+                    </div>
+                    <div sec:authorize="!hasRole('EMPLOYEE')" style="width: 50%">
+                        <a class="fa login-link"></a>
+                    </div>
+
+                    <div class="ht-social" style="width: 50%">
                         <a href="#"><i class="fa fa-facebook"></i></a>
                         <a href="#"><i class="fa fa-twitter"></i></a>
                         <a href="#"><i class="fa fa-youtube-play"></i></a>

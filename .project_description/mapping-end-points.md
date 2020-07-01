@@ -52,13 +52,6 @@ Means GET - if not specified.
 ##Admin section.
 ###/{root}/admin
 
-####/user
-#####/all
-#####/create
-#####/show/{user_id}/user_id
-#####/edit/{user_id}/user_id
-#####/delete/{user_id}/user_id
-
 ####/product
 #####/all
 #####/create
@@ -74,6 +67,13 @@ Means GET - if not specified.
 #####/edit/{cat_id}/cat_id
 #####/delete/{cat_id}/cat_id
 
+####/user
+#####/all
+#####/create
+#####/show/{user_id}/user_id
+#####/edit/{user_id}/user_id
+#####/delete/{user_id}/user_id
+
 ####/role
 #####/all
 #####/create
@@ -88,17 +88,17 @@ Means GET - if not specified.
 #####/edit/{addr_id}/addr_id
 #####/delete/{addr_id}/addr_id
 
-####/order
-#####/all
-#####/show/{order_id}/order_id
-#####/edit/{order_id}/order_id
-#####/delete/{order_id}/order_id
-#####/cancel/{order_id}/order_id
-
 ####/order_status
 #####/all
 #####/create
 #####/show/{ord_st_id}/ord_st_id
 #####/edit/{ord_st_id}/ord_st_id
 #####/delete/{ord_st_id}/ord_st_id
+
+####/order
+#####/all
+#####/show/{order_id}/order_id
+#####/edit/{order_id}/order_id
+#####/delete/{order_id}/order_id
+#####/cancel/{order_id}/order_id
 
