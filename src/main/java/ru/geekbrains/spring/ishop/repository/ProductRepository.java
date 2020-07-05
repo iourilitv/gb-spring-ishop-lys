@@ -11,4 +11,6 @@ public interface ProductRepository extends
 
     Product findFirstByTitle(String title);
 
+    Product findFirstByVendorCode(String vendorCode);
+
 }

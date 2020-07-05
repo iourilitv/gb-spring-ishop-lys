@@ -55,7 +55,9 @@
                                 <!-- card img -->
                                 <a class="cg-pic set-bg">
                                     <!-- //TODO p.images[0] - Убрать жесткую привязку к позиции картинки в коллекции -->
-                                    <img th:src="@{'/img/amin/' + ${p.images[0].path}}" alt="product card item image" src="">
+<!--                                    <img th:src="@{'/img/amin/' + ${p.images[0].path}}" alt="product card item image" src="">-->
+<!--                                    <img th:src="@{'/images/cg-1.jpg'}" alt="product card item image" src="">-->
+                                    <img th:src="@{'/images/amin/' + ${p.images[0].path}}" alt="product card item image" src="">
                                 </a>
                                 <div>
                                     <a class="catalog__product-card__category" th:href="@{'/catalog/all?category=' + ${p.category.id}}">

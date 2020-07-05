@@ -203,6 +203,12 @@
             <artifactId>amqp-client</artifactId>
             <version>5.7.0</version>
         </dependency>
+
+        <!-- 20. Added automatically for import org.springframework.mock.web.MockMultipartFile -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

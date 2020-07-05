@@ -57,13 +57,11 @@ Means GET - if not specified.
 #####/create
 #####/edit/{prod_id}/prod_id
 #####/delete/{prod_id}/prod_id
-#####/process/create (POST)
 #####/process/edit (POST)
 
 ####/category
 #####/all
 #####/create
-#####/show/{cat_id}/cat_id
 #####/edit/{cat_id}/cat_id
 #####/delete/{cat_id}/cat_id
 
@@ -74,7 +72,7 @@ Means GET - if not specified.
 #####/edit/{user_id}/user_id
 #####/delete/{user_id}/user_id
 
-####/role
+####/user_role
 #####/all
 #####/create
 #####/show/{role_id}/role_id

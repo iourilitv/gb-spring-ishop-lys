@@ -6,16 +6,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.Category;
+import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.utils.filters.CategoryFilter;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Map;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin/product/category")
+@RequestMapping("/admin/category")
 public class CategoryController {
     private final CategoryService categoryService;
     private final CategoryFilter categoryFilter;
@@ -29,7 +32,7 @@ public class CategoryController {
 
     @GetMapping
     public String sectionRoot() {
-        return "redirect:/admin/product/category/all";
+        return "redirect:/admin/category/all";
     }
 
     @GetMapping("/all")
@@ -49,35 +52,51 @@ public class CategoryController {
         return "amin/admin/categories";
     }
 
-    @GetMapping("/form")
-    public String categoryForm(Model model) {
+    @GetMapping("/create")
+    public RedirectView createNewCategory(Model model) {
         model.addAttribute("category", new Category());
-        return "amin/admin/category_form";
+        return new RedirectView("/amin/admin/category/edit/0/cat_id");
     }
 
-    @GetMapping("/{id}/id/edit")
-    public String editCategory(@PathVariable Optional<Short> id, Model model) {
-        Category category = categoryService.findById(id.orElseThrow(() -> new RuntimeException("There is no id presented!")));
-        model.addAttribute("category", category);
-        return "amin/admin/category_form";
-    }
-
-    @GetMapping("/{id}/id/delete")
-    public String deleteCategory(@PathVariable Optional<Short> id) {
-        Category category = categoryService.findById(id.orElseThrow(() -> new RuntimeException("There is no id presented!")));
-        categoryService.delete(category);
-        return "redirect:/admin/product/category/all";
-    }
-
-    @PostMapping("/form")
-    public String updateCategory(@ModelAttribute @Valid Category category,
-                                BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
-            //FIXME
-            return "redirect:/admin/product/category/form";
+    @GetMapping("/edit/{cat_id}/cat_id")
+    public String editCategory(@PathVariable Short cat_id, Model model, HttpSession session) {
+        Category category;
+        if(cat_id != 0) {
+            category = categoryService.findById(cat_id);
+        } else {
+            category = (Category) session.getAttribute("category");
         }
+        model.addAttribute("category", category);
+
+        //TODO доделать как ProductController
+
+        return "amin/admin/category-form";
+    }
+
+    @GetMapping("/delete/{cat_id}/cat_id")
+    public String deleteCategory(@PathVariable Short cat_id) {
+        Category category = categoryService.findById(cat_id);
+        categoryService.delete(category);
+        return "redirect:/admin/category/all";
+    }
+
+    @PostMapping("/process/create")
+    public RedirectView processCreateCategory(@ModelAttribute @Valid Category category,
+                                BindingResult bindingResult) {
+//        if(bindingResult.hasErrors()){
+//            //FIXME
+//            return "redirect:/admin/product/category/form";
+//        }
         categoryService.save(category);
-        return "redirect:/admin/product/category/all";
+        return new RedirectView("/amin/admin/category/all");
+    }
+
+    @PostMapping("/process/edit")
+    public RedirectView processUpdateCategory(@ModelAttribute @Valid Category category,
+                                      BindingResult bindingResult, HttpSession session) {
+        //TODO доделать
+
+        return new RedirectView("/amin/admin/category/all");
     }
 
 }

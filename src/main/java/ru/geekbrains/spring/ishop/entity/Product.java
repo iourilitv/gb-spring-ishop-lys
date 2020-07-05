@@ -20,27 +20,27 @@ public class Product {
     private Long id;
 
     @ManyToOne
-    @NotNull(message = "категория не выбрана")
+    @NotNull(message = "category: категория не выбрана")
     @JoinColumn(name = "category_id")
     private Category category;
 
     @Column(name = "vendor_code")
-    @NotNull(message = "не может быть пустым")
-    @Pattern(regexp = "([0-9]+)", message = "недопустимый символ")
-    @Size(min = 8, max = 8, message = "требуется 8 числовых символов")
+    @NotNull(message = "vendorCode: не может быть пустым")
+    @Pattern(regexp = "([0-9]+)", message = "vendorCode: недопустимый символ")
+    @Size(min = 8, max = 8, message = "vendorCode: требуется 8 числовых символов")
     private String vendorCode;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "product")
     private List<ProductImage> images;
 
     @Column(name = "title", unique = true)
-    @NotNull(message = "не может быть пустым")
-    @Size(min = 5, max = 250, message = "требуется минимум 5 символов")
+    @NotNull(message = "title: не может быть пустым")
+    @Size(min = 5, max = 250, message = "title: требуется минимум 5 символов")
     private String title;
 
     @Column(name = "price")
-    @NotNull(message = "не может быть пустым")
-    @DecimalMin(value = "0.01", message = "минимальное значение 0")
+    @NotNull(message = "price: не может быть пустым")
+    @DecimalMin(value = "0.01", message = "price: минимальное значение 0")
     @Digits(integer = 19, fraction = 2)
     private BigDecimal price;
 

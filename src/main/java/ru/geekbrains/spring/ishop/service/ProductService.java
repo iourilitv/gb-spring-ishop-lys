@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.entity.ProductImage;
+import ru.geekbrains.spring.ishop.repository.ProductImageRepository;
 import ru.geekbrains.spring.ishop.repository.ProductRepository;
 import ru.geekbrains.spring.ishop.utils.filters.ProductFilter;
 import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
@@ -15,12 +16,18 @@ import java.util.ArrayList;
 
 @Service
 public class ProductService {
-    private ProductRepository repository;
+    private ProductRepository productRepository;
+    private ProductImageRepository productImageRepository;
     private UtilFilter utilFilter;
 
     @Autowired
-    public void setRepository(ProductRepository repository) {
-        this.repository = repository;
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    @Autowired
+    public void setProductImageRepository(ProductImageRepository productImageRepository) {
+        this.productImageRepository = productImageRepository;
     }
 
     @Autowired
@@ -32,19 +39,19 @@ public class ProductService {
         //инициируем объект пагинации с сортировкой
         Pageable pageRequest = PageRequest.of(utilFilter.getPageIndex(),
                 utilFilter.getLimit(), utilFilter.getDirection(), property);
-        return repository.findAll(filter.getSpec(), pageRequest);
+        return productRepository.findAll(filter.getSpec(), pageRequest);
     }
 
     public Product findById(Long id) {
-        return repository.getOne(id);
+        return productRepository.getOne(id);
     }
 
     public void save(Product product) {
-        repository.save(product);
+        productRepository.save(product);
     }
 
     public void delete(Product product) {
-        repository.delete(product);
+        productRepository.delete(product);
     }
 
     public void addImage(Product product, ProductImage productImage) {
@@ -55,6 +62,14 @@ public class ProductService {
     }
 
     public boolean isProductWithTitleExists(String title) {
-        return repository.findFirstByTitle(title) != null;
+        return productRepository.findFirstByTitle(title) != null;
+    }
+
+    public boolean isProductWithVendorCodeExists(String vendorCode) {
+        return productRepository.findFirstByVendorCode(vendorCode) != null;
+    }
+
+    public void deleteAllProductImagesByProduct(Product product) {
+        productImageRepository.deleteAllByProduct(product);
     }
 }
