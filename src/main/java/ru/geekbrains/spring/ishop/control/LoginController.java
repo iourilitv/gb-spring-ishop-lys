@@ -8,6 +8,5 @@ public class LoginController {
     @GetMapping("/login")
     public String showMyLoginPage() {
         return "amin/login";
-//        return "login";
     }
 }

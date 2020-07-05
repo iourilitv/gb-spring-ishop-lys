@@ -46,7 +46,6 @@ public class UserProfileFormController {
         User theUser = (User) session.getAttribute("user");
         theModel.addAttribute("systemUser", new SystemUser(theUser));
         return "amin/password-changing-form";
-//        return "password-changing-form";
     }
 
     // Binding Result после @ValidModel !!!
@@ -59,7 +58,6 @@ public class UserProfileFormController {
         logger.debug("Processing password changing form for: " + userName);
         if (theBindingResult.hasErrors()) {
         return "amin/password-changing-form";
-//            return "password-changing-form";
         }
         User existing = userService.findByUserName(userName);
         if (existing == null) {
@@ -67,7 +65,6 @@ public class UserProfileFormController {
             theModel.addAttribute("registrationError", "There is no user with current username!");
             logger.debug("There is no user with current username.");
         return "amin/password-changing-form";
-//            return "password-changing-form";
         }
         userService.updatePassword(userName, theSystemUser.getPassword());
         logger.debug("Successfully updated user password: " + userName);
@@ -76,7 +73,6 @@ public class UserProfileFormController {
         theModel.addAttribute("confirmationAHref", "/");
         theModel.addAttribute("confirmationAText", "Go to home page");
         return "amin/confirmation";
-//        return "confirmation";
     }
 
 }
