@@ -111,38 +111,6 @@ public class ProductController {
         return "redirect:/admin/product/all";
     }
 
-//    @PostMapping("/process/create")
-//    public RedirectView processCreateNew(@Valid @ModelAttribute("product") Product product,
-////    public RedirectView processCreateNew(@ModelAttribute("product") Product product,
-//                                        BindingResult bindingResult,
-//                                        @RequestParam("file") MultipartFile file) {
-//        if(bindingResult.hasErrors()){
-//            return new RedirectView("/amin/admin/product/edit/0/prod_id");
-//        }
-//
-//        if (productService.isProductWithTitleExists(product.getTitle())) {
-//            // todo не отображает сообщение
-//            bindingResult.addError(new ObjectError("product.title", "Товар с таким названием уже существует"));
-//        }
-//
-//        if (!file.isEmpty()) {
-////            String pathToSavedImage = imageSaverService.saveFile(file);
-//            String pathToSavedImage = imageSaverService.saveFile(file, "product");
-//            ProductImage productImage = new ProductImage();
-//            productImage.setPath(pathToSavedImage);
-//            productImage.setProduct(product);
-//            productService.addImage(product, productImage);
-//        } else {
-//            ProductImage productImage = productService.findById(product.getId()).getImages().get(0);
-//            productService.addImage(product, productImage);
-//        }
-//
-//        System.out.println(product);
-//
-////        productService.save(product);
-//        return new RedirectView("/amin/admin/product/all");
-//    }
-
     @PostMapping("/process/edit")
     @Transactional
     public RedirectView processUpdate(@ModelAttribute @Valid Product product,
@@ -175,22 +143,6 @@ public class ProductController {
             }
         }
 
-//        // todo не отображает сообщение
-//        if (product.getId() == 0 && productService.isProductWithTitleExists(product.getTitle())) {
-//            bindingResult.addError(new ObjectError("product.title", "Товар с таким названием уже существует"));
-//        }
-//
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("categories", categoryService.getAllCategories());
-//            return "edit-product";
-//        }
-//        if (!file.isEmpty()) {
-//            String pathToSavedImage = imageSaverService.saveFile(file);
-//            ProductImage productImage = new ProductImage();
-//            productImage.setPath(pathToSavedImage);
-//            productImage.setProduct(product);
-//            productService.addImage(product, productImage);
-//        }
         ProductImage productImage;
         if (!file.isEmpty()) {
             //for exist product
@@ -213,11 +165,6 @@ public class ProductController {
             //TODO replace List with Map
             productImage = productService.findById(product.getId()).getImages().get(0);
         }
-//        //если это уже существующий товар
-//        if(prod_id != null) {
-//            //удаляем все предыдущие объекты картинки из БД
-//            productService.deleteAllProductImagesByProduct(product);
-//        }
         productService.addImage(product, productImage);
         productService.save(product);
         return new RedirectView("/amin/admin/product/all");

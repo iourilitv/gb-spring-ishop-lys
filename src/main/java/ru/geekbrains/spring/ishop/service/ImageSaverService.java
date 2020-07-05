@@ -10,26 +10,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.UUID;
 
 @Service
 public class ImageSaverService {
     private static final String UPLOADED_FOLDER = "./images/amin/";
 
-//    public String saveFile(MultipartFile file) {
-//        if (file.isEmpty()) {
-//            return "";
-//        }
-//        String fileName = UUID.randomUUID().toString() + file.getOriginalFilename();
-//        try {
-//            Path path = Paths.get(UPLOADED_FOLDER + fileName);
-//            file.transferTo(path);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return fileName;
-//    }
     public String saveFile(MultipartFile file, String subDirName) {
         if (file.isEmpty()) {
             return "";
@@ -53,16 +38,8 @@ public class ImageSaverService {
     }
 
     public MultipartFile getFile(String pathToFile) {
-//        String pathname = Paths.get(UPLOADED_FOLDER, "products/", pathToFile).toString();
         String pathname = Paths.get(UPLOADED_FOLDER, pathToFile).toString();
         try {
-//            File file = new File(pathname);
-//            System.out.println(file);
-//
-//            MultipartFile multipartFile = new MockMultipartFile(pathToFile,
-//                    new FileInputStream(file));
-//
-//            return multipartFile;
             return new MockMultipartFile(pathToFile,
                     new FileInputStream(new File(pathname)));
         } catch (IOException e) {

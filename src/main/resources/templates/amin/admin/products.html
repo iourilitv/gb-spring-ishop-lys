@@ -27,6 +27,8 @@
 </head>
 
 <body>
+<!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
+<!--/*@thymesVar id="product" type="ru.geekbrains.spring.ishop.entity.Product"*/-->
 <!--/*@thymesVar id="filterDef" type="java.lang.StringBuilder"*/-->
 
 <!-- Page Preloder, Humberger Menu, Header Section Begin -->
@@ -85,7 +87,6 @@
                                                                         th:text="'Все категории'"
                                                                         th:selected="${param.category == null}" th:value="null"></option>
 
-                                                                <!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
                                                                 <option class="dropdown-option"
                                                                         th:each="category : ${categories}"
                                                                         th:text="${category.title}"
@@ -175,10 +176,6 @@
 
                     <td>
                         <ul class="dropdown">
-<!--                            <li>-->
-<!--                                <a th:href="@{'/admin/product/create'}">Create</a>-->
-<!--                            </li>-->
-
                             <li>
                                 <a th:href="@{'/admin/product/edit/' + ${product.id} + '/prod_id'}">Edit</a>
                             </li>

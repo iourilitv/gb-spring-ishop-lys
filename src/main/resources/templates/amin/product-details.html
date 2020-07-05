@@ -67,7 +67,6 @@
                     <div class="cl-item">
                         <div class="cl-pic">
                             <!-- //TODO p.images[0] - Убрать жесткую привязку к позиции картинки в коллекции -->
-<!--                            <img th:src="@{'/img/amin/' + ${product.images[0].path}}" alt="product image" src="">-->
                             <img th:src="@{'/images/amin/' + ${product.images[0].path}}" alt="product image" src="">
                         </div>
                     </div>
@@ -77,11 +76,8 @@
                     <div class="cl-item">
                         <div class="cl-pic" style="max-width:none">
                             <!-- //TODO p.images[0] - Убрать жесткую привязку к позиции картинки в коллекции -->
-<!--                            <img style="height: calc(256px * 2); width: calc(385px * 2);"-->
-<!--                                 th:src="@{'/img/amin/' + ${product.images[0].path}}" alt="product image" src="">-->
                             <img style="height: calc(256px * 2); width: calc(385px * 2);"
                                  th:src="@{'/images/amin/' + ${product.images[0].path}}" alt="product image" src="">
-
                         </div>
                     </div>
                 </div>
