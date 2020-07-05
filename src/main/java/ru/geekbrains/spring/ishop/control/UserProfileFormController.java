@@ -45,8 +45,8 @@ public class UserProfileFormController {
     public String showPasswordChangingPage(HttpSession session, Model theModel) {
         User theUser = (User) session.getAttribute("user");
         theModel.addAttribute("systemUser", new SystemUser(theUser));
-//        return "amin/password-changing-form";
-        return "password-changing-form";
+        return "amin/password-changing-form";
+//        return "password-changing-form";
     }
 
     // Binding Result после @ValidModel !!!
@@ -58,25 +58,25 @@ public class UserProfileFormController {
         String userName = theSystemUser.getUserName();
         logger.debug("Processing password changing form for: " + userName);
         if (theBindingResult.hasErrors()) {
-//        return "amin/password-changing-form";
-            return "password-changing-form";
+        return "amin/password-changing-form";
+//            return "password-changing-form";
         }
         User existing = userService.findByUserName(userName);
         if (existing == null) {
             theModel.addAttribute("systemUser", theSystemUser);
             theModel.addAttribute("registrationError", "There is no user with current username!");
             logger.debug("There is no user with current username.");
-//        return "amin/password-changing-form";
-            return "password-changing-form";
+        return "amin/password-changing-form";
+//            return "password-changing-form";
         }
         userService.updatePassword(userName, theSystemUser.getPassword());
         logger.debug("Successfully updated user password: " + userName);
-        theModel.addAttribute("confirmationTitle", "Password Changing Confirmation");
+        theModel.addAttribute("confirmationTitle", "Amin | Password Changing Confirmation Page");
         theModel.addAttribute("confirmationMessage", "The password has been changed successfully!");
         theModel.addAttribute("confirmationAHref", "/");
         theModel.addAttribute("confirmationAText", "Go to home page");
-//        return "amin/confirmation";
-        return "confirmation";
+        return "amin/confirmation";
+//        return "confirmation";
     }
 
 }
