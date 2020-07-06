@@ -67,10 +67,9 @@ Means GET - if not specified.
 
 ####/user
 #####/all
-#####/create
-#####/show/{user_id}/user_id
 #####/edit/{user_id}/user_id
 #####/delete/{user_id}/user_id
+#####/process/edit (POST)
 
 ####/user_role
 #####/all

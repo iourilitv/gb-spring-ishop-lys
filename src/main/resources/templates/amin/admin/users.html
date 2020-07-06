@@ -151,9 +151,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!-- отображаем строку только пользователю с ролью SUPERADMIN -->
-<!--                <tr sec:authorize="hasRole('SUPERADMIN')"-->
-<!--                    th:each="user : ${page}">-->
+                <!-- отображаем строку только пользователю с ролью ADMIN -->
                 <tr sec:authorize="hasRole('ADMIN')"
                     th:each="user : ${page}">
 

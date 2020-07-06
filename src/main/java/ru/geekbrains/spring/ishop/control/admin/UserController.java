@@ -7,14 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.geekbrains.spring.ishop.entity.Category;
-import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.entity.Role;
 import ru.geekbrains.spring.ishop.entity.User;
-import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.UserService;
-import ru.geekbrains.spring.ishop.utils.SystemUser;
-import ru.geekbrains.spring.ishop.utils.filters.CategoryFilter;
 import ru.geekbrains.spring.ishop.utils.filters.UserFilter;
 
 import javax.servlet.http.HttpSession;
@@ -57,12 +52,6 @@ public class UserController {
         model.addAttribute("activePage", "Users");
         return "amin/admin/users";
     }
-
-//    @GetMapping("/create") //TODO is it allowed here?
-//    public RedirectView createNewUser(Model model) {
-//        model.addAttribute("user", new User());
-//        return new RedirectView("/amin/admin/user/edit/0/user_id");
-//    }
 
     @GetMapping("/edit/{user_id}/user_id")
     public String editUser(@PathVariable Long user_id, Model model,
