@@ -1,5 +1,8 @@
 package ru.geekbrains.spring.ishop.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import ru.geekbrains.spring.ishop.entity.Role;
 import ru.geekbrains.spring.ishop.utils.SystemUser;
 import ru.geekbrains.spring.ishop.entity.User;
@@ -13,9 +16,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.geekbrains.spring.ishop.utils.filters.UserFilter;
+import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder passwordEncoder;
+    private UtilFilter utilFilter;
 
     @Autowired
     public void setAddressService(AddressService addressService) {
@@ -45,6 +52,11 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Autowired
+    public void setUtilFilter(UtilFilter utilFilter) {
+        this.utilFilter = utilFilter;
+    }
+
     //TODO переделать: вводить первого юзера
     @Override
     @Transactional
@@ -57,8 +69,22 @@ public class UserServiceImpl implements UserService {
                 "superadmin first_name", "superadmin last_name",
                 "+79991234567", "superadmin@mail.com");
         user.setDeliveryAddress(addressService.findById(1L));
-        user.setRoles((Collection<Role>) roleRepository.findAll());
+        user.setRoles(roleRepository.findAll());
         userRepository.save(user);
+    }
+
+    @Override
+    public Page<User> findAll(UserFilter filter, String property) {
+        //инициируем объект пагинации с сортировкой
+        Pageable pageRequest = PageRequest.of(utilFilter.getPageIndex(),
+                utilFilter.getLimit(), utilFilter.getDirection(), property);
+        return userRepository.findAll(filter.getSpec(), pageRequest);
+    }
+
+    @Override
+    @Transactional
+    public User findById(Long user_id) {
+        return userRepository.findById(user_id).orElse(null);
     }
 
     @Override
@@ -88,14 +114,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean updatePassword(String userName, String newPassword) {
+    public void updatePassword(String userName, String newPassword) {
         User user = userRepository.findOneByUserName(userName);
         if(user == null) {
-            return false;
+            return;
         }
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
-        return true;
+    }
+
+    @Override
+    @Transactional
+    public void delete(User user) {
+        userRepository.delete(user);
+    }
+
+    @Override
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
     }
 
     @Override
