@@ -94,6 +94,13 @@
         </dependency>
 
         <!-- 13 -->
+        <!-- includes: -->
+        <!-- JUnit — фактический стандарт модульного тестирования в мире Java. -->
+        <!-- Spring Test & Spring Boot Test — утилиты интеграционного тестирования Spring-приложений. -->
+        <!-- AssertJ — библиотека assert-утверждений. -->
+        <!-- Hamcrest — библиотека assert-утверждений. -->
+        <!-- Mockito — библиотека для создания и управления объектами-заглушками. -->
+        <!-- JSONassert — библиотека assert-утверждений для JSON. -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -208,6 +215,14 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+        </dependency>
+
+        <!-- 21. Added automatically for import org.junit.Before and other annotations for tests -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
