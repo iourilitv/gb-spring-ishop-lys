@@ -23,14 +23,8 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/profile/form")
 public class UserProfileFormController {
-//    private UserService userService;
     private final UserService userService;
     private final ShoppingCartService cartService;
-
-//    @Autowired
-//    public void setUserService(UserService userService) {
-//        this.userService = userService;
-//    }
 
     @Autowired
     public UserProfileFormController(UserService userService, ShoppingCartService cartService) {
@@ -46,24 +40,6 @@ public class UserProfileFormController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-//    @GetMapping
-//    public String showProfileFormPage(HttpSession session, Model theModel) {
-//        User theUser = (User) session.getAttribute("user");
-//        theModel.addAttribute("systemUser", new SystemUser(theUser));
-//        return "amin/profile-form";
-//    }
-//    @GetMapping("/edit/{user_id}/user_id")
-//    public String showProfileFormPage(@PathVariable Long user_id, HttpSession session, Model model) {
-//        User user = userService.findById(user_id);
-//        model.addAttribute("user", user);
-//
-//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
-//        //добавляем общее количество товаров в корзине
-//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
-//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-//
-//        return "amin/profile-form";
-//    }
     @GetMapping("/show")
     public String showProfileFormPage(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");

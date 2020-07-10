@@ -63,9 +63,6 @@
                 <table class="table color-white">
                     <tbody><tr><td th:text="${user.id}"></td></tr></tbody>
                 </table>
-<!--                <label>-->
-<!--                    <input th:field="*{id}" th:hidden="true" th:text="*{id}"/>-->
-<!--                </label>-->
             </div>
             <!-- Id uneditable field End -->
 
@@ -75,9 +72,6 @@
                 <table class="table color-white">
                     <tbody><tr><td th:text="${user.userName}"></td></tr></tbody>
                 </table>
-<!--                <label>-->
-<!--                    <input th:field="*{userName}" placeholder="username (*)" class="form-control"/>-->
-<!--                </label>-->
             </div>
             <!-- userName uneditable field End -->
 
@@ -111,19 +105,12 @@
                 <h5 class="color-white">Delivery Address</h5>
                 <table class="table color-white" style="margin-bottom: 0;">
                     <thead><tr>
-<!--                        <th>id</th>-->
                         <th>country</th>
                         <th>city</th>
                         <th>address</th>
                     </tr></thead>
                     <tbody><tr>
-<!--                        <td><label>-->
-<!--&lt;!&ndash;                            <input type="text" th:field="*{id}" th:hidden="true" th:text="${user.deliveryAddress.id}">&ndash;&gt;-->
-<!--                            <input type="text" name="id" th:hidden="true" th:value="${user.deliveryAddress.id}" th:text="${user.deliveryAddress.id}">-->
-<!--                        </label></td>-->
-
                         <td><label>
-<!--                            <input type="text" th:field="*{country}" th:hidden="true" th:text="${user.deliveryAddress.country}">-->
                             <input type="text" name="country" th:value="${user.deliveryAddress != null ? user.deliveryAddress.country : ' '}">
                         </label></td>
 
@@ -132,7 +119,6 @@
                         </label></td>
 
                         <td><label style="margin-bottom: 0;">
-<!--                            <input type="text" th:field="*{address}" th:hidden="true" th:text="*{user.deliveryAddress.address}">-->
                             <input type="text" name="address" th:value="${user.deliveryAddress != null ? user.deliveryAddress.address : ' '}">
                         </label></td>
                     </tr></tbody>
@@ -142,34 +128,6 @@
                     <button type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
                 </div>
             </form>
-            <!-- Form: Delivery End -->
-
-            <!-- Form: Table of deliveryAddress field Begin -->
-<!--            <div class="col-lg-12 p-0">-->
-<!--                <h5 class="color-white">Delivery Address</h5>-->
-<!--                <table class="table color-white">-->
-<!--                    <thead>-->
-<!--                        <tr>-->
-<!--                            <th>id</th>-->
-<!--                            <th>country</th>-->
-<!--                            <th>city</th>-->
-<!--                            <th>address</th>-->
-<!--                        </tr>-->
-<!--                    </thead>-->
-<!--                    <tbody>-->
-<!--                        <tr>-->
-<!--                            <td th:text="${user.deliveryAddress.id}"></td>-->
-
-<!--                            <td th:text="${user.deliveryAddress.country}"></td>-->
-
-<!--                            <td th:text="${user.deliveryAddress.city}"></td>-->
-
-<!--                            <td th:text="${user.deliveryAddress.address}"></td>-->
-<!--                        </tr>-->
-<!--                    </tbody>-->
-<!--                </table>-->
-<!--            </div>-->
-            <!-- Form: Table of deliveryAddress field Begin -->
 
             <!-- User Profile Form Close Button -->
             <div class="user_form__buttons__div">

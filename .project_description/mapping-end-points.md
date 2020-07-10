@@ -26,10 +26,10 @@ Means GET - if not specified.
 ###/{root}/profile
 
 ####/form
-######/showForm
-######/process (POST)
-#####/edit
-#####/change/password
+######/show
+#####/change/password/showForm
+######/change/password/process (POST)
+######/process/update/deliveryAddress (POST)
 
 ####/cart
 #####/clear

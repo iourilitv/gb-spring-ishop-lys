@@ -8,7 +8,6 @@ import ru.geekbrains.spring.ishop.entity.User;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
 import ru.geekbrains.spring.ishop.service.UserService;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
-import ru.geekbrains.spring.ishop.utils.SystemUser;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,18 +23,6 @@ public class UserProfileController {
         this.cartService = cartService;
     }
 
-//    @GetMapping
-//    public String showProfilePage(HttpSession session, Model model) {
-//        User theUser = (User) session.getAttribute("user");
-//        model.addAttribute("systemUser", new SystemUser(theUser));
-//
-//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
-//        //добавляем общее количество товаров в корзине
-//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
-//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-//
-//        return "amin/profile";
-//    }
     @GetMapping
     public String indexPage(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
