@@ -9,8 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+import ru.geekbrains.spring.ishop.entity.Address;
 import ru.geekbrains.spring.ishop.entity.User;
+import ru.geekbrains.spring.ishop.service.ShoppingCartService;
 import ru.geekbrains.spring.ishop.service.UserService;
+import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 import ru.geekbrains.spring.ishop.utils.SystemUser;
 
 import javax.servlet.http.HttpSession;
@@ -19,11 +23,19 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/profile/form")
 public class UserProfileFormController {
-    private UserService userService;
+//    private UserService userService;
+    private final UserService userService;
+    private final ShoppingCartService cartService;
+
+//    @Autowired
+//    public void setUserService(UserService userService) {
+//        this.userService = userService;
+//    }
 
     @Autowired
-    public void setUserService(UserService userService) {
+    public UserProfileFormController(UserService userService, ShoppingCartService cartService) {
         this.userService = userService;
+        this.cartService = cartService;
     }
 
     private final Logger logger = LoggerFactory.getLogger(UserProfileFormController.class);
@@ -34,10 +46,34 @@ public class UserProfileFormController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @GetMapping
-    public String showProfileFormPage(HttpSession session, Model theModel) {
-        User theUser = (User) session.getAttribute("user");
-        theModel.addAttribute("systemUser", new SystemUser(theUser));
+//    @GetMapping
+//    public String showProfileFormPage(HttpSession session, Model theModel) {
+//        User theUser = (User) session.getAttribute("user");
+//        theModel.addAttribute("systemUser", new SystemUser(theUser));
+//        return "amin/profile-form";
+//    }
+//    @GetMapping("/edit/{user_id}/user_id")
+//    public String showProfileFormPage(@PathVariable Long user_id, HttpSession session, Model model) {
+//        User user = userService.findById(user_id);
+//        model.addAttribute("user", user);
+//
+//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+//        //добавляем общее количество товаров в корзине
+//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+//
+//        return "amin/profile-form";
+//    }
+    @GetMapping("/show")
+    public String showProfileFormPage(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("user", user);
+
+        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+        //добавляем общее количество товаров в корзине
+        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+
         return "amin/profile-form";
     }
 
@@ -48,7 +84,7 @@ public class UserProfileFormController {
         return "amin/password-changing-form";
     }
 
-    // Binding Result после @ValidModel !!!
+    // Binding Result после @ValidModel !!! //TODO process -> впереди
     @PostMapping("/change/password/process")
     public String processPasswordChangingForm(
             @Valid @ModelAttribute("systemUser") SystemUser theSystemUser,
@@ -73,6 +109,23 @@ public class UserProfileFormController {
         theModel.addAttribute("confirmationAHref", "/");
         theModel.addAttribute("confirmationAText", "Go to home page");
         return "amin/confirmation";
+    }
+
+    @PostMapping("/process/update/deliveryAddress")
+    public RedirectView processProfileEditForm(
+            @Valid @ModelAttribute("deliveryAddress") Address deliveryAddress,
+            BindingResult theBindingResult, HttpSession session) {
+
+        logger.debug("Processing user profile deliveryAddress updating: ");
+        logger.info(deliveryAddress.toString());
+
+        if (theBindingResult.hasErrors()) {
+            return new RedirectView("/amin/profile/form/show");
+        }
+        User user = (User)session.getAttribute("user");
+        userService.updateDeliveryAddress(user, deliveryAddress);
+        session.setAttribute("user", userService.findById(user.getId()));
+        return new RedirectView("/amin/profile");
     }
 
 }

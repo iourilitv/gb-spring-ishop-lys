@@ -1,6 +1,7 @@
 package ru.geekbrains.spring.ishop.service;
 
 import org.springframework.data.domain.Page;
+import ru.geekbrains.spring.ishop.entity.Address;
 import ru.geekbrains.spring.ishop.entity.Role;
 import ru.geekbrains.spring.ishop.utils.SystemUser;
 import ru.geekbrains.spring.ishop.entity.User;
@@ -23,6 +24,8 @@ public interface UserService extends UserDetailsService {
     boolean save(SystemUser systemUser);
 
     void updatePassword(String userName, String newPassword);
+
+    void updateDeliveryAddress(User user, Address deliveryAddress);
 
     void delete(User user);
 

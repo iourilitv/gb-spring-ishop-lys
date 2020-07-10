@@ -56,7 +56,10 @@
 
             <!-- Profile items list Begin -->
             <div class="col-lg-12 p-0">
-                <h4><a th:href="@{/profile/form}">Profile form</a></h4>
+<!--                <h4><a th:href="@{/profile/form}">Profile form</a></h4>-->
+<!--                <h4><a th:href="@{'/profile/form/edit/' + ${user.id} + '/user_id'}">Profile Details</a></h4>-->
+                <h4><a th:href="@{/profile/form/show}">Profile form</a></h4>
+
                 <h4><a th:href="@{/profile/form/change/password/showForm}">Change Password</a></h4>
                 <h4><a th:href="@{/profile/cart}">Shopping Cart</a></h4>
                 <h4><a th:href="@{/profile/order/all}">Orders List</a></h4>

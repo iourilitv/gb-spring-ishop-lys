@@ -24,10 +24,22 @@ public class UserProfileController {
         this.cartService = cartService;
     }
 
+//    @GetMapping
+//    public String showProfilePage(HttpSession session, Model model) {
+//        User theUser = (User) session.getAttribute("user");
+//        model.addAttribute("systemUser", new SystemUser(theUser));
+//
+//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+//        //добавляем общее количество товаров в корзине
+//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+//
+//        return "amin/profile";
+//    }
     @GetMapping
-    public String showProfilePage(HttpSession session, Model model) {
-        User theUser = (User) session.getAttribute("user");
-        model.addAttribute("systemUser", new SystemUser(theUser));
+    public String indexPage(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("user", user);
 
         ShoppingCart cart = cartService.getShoppingCartForSession(session);
         //добавляем общее количество товаров в корзине

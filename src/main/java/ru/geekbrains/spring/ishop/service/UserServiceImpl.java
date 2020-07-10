@@ -3,6 +3,7 @@ package ru.geekbrains.spring.ishop.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import ru.geekbrains.spring.ishop.entity.Address;
 import ru.geekbrains.spring.ishop.entity.Role;
 import ru.geekbrains.spring.ishop.utils.SystemUser;
 import ru.geekbrains.spring.ishop.entity.User;
@@ -121,6 +122,21 @@ public class UserServiceImpl implements UserService {
         }
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateDeliveryAddress(User user, Address deliveryAddress) {
+        User theUser = userRepository.getOne(user.getId());
+        Address address = addressService.getAddressByUserDeliveryAddress(deliveryAddress);
+        //если совпадают все поля, кроме id, адреса в БД и у пользователя
+        if(address != null) {
+            //выходим без изменений, ввиду их отсутствия
+            return;
+        }
+        addressService.save(deliveryAddress);
+        theUser.setDeliveryAddress(deliveryAddress);
+        userRepository.save(theUser);
     }
 
     @Override
