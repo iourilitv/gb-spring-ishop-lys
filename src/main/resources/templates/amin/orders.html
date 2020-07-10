@@ -39,9 +39,12 @@
 <!--/*@thymesVar id="filterDef" type="java.lang.StringBuilder"*/-->
 
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<!--    <superheader th:replace="/amin/fragments/header.html :: header(-->
+<!--        activePage=${activePage}, categories=${categories}, filterDef='',-->
+<!--        showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>-->
     <superheader th:replace="/amin/fragments/header.html :: header(
         activePage=${activePage}, categories=${categories}, filterDef='',
-        showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>
+        cartItemsQuantity=${cartItemsQuantity})"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
 
     <!-- Items list Section Begin -->
@@ -71,7 +74,7 @@
                             <li th:class="${!param.isEmpty() ? 'mega-menu active' : 'mega-menu'}">
                                 <a style="padding: 12px 10px 12px 20px" th:href="@{'/profile/order/all'}">
                                     <span>Filters <i class="fa fa-angle-down"></i></span></a>
-                                <div class="megamenu-wrapper col-lg-12">
+                                <div class="megamenu-wrapper col-lg-12" style="top: auto;">
                                     <div class="col-lg-12 col-md-7 p-0">
                                         <div class="sidebar-option">
                                             <div class="subscribe-option">

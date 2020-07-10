@@ -70,7 +70,7 @@ public class CatalogController {
 
     @GetMapping("/{prod_id}/details")
     public String productDetails(@PathVariable(value = "prod_id") Long prod_id,
-                                 Model model, HttpSession session) {
+                                 Model model, HttpSession session) throws Throwable {
         ShoppingCart cart = cartService.getShoppingCartForSession(session);
         categoryService.addToModelAttributeCategories(model);
         model.addAttribute("product", productService.findById(prod_id));

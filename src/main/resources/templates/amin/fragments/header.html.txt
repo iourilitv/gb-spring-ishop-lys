@@ -2,8 +2,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<!--<superheader th:fragment="header (activePage, categories, filterDef, showFilters, cartItemsQuantity)">-->
-<superheader th:fragment="header (activePage, categories, filterDef, cartItemsQuantity)">
+<superheader th:fragment="header (activePage, categories, filterDef, showFilters, cartItemsQuantity)">
 
 <!-- Page Preloder -->
 <!-- //TODO Не работает без .js -->
@@ -183,81 +182,79 @@
                             </ul>
                         </div>
                     </li>
-
                     <!-- Filters item dropdown in top menu -->
-<!--                    <li th:if="${showFilters} == true" th:class="${!param.isEmpty() ? 'mega-menu active' : 'mega-menu'}">-->
-<!--                        <a th:href="@{'/catalog/all'}">-->
-<!--                            <span>Filters <i class="fa fa-angle-down"></i></span></a>-->
-<!--                        <div class="megamenu-wrapper col-lg-6">-->
-<!--                            <div class="col-lg-12 col-md-7 p-0">-->
-<!--                                <div class="sidebar-option">-->
-<!--                                    <div class="subscribe-option">-->
-<!--                                        <form th:action="@{/catalog/all}" method="GET">-->
-<!--                                            &lt;!&ndash; Categories field of filter form &ndash;&gt;-->
-<!--                                            <label class="filter-field-label">-->
-<!--                                                <span>Category</span>-->
-<!--                                                <select name="category"-->
-<!--                                                        class="select-btn-dropdown-toggle">-->
-<!--                                                    <option class="dropdown-option"-->
-<!--                                                            th:text="'Все категории'"-->
-<!--                                                            th:selected="${param.category == null}" th:value="null"></option>-->
+                    <li th:if="${showFilters} == true" th:class="${!param.isEmpty() ? 'mega-menu active' : 'mega-menu'}">
+                        <a th:href="@{'/catalog/all'}">
+                            <span>Filters <i class="fa fa-angle-down"></i></span></a>
+                        <div class="megamenu-wrapper col-lg-6">
+                            <div class="col-lg-12 col-md-7 p-0">
+                                <div class="sidebar-option">
+                                    <div class="subscribe-option">
+                                        <form th:action="@{/catalog/all}" method="GET">
+                                            <!-- Categories field of filter form -->
+                                            <label class="filter-field-label">
+                                                <span>Category</span>
+                                                <select name="category"
+                                                        class="select-btn-dropdown-toggle">
+                                                    <option class="dropdown-option"
+                                                            th:text="'Все категории'"
+                                                            th:selected="${param.category == null}" th:value="null"></option>
 
-<!--                                                    &lt;!&ndash;/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/&ndash;&gt;-->
-<!--                                                    <option class="dropdown-option"-->
-<!--                                                            th:each="category : ${categories}"-->
-<!--                                                            th:text="${category.title}"-->
-<!--                                                            th:selected="${#strings.equals(param.category, category.id)}" th:value="${category.id}"></option>-->
-<!--                                                </select>-->
-<!--                                            </label>-->
-<!--                                            &lt;!&ndash; Min price field of filter form &ndash;&gt;-->
-<!--                                            <label class="filter-field-label">-->
-<!--                                                <span>Min price</span>-->
-<!--                                                <input name="minPrice" placeholder="Минимальная цена"-->
-<!--                                                       th:value="${param.minPrice}" type="number">-->
-<!--                                            </label>-->
-<!--                                            &lt;!&ndash; Max price field of filter form &ndash;&gt;-->
-<!--                                            <label class="filter-field-label">-->
-<!--                                                <span>Max price</span>-->
-<!--                                                <input name="maxPrice" placeholder="Максимальная цена"-->
-<!--                                                       th:value="${param.maxPrice}" type="number">-->
-<!--                                            </label>-->
-<!--                                            &lt;!&ndash; Items on page limit field of filter form &ndash;&gt;-->
-<!--                                            <label class="filter-field-label">-->
-<!--                                                <span>Elements on page</span>-->
-<!--                                                <input name="limit" placeholder="Товаров на странице"-->
-<!--                                                       th:value="${param.limit}" type="number">-->
-<!--                                            </label>-->
-<!--                                            &lt;!&ndash; выпадающий список направления сортировки &ndash;&gt;-->
-<!--                                            <label class="filter-field-label">-->
-<!--                                                <span>Sort direction</span>-->
-<!--                                                <select name="direction" class="select-btn-dropdown-toggle">-->
-<!--                                                    <option class="dropdown-option" th:text="'По возрастанию цены'"-->
-<!--                                                            th:selected="${#strings.equals(param.direction, 'ASC')}"-->
-<!--                                                            th:value="ASC"></option>-->
-<!--                                                    <option class="dropdown-option" th:text="'По убыванию цены'"-->
-<!--                                                            th:selected="${#strings.equals(param.direction, 'DESC')}"-->
-<!--                                                            th:value="DESC"></option>-->
-<!--                                                </select>-->
-<!--                                            </label>-->
+                                                    <!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
+                                                    <option class="dropdown-option"
+                                                            th:each="category : ${categories}"
+                                                            th:text="${category.title}"
+                                                            th:selected="${#strings.equals(param.category, category.id)}" th:value="${category.id}"></option>
+                                                </select>
+                                            </label>
+                                            <!-- Min price field of filter form -->
+                                            <label class="filter-field-label">
+                                                <span>Min price</span>
+                                                <input name="minPrice" placeholder="Минимальная цена"
+                                                       th:value="${param.minPrice}" type="number">
+                                            </label>
+                                            <!-- Max price field of filter form -->
+                                            <label class="filter-field-label">
+                                                <span>Max price</span>
+                                                <input name="maxPrice" placeholder="Максимальная цена"
+                                                       th:value="${param.maxPrice}" type="number">
+                                            </label>
+                                            <!-- Items on page limit field of filter form -->
+                                            <label class="filter-field-label">
+                                                <span>Elements on page</span>
+                                                <input name="limit" placeholder="Товаров на странице"
+                                                       th:value="${param.limit}" type="number">
+                                            </label>
+                                            <!-- выпадающий список направления сортировки -->
+                                            <label class="filter-field-label">
+                                                <span>Sort direction</span>
+                                                <select name="direction" class="select-btn-dropdown-toggle">
+                                                    <option class="dropdown-option" th:text="'По возрастанию цены'"
+                                                            th:selected="${#strings.equals(param.direction, 'ASC')}"
+                                                            th:value="ASC"></option>
+                                                    <option class="dropdown-option" th:text="'По убыванию цены'"
+                                                            th:selected="${#strings.equals(param.direction, 'DESC')}"
+                                                            th:value="DESC"></option>
+                                                </select>
+                                            </label>
 
-<!--                                            <div>-->
-<!--                                                <button class="btn-subscribe" type="submit">-->
-<!--                                                    <span>Submit</span>-->
-<!--                                                </button>-->
+                                            <div>
+                                                <button class="btn-subscribe" type="submit">
+                                                    <span>Submit</span>
+                                                </button>
 
-<!--                                                <div>-->
-<!--                                                    <a class="btn-reset" th:href="@{'/catalog/all'}">-->
-<!--                                                        <span>Clear</span>-->
-<!--                                                    </a>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </form>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </li>-->
-
+                                                <div>
+                                                    <a class="btn-reset" th:href="@{'/catalog/all'}">
+                                                        <span>Clear</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                     <!-- Contacts item dropdown in top menu -->
                     <li th:class="${activePage == 'Contacts' ? 'active' : ''}">
                         <a th:href="@{/contacts}">

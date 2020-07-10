@@ -36,9 +36,12 @@
 <!--/*@thymesVar id="categories" type=""*/-->
 
 <!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<!--<superheader th:replace="/amin/fragments/header.html :: header(-->
+<!--    activePage='', categories=${categories}, filterDef='',-->
+<!--    showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>-->
 <superheader th:replace="/amin/fragments/header.html :: header(
     activePage='', categories=${categories}, filterDef='',
-    showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>
+    cartItemsQuantity=${cartItemsQuantity})"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
 
     <!-- Details Post Section Begin -->
