@@ -39,9 +39,6 @@
 <!--/*@thymesVar id="filterDef" type="java.lang.StringBuilder"*/-->
 
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-<!--    <superheader th:replace="/amin/fragments/header.html :: header(-->
-<!--        activePage=${activePage}, categories=${categories}, filterDef='',-->
-<!--        showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>-->
     <superheader th:replace="/amin/fragments/header.html :: header(
         activePage=${activePage}, categories=${categories}, filterDef='',
         cartItemsQuantity=${cartItemsQuantity})"></superheader>
@@ -203,8 +200,6 @@
                                 </li>
                             </ul>
                         </td>
-
-<!--                                <a class="btn btn-info" th:href="@{'/profile/cart/saveForLater/' + ${product.id}}">Save for later</a>-->
                     </tr>
                     </tbody>
                 </table>

@@ -1,5 +1,6 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Amin Template">
@@ -36,9 +37,6 @@
 <!--/*@thymesVar id="orderItem" type="ru.geekbrains.spring.ishop.entity.OrderItem"*/-->
 
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-<!--    <superheader th:replace="/amin/fragments/header.html :: header(-->
-<!--        activePage='', categories=${categories}, filterDef='',-->
-<!--        showFilters=false, cartItemsQuantity=${cartItemsQuantity})"></superheader>-->
 <superheader th:replace="/amin/fragments/header.html :: header(
         activePage='', categories=${categories}, filterDef='',
         cartItemsQuantity=${cartItemsQuantity})"></superheader>
@@ -89,12 +87,6 @@
                         </tr></thead>
                         <tbody><tr>
                             <td><label class="filter-field-label" style="margin-bottom: 0;">
-<!--                                <select th:field="*{id}" class="select-btn-dropdown-toggle" style="margin-bottom: 0;">-->
-<!--                                    <option class="dropdown-option"-->
-<!--                                            th:each="orderStatus : ${orderStatuses}"-->
-<!--                                            th:text="${orderStatus.title}"-->
-<!--                                            th:selected="${#strings.equals(order.orderStatus.id, orderStatus.id)}" th:value="${orderStatus.id}"></option>-->
-<!--                                </select>-->
                                     <select th:field="*{id}" class="select-btn-dropdown-toggle" style="margin-bottom: 0;">
                                         <option class="dropdown-option"
                                                 th:each="oStatus : ${orderStatuses}"
