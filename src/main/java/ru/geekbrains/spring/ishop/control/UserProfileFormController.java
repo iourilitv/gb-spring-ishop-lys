@@ -86,22 +86,6 @@ public class UserProfileFormController {
         return "amin/confirmation";
     }
 
-//    @PostMapping("/process/update/deliveryAddress")
-//    public RedirectView processUpdateDeliveryAddress(
-//            @Valid @ModelAttribute("deliveryAddress") Address deliveryAddress,
-//            BindingResult theBindingResult, HttpSession session) {
-//
-//        logger.debug("Processing user profile deliveryAddress updating: ");
-//        logger.info(deliveryAddress.toString());
-//
-//        if (theBindingResult.hasErrors()) {
-//            return new RedirectView("/amin/profile/form/show");
-//        }
-//        User user = (User)session.getAttribute("user");
-//        userService.updateDeliveryAddress(user, deliveryAddress);
-//        session.setAttribute("user", userService.findById(user.getId()));
-//        return new RedirectView("/amin/profile");
-//    }
     @PostMapping("/process/update/deliveryAddress")
     public RedirectView processUpdateDeliveryAddress(
             @Valid @ModelAttribute("deliveryAddress") Address deliveryAddress,

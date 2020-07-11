@@ -30,6 +30,8 @@ Means GET - if not specified.
 #####/change/password/showForm
 ######/process/change/password (POST)
 ######/process/update/deliveryAddress (POST)
+######/process/update/first_name (POST)
+######/process/update/last_name (POST)
 
 ####/cart
 #####/clear
