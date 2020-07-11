@@ -60,33 +60,6 @@ public class UserProfileFormController {
         return "amin/password-changing-form";
     }
 
-    // Binding Result после @ValidModel !!! //TODO process -> впереди
-//    @PostMapping("/change/password/process")
-//    @PostMapping("/process/change/password")
-//    public String processPasswordChangingForm(
-//            @Valid @ModelAttribute("systemUser") SystemUser theSystemUser,
-//            BindingResult theBindingResult, Model theModel) {
-//
-//        String userName = theSystemUser.getUserName();
-//        logger.debug("Processing password changing form for: " + userName);
-//        if (theBindingResult.hasErrors()) {
-//        return "amin/password-changing-form";
-//        }
-//        User existing = userService.findByUserName(userName);
-//        if (existing == null) {
-//            theModel.addAttribute("systemUser", theSystemUser);
-//            theModel.addAttribute("registrationError", "There is no user with current username!");
-//            logger.debug("There is no user with current username.");
-//        return "amin/password-changing-form";
-//        }
-//        userService.updatePassword(userName, theSystemUser.getPassword());
-//        logger.debug("Successfully updated user password: " + userName);
-//        theModel.addAttribute("confirmationTitle", "Amin | Password Changing Confirmation Page");
-//        theModel.addAttribute("confirmationMessage", "The password has been changed successfully!");
-//        theModel.addAttribute("confirmationAHref", "/");
-//        theModel.addAttribute("confirmationAText", "Go to home page");
-//        return "amin/confirmation";
-//    }
     @PostMapping("/process/change/password")
     public String processPasswordChangingForm(
             @Valid @ModelAttribute("systemUser") SystemUser theSystemUser,
