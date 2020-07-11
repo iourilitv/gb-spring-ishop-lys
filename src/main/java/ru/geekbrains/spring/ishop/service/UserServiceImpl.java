@@ -141,6 +141,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    public void updateFirstName(User user, String first_name) {
+        User theUser = userRepository.getOne(user.getId());
+        if(theUser.getFirstName().equals(first_name)) {
+            return;
+        }
+        theUser.setFirstName(first_name);
+        userRepository.save(theUser);
+    }
+
+    @Override
+    @Transactional
+    public void updateLastName(User user, String last_name) {
+        User theUser = userRepository.getOne(user.getId());
+        if(theUser.getLastName().equals(last_name)) {
+            return;
+        }
+        theUser.setLastName(last_name);
+        userRepository.save(theUser);
+    }
+
+    @Override
+    @Transactional
     public void delete(User user) {
         userRepository.delete(user);
     }

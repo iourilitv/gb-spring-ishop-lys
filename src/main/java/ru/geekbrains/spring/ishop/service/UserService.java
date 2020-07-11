@@ -27,8 +27,11 @@ public interface UserService extends UserDetailsService {
 
     void updateDeliveryAddress(User user, Address deliveryAddress);
 
+    void updateFirstName(User user, String first_name);
+
+    void updateLastName(User user, String last_name);
+
     void delete(User user);
 
     List<Role> getAllRoles();
-
 }

@@ -29,8 +29,6 @@
 <body>
 <!--/*@thymesVar id="categories" type=""*/-->
 <!--/*@thymesVar id="cartItemsQuantity" type=""*/-->
-<!--/*@thymesVar id="first_name" type="java.lang.String"*/-->
-<!--/*@thymesVar id="deliveryAddress" type="ru.geekbrains.spring.ishop.entity.Address"*/-->
 
 <!-- Page Preloder, Humberger Menu, Header Section Begin -->
 <superheader th:replace="/amin/fragments/header.html :: header(
@@ -82,52 +80,26 @@
                 <h4><a th:href="@{/profile/form/change/password/showForm}" th:text="'Password Changing Form'"></a></h4>
             </div>
 
-            <!-- Form: firstName field Begin -->
-            <form th:action="@{'/profile/form/process/update/first_name'}"
-                  th:object="${user}" method="POST" class="col-lg-12 p-0">
-                <!-- firstName field Begin -->
-                <div class="col-lg-12 p-0">
-                    <h5 class="color-white">User First Name</h5>
-                    <table class="table color-white" style="margin-bottom: 0;">
-<!--                        <tbody><tr><td th:text="${user.firstName}"></td></tr></tbody>-->
-                        <tbody><tr><td>
-                            <label style="margin-bottom: 0;">
-                                <input type="text" name="firstName" th:value="${user.firstName != null ? user.firstName : ' '}">
-                            </label>
-                        </td></tr></tbody>
-                    </table>
-                </div>
-                <!-- firstName field End -->
-                <!-- Save Changing Button -->
-                <div class="user_form__buttons__div">
-                    <button type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
-                </div>
-            </form>
-            <!-- Form: firstName field End -->
+            <!-- firstName uneditable field Begin -->
+            <div class="col-lg-12 p-0">
+                <h5 class="color-white">User First Name</h5>
+                <table class="table color-white">
+                    <tbody><tr><td th:text="${user.firstName}"></td></tr></tbody>
+                </table>
+            </div>
+            <!-- firstName uneditable field End -->
 
-            <!-- Form: lastName field Begin -->
-            <form th:action="@{'/profile/form/process/update/last_name'}"
-                  th:object="${user}" method="POST" class="col-lg-12 p-0">
-                <!-- lastName field Begin -->
-                <div class="col-lg-12 p-0">
-                    <h5 class="color-white">User Last Name</h5>
-                    <table class="table color-white" style="margin-bottom: 0;">
-    <!--                    <tbody><tr><td th:text="${user.lastName}"></td></tr></tbody>-->
-                        <tbody><tr><td>
-                            <label style="margin-bottom: 0;">
-                                <input type="text" name="lastName" th:value="${user.lastName != null ? user.lastName : ' '}">
-                            </label>
-                    </table>
-                </div>
-                <!-- lastName field End -->
-                <!-- Save Changing Button -->
-                <div class="user_form__buttons__div">
-                    <button type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
-                </div>
-            </form>
-            <!-- Form: lastName field End -->
+            <!-- lastName field Begin -->
+            <div class="col-lg-12 p-0">
+                <h5 class="color-white">User Last Name</h5>
+                <table class="table color-white">
+                    <tbody><tr><td th:text="${user.lastName}"></td></tr></tbody>
+                </table>
+            </div>
+            <!-- lastName field End -->
 
             <!-- Form: deliveryAddress Begin -->
+            <!--/*@thymesVar id="deliveryAddress" type="ru.geekbrains.spring.ishop.entity.Address"*/-->
             <form th:action="@{'/profile/form/process/update/deliveryAddress'}"
                   th:object="${deliveryAddress}" method="POST" class="col-lg-12 p-0">
                 <h5 class="color-white">Delivery Address</h5>
@@ -151,7 +123,7 @@
                         </label></td>
                     </tr></tbody>
                 </table>
-                <!-- Save Changing Button -->
+                <!-- Buttons -->
                 <div class="user_form__buttons__div">
                     <button type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
                 </div>
