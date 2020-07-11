@@ -28,7 +28,7 @@ Means GET - if not specified.
 ####/form
 ######/show
 #####/change/password/showForm
-######/change/password/process (POST)
+######/process/change/password (POST)
 ######/process/update/deliveryAddress (POST)
 
 ####/cart
@@ -67,6 +67,7 @@ Means GET - if not specified.
 
 ####/user
 #####/all
+#####/reset/password/{user_id}/user_id
 #####/edit/{user_id}/user_id
 #####/delete/{user_id}/user_id
 #####/process/edit (POST)

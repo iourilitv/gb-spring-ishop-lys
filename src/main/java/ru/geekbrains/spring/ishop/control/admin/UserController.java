@@ -53,6 +53,17 @@ public class UserController {
         return "amin/admin/users";
     }
 
+    @GetMapping("/reset/password/{user_id}/user_id")
+    public RedirectView resetPassword(@PathVariable Long user_id, Model model,
+                           HttpSession session) {
+        User user = userService.findById(user_id);
+
+        //TODO replace user.getUserName(), for password, with a random secure password generator
+        userService.updatePassword(user.getUserName(), user.getUserName());
+
+        return new RedirectView("/amin/admin/user/all");
+    }
+
     @GetMapping("/edit/{user_id}/user_id")
     public String editUser(@PathVariable Long user_id, Model model,
                            HttpSession session) {
@@ -75,17 +86,6 @@ public class UserController {
         userService.delete(user);
         return "redirect:/admin/user/all";
     }
-
-//    @PostMapping("/process/create")
-//    public RedirectView processCreateUser(@ModelAttribute @Valid SystemUser systemUser,
-//                                BindingResult bindingResult) {
-////        if(bindingResult.hasErrors()){
-////            //FIXME
-////            return "redirect:/admin/product/category/form";
-////        }
-////        categoryService.save(category);
-//        return new RedirectView("/amin/admin/user/all");
-//    }
 
     @PostMapping("/process/edit")
     public RedirectView updateUser(@ModelAttribute @Valid User user,

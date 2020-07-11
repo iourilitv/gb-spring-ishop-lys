@@ -177,6 +177,10 @@
                     <td>
                         <ul th:if="${!user.userName.equals('superadmin')}" class="dropdown">
                             <li>
+                                <a th:href="@{'/admin/user/reset/password/' + ${user.id} + '/user_id'}">Reset Password</a>
+                            </li>
+
+                            <li>
                                 <a th:href="@{'/admin/user/edit/' + ${user.id} + '/user_id'}">Edit</a>
                             </li>
 
