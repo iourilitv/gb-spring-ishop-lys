@@ -174,6 +174,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    public void addRoleToUser(Long user_id, Short role_id) {
+        User theUser = userRepository.findById(user_id).orElseThrow(RuntimeException::new);
+        theUser.getRoles().add(roleRepository.getOne(role_id));
+        userRepository.save(theUser);
+    }
+
+    @Override
+    @Transactional
+    public void removeRoleFromUser(Long user_id, Short role_id) {
+        User theUser = userRepository.findById(user_id).orElseThrow(RuntimeException::new);
+        theUser.getRoles().remove(roleRepository.getOne(role_id));
+        userRepository.save(theUser);
+    }
+
+    @Override
+    @Transactional
+    public List<Role> getRemainingAvailableRoles(Long user_id) {
+        User user = userRepository.findById(user_id).orElseThrow(RuntimeException::new);
+        List<Role> allRoles = roleRepository.findAll();
+        allRoles.removeAll(user.getRoles());
+        allRoles.remove(roleRepository.findRoleByName("ROLE_SUPERADMIN"));
+        return allRoles;
+    }
+
+    @Override
+    @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userRepository.findOneByUserName(userName);
         if (user == null) {

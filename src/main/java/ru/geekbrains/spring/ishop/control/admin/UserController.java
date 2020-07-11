@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.Role;
@@ -13,7 +12,6 @@ import ru.geekbrains.spring.ishop.service.UserService;
 import ru.geekbrains.spring.ishop.utils.filters.UserFilter;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -74,10 +72,21 @@ public class UserController {
             user = (User) session.getAttribute("user");
         }
         model.addAttribute("user", user);
-
-        //TODO доделать как ProductController
-
+        List<Role> remainingRoles = userService.getRemainingAvailableRoles(user_id);
+        model.addAttribute("roles", remainingRoles);
         return "amin/admin/user-form";
+    }
+
+    @GetMapping("/{user_id}/user_id/add/{role_id}/role_id")
+    public RedirectView addRoleToUser(@PathVariable Long user_id, @PathVariable Short role_id, HttpSession session) {
+        userService.addRoleToUser(user_id, role_id);
+        return new RedirectView("/amin/admin/user/edit/" + user_id + "/user_id");
+    }
+
+    @GetMapping("/{user_id}/user_id/remove/{role_id}/role_id")
+    public RedirectView removeRoleFromUser(@PathVariable Long user_id, @PathVariable Short role_id, HttpSession session) {
+        userService.removeRoleFromUser(user_id, role_id);
+        return new RedirectView("/amin/admin/user/edit/" + user_id + "/user_id");
     }
 
     @GetMapping("/delete/{user_id}/user_id")
@@ -85,14 +94,6 @@ public class UserController {
         User user = userService.findById(user_id);
         userService.delete(user);
         return "redirect:/admin/user/all";
-    }
-
-    @PostMapping("/process/edit")
-    public RedirectView updateUser(@ModelAttribute @Valid User user,
-                            BindingResult bindingResult, HttpSession session) {
-        //TODO доделать
-
-        return new RedirectView("/amin/admin/user/all");
     }
 
 }

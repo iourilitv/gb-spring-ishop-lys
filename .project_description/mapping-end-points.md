@@ -71,8 +71,9 @@ Means GET - if not specified.
 #####/all
 #####/reset/password/{user_id}/user_id
 #####/edit/{user_id}/user_id
+#####/{user_id}/user_id/add/{role_id}/role_id
+#####/{user_id}/user_id/remove/{role_id}/role_id
 #####/delete/{user_id}/user_id
-#####/process/edit (POST)
 
 ####/user_role
 #####/all

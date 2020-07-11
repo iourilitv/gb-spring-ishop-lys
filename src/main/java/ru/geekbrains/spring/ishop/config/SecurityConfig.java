@@ -36,11 +36,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
+    //TODO не работает ограничение в admin
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/register/**").permitAll()
                 .antMatchers("/admin/**").hasRole("EMPLOYEE")
+                .antMatchers("/admin/user/**").hasRole("ADMIN")
+                .antMatchers("/admin/user/reset/password/1/**").hasRole("SUPERADMIN")
+                .antMatchers("/admin/user/edit/1/**").hasRole("SUPERADMIN")
+                .antMatchers("/admin/user/1/**").hasRole("SUPERADMIN")
+                .antMatchers("/admin/user/delete/1/**").hasRole("SUPERADMIN")
                 .antMatchers("/profile/**").authenticated()
                 .and()
                 .formLogin()
