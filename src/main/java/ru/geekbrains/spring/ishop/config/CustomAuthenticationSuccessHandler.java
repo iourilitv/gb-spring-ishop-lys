@@ -32,12 +32,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         session.setAttribute("user", theUser);
 
         String referer = String.valueOf(request.getSession().getAttribute("referer"));
-        if(!referer.contains("login")) {
-            response.sendRedirect(referer);
-            session.removeAttribute("referer");
-        } else {
-            response.sendRedirect(request.getContextPath());
-        }
+        response.sendRedirect(referer);
+        session.removeAttribute("referer");
     }
 }
 
