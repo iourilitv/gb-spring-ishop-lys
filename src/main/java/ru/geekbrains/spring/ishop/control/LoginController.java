@@ -8,10 +8,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
-//    @GetMapping("/login")
-//    public String showMyLoginPage() {
-//        return "amin/login";
-//    }
+
     @GetMapping("/login")
     public String showMyLoginPage(HttpServletRequest request, HttpSession session) {
         //it is required in order to redirect on the previous page before the login form showing
