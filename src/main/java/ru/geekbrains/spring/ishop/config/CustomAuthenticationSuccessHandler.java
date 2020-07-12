@@ -30,8 +30,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         User theUser = userService.findByUserName(userName);
         HttpSession session = request.getSession();
         session.setAttribute("user", theUser);
-        if(!request.getHeader("referer").contains("login")) {
-            response.sendRedirect(request.getHeader("referer"));
+
+        String referer = String.valueOf(request.getSession().getAttribute("referer"));
+        if(!referer.contains("login")) {
+            response.sendRedirect(referer);
+            session.removeAttribute("referer");
         } else {
             response.sendRedirect(request.getContextPath());
         }
