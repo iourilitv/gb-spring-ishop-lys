@@ -37,9 +37,6 @@
 <!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
 
 <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-<!--<superheader th:replace="/amin/fragments/header.html :: header(-->
-<!--    activePage=${activePage}, categories=${categories}, filterDef=${filterDef},-->
-<!--    showFilters=true, cartItemsQuantity=${cartItemsQuantity})"></superheader>-->
 <superheader th:replace="/amin/fragments/header.html :: header(
     activePage=${activePage}, categories=${categories}, filterDef=${filterDef},
     cartItemsQuantity=${cartItemsQuantity})"></superheader>
@@ -117,10 +114,10 @@
                                                         <label class="filter-field-label col-lg-3">
                                                             <span>Sort direction</span>
                                                             <select name="direction" class="select-btn-dropdown-toggle">
-                                                                <option class="dropdown-option" th:text="'Созданные ранее вверху'"
+                                                                <option class="dropdown-option" th:text="'С наименьшей ценой вверху'"
                                                                         th:selected="${#strings.equals(param.direction, 'ASC')}"
                                                                         th:value="ASC"></option>
-                                                                <option class="dropdown-option" th:text="'Созданные позднее вверху'"
+                                                                <option class="dropdown-option" th:text="'С наибольшей ценой вверху'"
                                                                         th:selected="${#strings.equals(param.direction, 'DESC')}"
                                                                         th:value="DESC"></option>
                                                             </select>
