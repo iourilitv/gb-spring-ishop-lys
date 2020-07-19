@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.*;
@@ -13,13 +12,11 @@ import ru.geekbrains.spring.ishop.rabbit.RabbitSender;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.OrderService;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
-import ru.geekbrains.spring.ishop.utils.SystemDelivery;
 import ru.geekbrains.spring.ishop.utils.SystemOrder;
 import ru.geekbrains.spring.ishop.utils.filters.OrderFilter;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Map;
 
@@ -118,61 +115,5 @@ public class OrderController {
 
         return "amin/order-details";
     }
-
-//    @GetMapping("/edit/{order_id}/order_id")
-//    public String editOrder(@PathVariable Long order_id, Model model,
-//                            HttpSession session) {
-//        SystemOrder systemOrder = orderService.getSystemOrderForSession(session, order_id);
-//        model.addAttribute("order", systemOrder);
-//        model.addAttribute("orderStatuses", orderService.findAllOrderStatuses());
-//        model.addAttribute("orderStatus", systemOrder.getOrderStatus());
-//        model.addAttribute("delivery", systemOrder.getSystemDelivery());
-//
-//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
-//        //добавляем общее количество товаров в корзине
-//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
-//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-//
-//        return "amin/order-form";
-//    }
-//
-//    @GetMapping("/delete/{order_id}/order_id")
-//    public RedirectView removeOrder(@PathVariable("order_id") Long orderId) {
-//        orderService.delete(orderId);
-//        return new RedirectView("/amin/profile/order/all");
-//    }
-//
-//    @GetMapping("/cancel/{order_id}/order_id")
-//    public RedirectView cancelOrder(@PathVariable("order_id") Long orderId) {
-//        orderService.cancelOrder(orderId);
-//        return new RedirectView("/amin/profile/order/all");
-//    }
-//
-//    @PostMapping("/process/update/orderStatus")
-//    public RedirectView processUpdateOrderStatus(@Valid @ModelAttribute("orderStatus") OrderStatus orderStatus,
-//                                              BindingResult theBindingResult,
-//                                              HttpSession session) {
-//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
-//        if (!theBindingResult.hasErrors()) {
-//            systemOrder.setOrderStatus(orderStatus);
-//            orderService.updateOrderStatus(systemOrder);
-//        }
-//        return new RedirectView("/amin/profile/order/edit/" +
-//                systemOrder.getId() + "/order_id");
-//    }
-//
-//    @PostMapping("/process/update/delivery")
-//    public RedirectView processUpdateDelivery(@Valid @ModelAttribute("delivery") SystemDelivery systemDelivery,
-//                                              BindingResult theBindingResult,
-//                                              HttpSession session) {
-//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
-//        if (!theBindingResult.hasErrors()) {
-//            systemOrder.setSystemDelivery(systemDelivery);
-//            //сохраняем изменение в БД
-//            orderService.updateDelivery(systemOrder);
-//        }
-//        return new RedirectView("/amin/profile/order/edit/" +
-//                systemOrder.getId() + "/order_id");
-//    }
 
 }

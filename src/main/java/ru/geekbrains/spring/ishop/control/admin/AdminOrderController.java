@@ -12,7 +12,6 @@ import ru.geekbrains.spring.ishop.entity.Order;
 import ru.geekbrains.spring.ishop.entity.OrderStatus;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.OrderService;
-import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 import ru.geekbrains.spring.ishop.utils.SystemDelivery;
 import ru.geekbrains.spring.ishop.utils.SystemOrder;
 import ru.geekbrains.spring.ishop.utils.filters.OrderFilter;
