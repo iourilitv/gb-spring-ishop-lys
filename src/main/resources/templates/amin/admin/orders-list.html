@@ -7,7 +7,7 @@
     <meta name="keywords" content="Amin, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Amin | Orders List</title>
+    <title>Amin | Admin Orders List</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
@@ -39,9 +39,8 @@
 <!--/*@thymesVar id="filterDef" type="java.lang.StringBuilder"*/-->
 
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-    <superheader th:replace="/amin/fragments/header.html :: header(
-        activePage=${activePage}, categories=${categories}, filterDef='',
-        cartItemsQuantity=${cartItemsQuantity})"></superheader>
+<superheader th:replace="/amin/admin/fragments/admin-header.html :: header(
+        filterDef='')"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
 
     <!-- Items list Section Begin -->
@@ -54,7 +53,7 @@
                     <div class="details-text typography-page">
                         <div class="dt-breadcrumb">
                             <div class="dt-bread-option">
-                                <a class="color-white" th:href="@{'/profile'}">Profile</a>
+                                <a class="color-white" th:href="@{'/admin'}">Admin Index Page</a>
                                 <span>Orders List</span>
                             </div>
                         </div>
@@ -69,13 +68,13 @@
                         <ul>
                             <!-- Filters item dropdown in top menu -->
                             <li th:class="${!param.isEmpty() ? 'mega-menu active' : 'mega-menu'}">
-                                <a style="padding: 12px 10px 12px 20px" th:href="@{'/profile/order/all'}">
+                                <a style="padding: 12px 10px 12px 20px" th:href="@{'/admin/order/all'}">
                                     <span>Filters <i class="fa fa-angle-down"></i></span></a>
-                                <div class="megamenu-wrapper col-lg-12" style="top: auto;">
+                                <div class="megamenu-wrapper col-lg-12">
                                     <div class="col-lg-12 col-md-7 p-0">
                                         <div class="sidebar-option">
                                             <div class="subscribe-option">
-                                                <form th:action="@{/profile/order/all}" method="GET">
+                                                <form th:action="@{/admin/order/all}" method="GET">
                                                     <div class="row justify-content-center">
                                                     <!-- Order Status field of filter form -->
                                                     <label class="filter-field-label col-lg-3">
@@ -120,7 +119,7 @@
 
                                                         <div class="col-lg-2">
                                                             <a class="btn-reset" style="padding: 12px 10px 12px 20px"
-                                                               th:href="@{'/profile/order/all'}">
+                                                               th:href="@{'/admin/order/all'}">
                                                                 <span>Clear</span>
                                                             </a>
                                                         </div>
@@ -150,10 +149,8 @@
                         <th>id</th>
                         <th>order status</th>
                         <th>user</th>
-<!--                        <th>order items details</th>-->
                         <th>total items costs</th>
                         <th>total costs</th>
-<!--                        <th>delivery details</th>-->
                         <th>created at</th>
                         <th>updated at</th>
                         <th>operations</th>
@@ -169,13 +166,9 @@
 
                         <td th:text="${order.user.userName}"></td>
 
-<!--                        <td th:text="${order.orderItems}"></td>-->
-
                         <td th:text="${order.totalItemsCosts}"></td>
 
                         <td th:text="${order.totalCosts}"></td>
-
-<!--                        <td th:text="${order.delivery}"></td>-->
 
                         <td th:text="${order.createdAt}"></td>
 
@@ -184,7 +177,19 @@
                         <td>
                             <ul class="dropdown">
                                 <li>
-                                    <a th:href="@{'/profile/order/show/' + ${order.id} + '/order_id'}">Show</a>
+                                    <a th:href="@{'/admin/order/show/' + ${order.id} + '/order_id'}">Show</a>
+                                </li>
+
+                                <li>
+                                    <a th:href="@{'/admin/order/edit/' + ${order.id} + '/order_id'}">Edit</a>
+                                </li>
+
+                                <li th:unless="${order.orderStatus.title.equals('Canceled')}">
+                                    <a th:href="@{'/admin/order/cancel/' + ${order.id} + '/order_id'}">Cancel</a>
+                                </li>
+
+                                <li>
+                                    <a th:href="@{'/admin/order/delete/' + ${order.id} + '/order_id'}">Delete</a>
                                 </li>
                             </ul>
                         </td>
@@ -197,7 +202,7 @@
             <!-- pagination line -->
             <div class="row justify-content-center">
                 <div th:if="${page.hasContent()}">
-                    <a th:class="pagination-item-a" th:href="@{'/profile/order/all?page='
+                    <a th:class="pagination-item-a" th:href="@{'/admin/order/all?page='
                                    + ${page.previousOrFirstPageable().getPageNumber() + 1}
                                    + ${filterDef}}">
                         <span th:class="pagination-item-a-span">Previous</span></a>
@@ -206,11 +211,11 @@
                                     'pagination-item-a pagination-item-active' :
                                     'pagination-item-a'}"
                        th:each="i : ${#numbers.sequence(1, page.getTotalPages())}"
-                       th:href="@{'/profile/order/all?page='+ ${i} + ${filterDef}}">
+                       th:href="@{'/admin/order/all?page='+ ${i} + ${filterDef}}">
                         <span th:class="pagination-item-a-span" th:text="${i}"></span>
                     </a>
 
-                    <a th:class="pagination-item-a" th:href="@{'/profile/order/all?page='
+                    <a th:class="pagination-item-a" th:href="@{'/admin/order/all?page='
                                    + ${page.nextOrLastPageable().getPageNumber() + 1}
                                    + ${filterDef}}">
                         <span th:class="pagination-item-a-span">Next</span></a>
@@ -221,7 +226,7 @@
     <!-- Items list Section End -->
 
     <!-- Footer Section Begin -->
-    <footer th:replace="/amin/fragments/footer.html"></footer>
+    <footer th:replace="/amin/admin/fragments/admin-footer.html"></footer>
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
