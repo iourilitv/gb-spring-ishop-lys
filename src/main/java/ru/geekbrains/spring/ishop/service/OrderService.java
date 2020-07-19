@@ -114,8 +114,24 @@ public class OrderService {
         cartService.rollBackToCart(session);
     }
 
+//    @Transactional
+//    public boolean saveNewOrder(SystemOrder systemOrder) {
+//        //создаем черновик заказа
+//        Order order = createNewDraftOrUpdateOrder(systemOrder);
+//        //сохраняем черновик заказа, чтобы получить orderId
+//        orderRepository.save(order);
+//        //сохраняем в БД и записываем в заказ обновленные объекты элементов заказа
+//        order.setOrderItems(saveOrderItems(systemOrder.getOrderItems(), order));
+//        //создаем новый объект доставки
+//        Delivery delivery = createDelivery(systemOrder.getSystemDelivery(), order);
+//        //сохраняем объект доставка в БД
+//        deliveryService.save(delivery);
+//        //записываем в заказ обновленный объект доставки
+//        order.setDelivery(delivery);
+//        return isOrderSavedCorrectly(orderRepository.save(order), systemOrder);
+//    }
     @Transactional
-    public boolean saveNewOrder(SystemOrder systemOrder) {
+    public Order saveNewOrder(SystemOrder systemOrder) {
         //создаем черновик заказа
         Order order = createNewDraftOrUpdateOrder(systemOrder);
         //сохраняем черновик заказа, чтобы получить orderId
@@ -128,7 +144,7 @@ public class OrderService {
         deliveryService.save(delivery);
         //записываем в заказ обновленный объект доставки
         order.setDelivery(delivery);
-        return isOrderSavedCorrectly(orderRepository.save(order), systemOrder);
+        return orderRepository.save(order);
     }
 
     @Transactional
@@ -218,7 +234,13 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    private boolean isOrderSavedCorrectly(Order order, SystemOrder systemOrder) {
+//    private boolean isOrderSavedCorrectly(Order order, SystemOrder systemOrder) {
+//        //простая проверка сохраненного заказа
+//        return order.getOrderItems().size() == systemOrder.getOrderItems().size() &&
+//                order.getTotalItemsCosts().equals(systemOrder.getTotalItemsCosts()) &&
+//                order.getTotalCosts().equals(systemOrder.getTotalCosts());
+//    }
+    public boolean isOrderSavedCorrectly(Order order, SystemOrder systemOrder) {
         //простая проверка сохраненного заказа
         return order.getOrderItems().size() == systemOrder.getOrderItems().size() &&
                 order.getTotalItemsCosts().equals(systemOrder.getTotalItemsCosts()) &&

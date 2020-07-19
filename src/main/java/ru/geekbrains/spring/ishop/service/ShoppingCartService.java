@@ -145,9 +145,19 @@ public class ShoppingCartService {
                 o.getProduct().getId().equals(prod_id));
     }
 
+//    private OrderItem newCartItem(Product product, int quantity){
+//        OrderItem cartItem = new OrderItem();
+//        cartItem.setId(1L);
+//        cartItem.setProduct(product);
+//        cartItem.setItemPrice(product.getPrice());
+//        cartItem.setQuantity(quantity);
+//        cartItem.setItemCosts(product.getPrice()
+//                .multiply(BigDecimal.valueOf(cartItem.getQuantity())));
+//        return cartItem;
+//    }
     private OrderItem newCartItem(Product product, int quantity){
         OrderItem cartItem = new OrderItem();
-        cartItem.setId(1L);
+//        cartItem.setId(1L);
         cartItem.setProduct(product);
         cartItem.setItemPrice(product.getPrice());
         cartItem.setQuantity(quantity);

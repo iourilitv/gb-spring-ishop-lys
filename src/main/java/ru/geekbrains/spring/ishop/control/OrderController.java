@@ -74,37 +74,73 @@ public class OrderController {
         return "amin/orders";
     }
 
+//    @GetMapping("/proceedToCheckout")
+//    public RedirectView proceedToCheckoutOrder(Model model, HttpSession session) {
+//        //отправляем сообщение в RabbitReceiver в другом сервисе
+//        try {
+//            rabbitSender.sendMessage("Create");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return new RedirectView("/amin/profile/order/show/0/order_id");
+//    }
     @GetMapping("/proceedToCheckout")
-    public RedirectView proceedToCheckoutOrder(Model model, HttpSession session) {
+    public RedirectView proceedToCheckoutOrder(HttpSession session) {
         //отправляем сообщение в RabbitReceiver в другом сервисе
         try {
             rabbitSender.sendMessage("Create");
         } catch (IOException e) {
             e.printStackTrace();
         }
+//        session.removeAttribute("order");
         return new RedirectView("/amin/profile/order/show/0/order_id");
     }
 
+//    @GetMapping("/rollBack")
+//    public RedirectView proceedToRollBackToCart(Model model, HttpSession session) {
+//        orderService.rollBackToCart(session);
+//        return new RedirectView("/amin/profile/cart");
+//    }
     @GetMapping("/rollBack")
-    public RedirectView proceedToRollBackToCart(Model model, HttpSession session) {
-        orderService.rollBackToCart(session);
+    public RedirectView proceedToRollBackToCart(HttpSession session) {
+//        orderService.rollBackToCart(session);
         return new RedirectView("/amin/profile/cart");
     }
 
+//    @GetMapping("/create")
+//    public RedirectView createOrder(Model model, HttpSession session) {
+//        if(orderService.saveNewOrder((SystemOrder) session.getAttribute("order"))) {
+//            cartService.getClearedCartForSession(session);
+//            session.removeAttribute("order");
+//            return new RedirectView("/amin/profile/order/all");
+//        }
+//        return new RedirectView("/amin/profile/rollBack");
+//    }
     @GetMapping("/create")
-    public RedirectView createOrder(Model model, HttpSession session) {
-        if(orderService.saveNewOrder((SystemOrder) session.getAttribute("order"))) {
+    public RedirectView createOrder(HttpSession session) {
+        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
+        System.out.println("********");
+        System.out.println("/create - SystemOrder: " + systemOrder);
+
+        Order order = orderService.saveNewOrder(systemOrder);
+        System.out.println("********");
+        System.out.println("/create - order: " + order);
+
+        if(order != null && orderService.isOrderSavedCorrectly(order, systemOrder)) {
             cartService.getClearedCartForSession(session);
             session.removeAttribute("order");
             return new RedirectView("/amin/profile/order/all");
         }
-        return new RedirectView("/amin/profile/rollBack");
+        return new RedirectView("/amin/profile/order/rollBack");
     }
 
     @GetMapping("/show/{order_id}/order_id")
     public String showOrderDetails(@PathVariable Long order_id, ModelMap model,
                                    HttpSession session){
         SystemOrder systemOrder = orderService.getSystemOrderForSession(session, order_id);
+        System.out.println("******** show *********");
+        System.out.println("/show - SystemOrder: " + systemOrder);
+
         model.addAttribute("order", systemOrder);
         model.addAttribute("delivery", systemOrder.getSystemDelivery());
 

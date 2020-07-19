@@ -36,16 +36,29 @@ public class OrderItem {
     //NOT NULL
     private Order order;
 
+//    @Override
+//    public String toString() {
+//        long orderId = order == null ? 0 : order.getId();
+//        return "OrderItem{" +
+//                "id=" + id +
+//                ", product=" + product +
+//                ", itemPrice=" + itemPrice +
+//                ", quantity=" + quantity +
+//                ", itemCosts=" + itemCosts +
+//                ", orderId=" + orderId +
+//                '}';
+//    }
     @Override
     public String toString() {
         long orderId = order == null ? 0 : order.getId();
         return "OrderItem{" +
                 "id=" + id +
-                ", product=" + product +
+                ", productId=" + product.getId() +
                 ", itemPrice=" + itemPrice +
                 ", quantity=" + quantity +
                 ", itemCosts=" + itemCosts +
                 ", orderId=" + orderId +
                 '}';
     }
+
 }
