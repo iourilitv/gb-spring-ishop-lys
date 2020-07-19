@@ -73,10 +73,6 @@ public class ShoppingCartService {
         recalculate(cart);
     }
 
-//    public void clearCart(HttpSession session) {
-//        cart = getShoppingCartForSession(session);
-//        cart.getCartItems().clear();
-//    }
     public ShoppingCart getClearedCartForSession(HttpSession session) {
         cart = new ShoppingCart();
         session.setAttribute("cart", cart);
@@ -85,8 +81,6 @@ public class ShoppingCartService {
 
     public ShoppingCart getShoppingCartForSession(HttpSession session) {
         if (session.getAttribute("cart") == null) {
-//            cart = new ShoppingCart();
-//            session.setAttribute("cart", cart);
             cart = getClearedCartForSession(session);
         } else {
             cart = (ShoppingCart) session.getAttribute("cart");
@@ -145,19 +139,8 @@ public class ShoppingCartService {
                 o.getProduct().getId().equals(prod_id));
     }
 
-//    private OrderItem newCartItem(Product product, int quantity){
-//        OrderItem cartItem = new OrderItem();
-//        cartItem.setId(1L);
-//        cartItem.setProduct(product);
-//        cartItem.setItemPrice(product.getPrice());
-//        cartItem.setQuantity(quantity);
-//        cartItem.setItemCosts(product.getPrice()
-//                .multiply(BigDecimal.valueOf(cartItem.getQuantity())));
-//        return cartItem;
-//    }
     private OrderItem newCartItem(Product product, int quantity){
         OrderItem cartItem = new OrderItem();
-//        cartItem.setId(1L);
         cartItem.setProduct(product);
         cartItem.setItemPrice(product.getPrice());
         cartItem.setQuantity(quantity);

@@ -32,42 +32,14 @@ public class OrderService {
     private UtilFilter utilFilter;
 
     @Autowired
-    public void setCartService(ShoppingCartService cartService) {
+    public OrderService(ShoppingCartService cartService, DeliveryService deliveryService, UserService userService, AddressRepository addressRepository, OrderStatusRepository orderStatusRepository, OrderItemRepository orderItemRepository, OrderRepository orderRepository, UtilFilter utilFilter) {
         this.cartService = cartService;
-    }
-
-    @Autowired
-    public void setDeliveryService(DeliveryService deliveryService) {
         this.deliveryService = deliveryService;
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
         this.userService = userService;
-    }
-
-    @Autowired
-    public void setAddressRepository(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
-    }
-
-    @Autowired
-    public void setOrderStatusRepository(OrderStatusRepository orderStatusRepository) {
         this.orderStatusRepository = orderStatusRepository;
-    }
-
-    @Autowired
-    public void setOrderItemRepository(OrderItemRepository orderItemRepository) {
         this.orderItemRepository = orderItemRepository;
-    }
-
-    @Autowired
-    public void setOrderRepository(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
-    }
-
-    @Autowired
-    public void setUtilFilter(UtilFilter utilFilter) {
         this.utilFilter = utilFilter;
     }
 
@@ -114,22 +86,6 @@ public class OrderService {
         cartService.rollBackToCart(session);
     }
 
-//    @Transactional
-//    public boolean saveNewOrder(SystemOrder systemOrder) {
-//        //создаем черновик заказа
-//        Order order = createNewDraftOrUpdateOrder(systemOrder);
-//        //сохраняем черновик заказа, чтобы получить orderId
-//        orderRepository.save(order);
-//        //сохраняем в БД и записываем в заказ обновленные объекты элементов заказа
-//        order.setOrderItems(saveOrderItems(systemOrder.getOrderItems(), order));
-//        //создаем новый объект доставки
-//        Delivery delivery = createDelivery(systemOrder.getSystemDelivery(), order);
-//        //сохраняем объект доставка в БД
-//        deliveryService.save(delivery);
-//        //записываем в заказ обновленный объект доставки
-//        order.setDelivery(delivery);
-//        return isOrderSavedCorrectly(orderRepository.save(order), systemOrder);
-//    }
     @Transactional
     public Order saveNewOrder(SystemOrder systemOrder) {
         //создаем черновик заказа
@@ -234,12 +190,6 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-//    private boolean isOrderSavedCorrectly(Order order, SystemOrder systemOrder) {
-//        //простая проверка сохраненного заказа
-//        return order.getOrderItems().size() == systemOrder.getOrderItems().size() &&
-//                order.getTotalItemsCosts().equals(systemOrder.getTotalItemsCosts()) &&
-//                order.getTotalCosts().equals(systemOrder.getTotalCosts());
-//    }
     public boolean isOrderSavedCorrectly(Order order, SystemOrder systemOrder) {
         //простая проверка сохраненного заказа
         return order.getOrderItems().size() == systemOrder.getOrderItems().size() &&
