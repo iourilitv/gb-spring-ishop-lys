@@ -10,6 +10,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.rabbit.RabbitSender;
 import ru.geekbrains.spring.ishop.service.CategoryService;
+import ru.geekbrains.spring.ishop.service.MailService;
 import ru.geekbrains.spring.ishop.service.OrderService;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
 import ru.geekbrains.spring.ishop.utils.SystemOrder;
@@ -18,6 +19,7 @@ import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Map;
 
 @Component
@@ -29,24 +31,66 @@ public class OrderController {
     private final OrderFilter orderFilter;
     private final RabbitSender rabbitSender;
 
+    private MailService mailService;
+
+//    @Autowired
+//    public OrderController(CategoryService categoryService, ShoppingCartService cartService,
+//                           OrderService orderService, OrderFilter orderFilter,
+//                           RabbitSender rabbitSender) {
+//        this.categoryService = categoryService;
+//        this.cartService = cartService;
+//        this.orderService = orderService;
+//        this.orderFilter = orderFilter;
+//        this.rabbitSender = rabbitSender;
+//    }
     @Autowired
-    public OrderController(CategoryService categoryService, ShoppingCartService cartService,
-                           OrderService orderService, OrderFilter orderFilter,
-                           RabbitSender rabbitSender) {
+    public OrderController(CategoryService categoryService, ShoppingCartService cartService, OrderService orderService, OrderFilter orderFilter, RabbitSender rabbitSender, MailService mailService) {
         this.categoryService = categoryService;
         this.cartService = cartService;
         this.orderService = orderService;
         this.orderFilter = orderFilter;
         this.rabbitSender = rabbitSender;
+        this.mailService = mailService;
     }
 
+//    @GetMapping("/all")
+//    public String allOrders(@RequestParam Map<String, String> params,
+//                            Model model, HttpSession session) {
+//        //удаляем атрибут заказа
+//        session.removeAttribute("order");
+//        //инициируем настройки фильтра
+//        orderFilter.init(params);
+//        //получаем объект страницы с применением фильтра
+//        //TODO created_at -> константы
+//        Page<Order> page = orderService.findAll(orderFilter,"createdAt");
+//        //передаем в .html атрибуты:
+//        //часть строки запроса с параметрами фильтра
+//        model.addAttribute("filterDef", orderFilter.getFilterDefinition());
+//        //коллекцию категорий
+//        categoryService.addToModelAttributeCategories(model);
+//        //объект страницы заказов
+//        model.addAttribute("page", page);
+//        //активную страницу
+//        model.addAttribute("activePage", "Profile");
+//        //коллекцию статусов заказа
+//        model.addAttribute("orderStatuses", orderService.findAllOrderStatuses());
+//
+//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+//        //добавляем общее количество товаров в корзине
+//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+//
+//        //вызываем файл orders.html
+//        return "amin/orders";
+//    }
     @GetMapping("/all")
     public String allOrders(@RequestParam Map<String, String> params,
-                            Model model, HttpSession session) {
+                            Model model, HttpSession session, Principal principal) {
         //удаляем атрибут заказа
         session.removeAttribute("order");
-        //инициируем настройки фильтра
-        orderFilter.init(params);
+        //инициируем настройки фильтра - показываем только заказы этого пользователя
+        orderFilter.init(params, principal.getName());
+
         //получаем объект страницы с применением фильтра
         //TODO created_at -> константы
         Page<Order> page = orderService.findAll(orderFilter,"createdAt");
@@ -88,6 +132,17 @@ public class OrderController {
         return new RedirectView("/amin/profile/cart");
     }
 
+//    @GetMapping("/create")
+//    public RedirectView createOrder(HttpSession session) {
+//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
+//        Order order = orderService.saveNewOrder(systemOrder);
+//        if(order != null && orderService.isOrderSavedCorrectly(order, systemOrder)) {
+//            cartService.getClearedCartForSession(session);
+//            session.removeAttribute("order");
+//            return new RedirectView("/amin/profile/order/all");
+//        }
+//        return new RedirectView("/amin/profile/order/rollBack");
+//    }
     @GetMapping("/create")
     public RedirectView createOrder(HttpSession session) {
         SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
@@ -95,15 +150,37 @@ public class OrderController {
         if(order != null && orderService.isOrderSavedCorrectly(order, systemOrder)) {
             cartService.getClearedCartForSession(session);
             session.removeAttribute("order");
+
+            mailService.sendOrderMail(order);
+
             return new RedirectView("/amin/profile/order/all");
         }
         return new RedirectView("/amin/profile/order/rollBack");
     }
 
+//    @GetMapping("/show/{order_id}/order_id")
+//    public String showOrderDetails(@PathVariable Long order_id, ModelMap model,
+//                                   HttpSession session){
+//        SystemOrder systemOrder = orderService.getSystemOrderForSession(session, order_id);
+//
+//        model.addAttribute("order", systemOrder);
+//        model.addAttribute("delivery", systemOrder.getSystemDelivery());
+//
+//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+//        //добавляем общее количество товаров в корзине
+//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+//
+//        return "amin/order-details";
+//    }
     @GetMapping("/show/{order_id}/order_id")
     public String showOrderDetails(@PathVariable Long order_id, ModelMap model,
                                    HttpSession session){
         SystemOrder systemOrder = orderService.getSystemOrderForSession(session, order_id);
+
+        if(order_id != 0) {
+            mailService.sendOrderMail(orderService.findById(order_id));
+        }
 
         model.addAttribute("order", systemOrder);
         model.addAttribute("delivery", systemOrder.getSystemDelivery());

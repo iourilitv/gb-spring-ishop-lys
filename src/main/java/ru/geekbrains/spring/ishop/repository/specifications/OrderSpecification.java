@@ -12,4 +12,9 @@ public class OrderSpecification {
                 -> criteriaBuilder.equal(root.get("orderStatus").get("id"), value);
     }
 
+    public static Specification<Order> userNameEquals(String value) {
+        return (Specification<Order>) (root, criteriaQuery, criteriaBuilder)
+                -> criteriaBuilder.equal(root.get("user").get("userName"), value);
+    }
+
 }
