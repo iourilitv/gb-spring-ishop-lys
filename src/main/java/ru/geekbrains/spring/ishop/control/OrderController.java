@@ -33,16 +33,6 @@ public class OrderController {
 
     private MailService mailService;
 
-//    @Autowired
-//    public OrderController(CategoryService categoryService, ShoppingCartService cartService,
-//                           OrderService orderService, OrderFilter orderFilter,
-//                           RabbitSender rabbitSender) {
-//        this.categoryService = categoryService;
-//        this.cartService = cartService;
-//        this.orderService = orderService;
-//        this.orderFilter = orderFilter;
-//        this.rabbitSender = rabbitSender;
-//    }
     @Autowired
     public OrderController(CategoryService categoryService, ShoppingCartService cartService, OrderService orderService, OrderFilter orderFilter, RabbitSender rabbitSender, MailService mailService) {
         this.categoryService = categoryService;
@@ -53,36 +43,6 @@ public class OrderController {
         this.mailService = mailService;
     }
 
-//    @GetMapping("/all")
-//    public String allOrders(@RequestParam Map<String, String> params,
-//                            Model model, HttpSession session) {
-//        //удаляем атрибут заказа
-//        session.removeAttribute("order");
-//        //инициируем настройки фильтра
-//        orderFilter.init(params);
-//        //получаем объект страницы с применением фильтра
-//        //TODO created_at -> константы
-//        Page<Order> page = orderService.findAll(orderFilter,"createdAt");
-//        //передаем в .html атрибуты:
-//        //часть строки запроса с параметрами фильтра
-//        model.addAttribute("filterDef", orderFilter.getFilterDefinition());
-//        //коллекцию категорий
-//        categoryService.addToModelAttributeCategories(model);
-//        //объект страницы заказов
-//        model.addAttribute("page", page);
-//        //активную страницу
-//        model.addAttribute("activePage", "Profile");
-//        //коллекцию статусов заказа
-//        model.addAttribute("orderStatuses", orderService.findAllOrderStatuses());
-//
-//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
-//        //добавляем общее количество товаров в корзине
-//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
-//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-//
-//        //вызываем файл orders.html
-//        return "amin/orders";
-//    }
     @GetMapping("/all")
     public String allOrders(@RequestParam Map<String, String> params,
                             Model model, HttpSession session, Principal principal) {

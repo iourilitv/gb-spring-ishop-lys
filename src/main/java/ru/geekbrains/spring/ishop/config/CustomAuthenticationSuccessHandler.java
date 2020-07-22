@@ -22,19 +22,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         this.userService = userService;
     }
 
-//    @Override
-//    @Transactional
-//    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-//            throws IOException {
-//        String userName = authentication.getName();
-//        User theUser = userService.findByUserName(userName);
-//        HttpSession session = request.getSession();
-//        session.setAttribute("user", theUser);
-//
-//        String referer = String.valueOf(request.getSession().getAttribute("referer"));
-//        response.sendRedirect(referer);
-//        session.removeAttribute("referer");
-//    }
     @Override
     @Transactional
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)

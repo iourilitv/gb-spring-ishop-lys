@@ -18,7 +18,6 @@ import ru.geekbrains.spring.ishop.utils.filters.OrderFilter;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.Map;
 
 @Controller
@@ -40,30 +39,6 @@ public class AdminOrderController {
         return "redirect:/admin/order/all";
     }
 
-//    @GetMapping("/all")
-//    public String showAll(@RequestParam Map<String, String> params,
-//                            Model model, HttpSession session) {
-//        //удаляем атрибут заказа
-//        session.removeAttribute("order");
-//        //инициируем настройки фильтра
-//        orderFilter.init(params);
-//        //получаем объект страницы с применением фильтра
-//        //TODO created_at -> константы
-//        Page<Order> page = orderService.findAll(orderFilter,"createdAt");
-//        //передаем в .html атрибуты:
-//        //часть строки запроса с параметрами фильтра
-//        model.addAttribute("filterDef", orderFilter.getFilterDefinition());
-//        //коллекцию категорий
-//        categoryService.addToModelAttributeCategories(model);
-//        //объект страницы заказов
-//        model.addAttribute("page", page);
-//        //активную страницу
-//        model.addAttribute("activePage", "Profile");
-//        //коллекцию статусов заказа
-//        model.addAttribute("orderStatuses", orderService.findAllOrderStatuses());
-//
-//        return "amin/admin/orders-list";
-//    }
     @GetMapping("/all")
     public String showAll(@RequestParam Map<String, String> params,
                           Model model, HttpSession session) {
