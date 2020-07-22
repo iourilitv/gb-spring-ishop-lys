@@ -1,9 +1,9 @@
 package ru.geekbrains.spring.ishop.utils.websocket;
 
 public class Response {
-    private String prodId;
-    private String quantity;
-    private String cartItemsQuantity;
+    private final String prodId;
+    private final String quantity;
+    private final String cartItemsQuantity;
     private String cartItemCost;
     private String totalCost;
 
@@ -11,8 +11,6 @@ public class Response {
         this.prodId = prodId;
         this.quantity = quantity;
         this.cartItemsQuantity = cartItemsQuantity;
-        this.cartItemCost = cartItemCost;
-        this.totalCost = totalCost;
     }
 
     public Response(String prodId, String quantity, String cartItemsQuantity,
