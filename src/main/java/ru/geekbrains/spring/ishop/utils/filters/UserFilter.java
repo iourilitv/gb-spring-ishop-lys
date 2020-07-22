@@ -36,7 +36,6 @@ public class UserFilter {
                 //инициируем переменную из параметра
                 Short role_id = Short.parseShort(params.get("role"));
                 //добавляем по и условие фильтра в спецификацию фильтра
-//                spec = spec.and(UserSpecification.userRoleIdEquals(role_id));
                 spec = spec.and(UserSpecification.userRoleIsMember(role_id));
                 //добавляем параметр фильтра к строке запроса
                 filterDefinition.append("&role=").append(role_id);
