@@ -17,6 +17,7 @@ import ru.geekbrains.spring.ishop.utils.SystemOrder;
 import ru.geekbrains.spring.ishop.utils.filters.OrderFilter;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.Principal;
@@ -111,7 +112,7 @@ public class OrderController {
             cartService.getClearedCartForSession(session);
             session.removeAttribute("order");
 
-            mailService.sendOrderMail(order);
+//            mailService.sendOrderMail(order);
 
             return new RedirectView("/amin/profile/order/all");
         }
