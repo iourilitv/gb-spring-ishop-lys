@@ -96,8 +96,6 @@
 
                             <td>
                                 <label>
-<!--                                    <input type="number" th:id="'quantity' + ${cartItem.product.id}"-->
-<!--                                           th:value="${cartItem.quantity}" style="width: 100px">-->
                                     <input type="number" th:id="'quantity' + ${cartItem.product.id}"
                                            th:value="${cartItem.quantity}" style="width: 100px"
                                            th:onchange="'changeQuantity('+${cartItem.product.id}+')'">
@@ -107,8 +105,6 @@
                             <td th:id="'cartItemCost' + ${cartItem.product.id}" th:text="${cartItem.itemCosts}"></td>
 
                             <td>
-<!--                                <a class="btn btn-info" th:onclick="'changeQuantity('+${cartItem.product.id}+')'"-->
-<!--                                    style="font-size: 11px">Recalculate</a>-->
                                 <a class="btn btn-warning" th:href="@{'/profile/cart/delete/' + ${cartItem.product.id} + '/prod_id'}"
                                    style="font-size: 11px">Delete</a>
 <!--                                <a class="btn btn-info" th:href="@{'/profile/cart/saveForLater/' + ${product.id}}">Save for later</a>-->

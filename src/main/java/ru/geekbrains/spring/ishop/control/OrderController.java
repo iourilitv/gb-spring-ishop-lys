@@ -91,17 +91,6 @@ public class OrderController {
         return new RedirectView("/amin/profile/cart");
     }
 
-//    @GetMapping("/create")
-//    public RedirectView createOrder(HttpSession session) {
-//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
-//        Order order = orderService.saveNewOrder(systemOrder);
-//        if(order != null && orderService.isOrderSavedCorrectly(order, systemOrder)) {
-//            cartService.getClearedCartForSession(session);
-//            session.removeAttribute("order");
-//            return new RedirectView("/amin/profile/order/all");
-//        }
-//        return new RedirectView("/amin/profile/order/rollBack");
-//    }
     @GetMapping("/create")
     public RedirectView createOrder(HttpSession session) {
         SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
@@ -120,7 +109,6 @@ public class OrderController {
     public String showOrderDetails(@PathVariable Long order_id, ModelMap model,
                                    HttpSession session){
         SystemOrder systemOrder = orderService.getSystemOrderForSession(session, order_id);
-
         model.addAttribute("order", systemOrder);
         model.addAttribute("delivery", systemOrder.getSystemDelivery());
 

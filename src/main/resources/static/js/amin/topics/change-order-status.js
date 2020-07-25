@@ -33,8 +33,4 @@ function showResponse(orderStatus) {
     document.getElementById('o_s_description_td').innerText=orderStatus.description;
 
     document.getElementById('o_s_button').setAttribute('style', "visibility: visible; font-size: 18px; margin-bottom: 20px; padding: 8px 18px 6px;");
-
-    //"visibility: hidden; font-size: 0; margin-bottom: 0; padding: 0px 18px 0px;"
-    //"visibility: visible; font-size: 18px; margin-bottom: 20px; padding: 8px 18px 6px;"
-
 }

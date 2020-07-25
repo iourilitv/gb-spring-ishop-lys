@@ -44,7 +44,6 @@
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
 <superheader th:replace="/amin/admin/fragments/admin-header.html :: header(
         filterDef='')"></superheader>
-
     <!-- Page Preloder, Humberger Menu, Header Section End -->
 
     <!-- Order Details Section Begin -->
@@ -88,45 +87,11 @@
                             <th>id</th>
                             <th>title</th>
                             <th>description</th>
-<!--                            <th>operation</th>-->
                         </tr></thead>
-<!--                        <tbody><tr>-->
-<!--                            <td><label class="filter-field-label" style="margin-bottom: 0;">-->
-<!--                                    <select th:field="*{id}" class="select-btn-dropdown-toggle" style="margin-bottom: 0;">-->
-<!--                                        <option class="dropdown-option"-->
-<!--                                                th:each="oStatus : ${orderStatuses}"-->
-<!--                                                th:text="${oStatus.title}"-->
-<!--                                                th:selected="${#strings.equals(order.orderStatus.id, oStatus.id)}" th:value="${oStatus.id}"></option>-->
-<!--                                    </select>-->
-<!--                                </label></td>-->
-
-<!--                            <td><label>-->
-<!--                                    <input th:field="*{title}" th:hidden="true" th:text="*{title}">-->
-<!--                                </label></td>-->
-
-<!--                            <td><label>-->
-<!--                                    <input th:field="*{description}" th:hidden="true" th:text="*{description}">-->
-<!--                                </label></td>-->
-<!--                        </tr></tbody>-->
                         <tbody><tr>
                             <td id="o_s_id_td" th:text="*{id}" style="width: 5%"></td>
 
                             <td style="width: 25%"><label class="filter-field-label" style="margin-bottom: 0">
-<!--                                <select th:field="*{title}" class="select-btn-dropdown-toggle" style="margin-bottom: 0;">-->
-<!--                                    <option th:id="'o_s_title'" th:onchange="'changeOrderStatus('+${order.id}+')'"-->
-<!--                                            class="dropdown-option"-->
-<!--                                            th:each="oStatus : ${orderStatuses}"-->
-<!--                                            th:text="${oStatus.title}"-->
-<!--                                            th:selected="${#strings.equals(order.orderStatus.title, oStatus.title)}" th:value="${oStatus.title}"></option>-->
-<!--                                </select>-->
-<!--                                <select id="title" name="title" th:onchange="'changeOrderStatus()'"-->
-<!--                                        class="select-btn-dropdown-toggle" style="margin-bottom: 0;">-->
-<!--                                    <option th:id="'o_s_title'"-->
-<!--                                            class="dropdown-option"-->
-<!--                                            th:each="oStatus : ${orderStatuses}"-->
-<!--                                            th:text="${oStatus.title}"-->
-<!--                                            th:selected="${#strings.equals(order.orderStatus.title, oStatus.title)}" th:value="${oStatus.title}"></option>-->
-<!--                                </select>-->
                                 <select id="o_s_title" name="title" th:onchange="'changeOrderStatus()'"
                                         class="select-btn-dropdown-toggle" style="margin-bottom: 0;">
                                     <option class="dropdown-option"
@@ -138,14 +103,10 @@
                             </label></td>
 
                             <td id="o_s_description_td" th:text="*{description}" style="width: auto"></td>
-
-<!--                            <td><label>-->
-<!--                                <a class="btn btn-info" th:onclick="'changeOrderStatus()'"-->
-<!--                                   style="font-size: 11px">Render</a>-->
-<!--                            </label></td>-->
                         </tr></tbody>
                     </table>
 
+                    <!-- hidden fields of OrderStatus: id, description -->
                     <input id="o_s_id_input" th:field="*{id}" type="hidden">
                     <input id="o_s_description_input" th:field="*{description}" type="hidden">
 

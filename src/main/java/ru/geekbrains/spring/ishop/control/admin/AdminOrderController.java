@@ -29,12 +29,6 @@ public class AdminOrderController {
     private final OrderFilter orderFilter;
     private final MailService mailService;
 
-//    @Autowired
-//    public AdminOrderController(CategoryService categoryService, OrderService orderService, OrderFilter orderFilter) {
-//        this.categoryService = categoryService;
-//        this.orderService = orderService;
-//        this.orderFilter = orderFilter;
-//    }
     @Autowired
     public AdminOrderController(CategoryService categoryService, OrderService orderService, OrderFilter orderFilter, MailService mailService) {
         this.categoryService = categoryService;
@@ -99,11 +93,6 @@ public class AdminOrderController {
         return new RedirectView("/amin/admin/order/all");
     }
 
-//    @GetMapping("/cancel/{order_id}/order_id")
-//    public RedirectView cancelOrder(@PathVariable("order_id") Long orderId) {
-//        orderService.cancelOrder(orderId);
-//        return new RedirectView("/amin/admin/order/all");
-//    }
     @GetMapping("/cancel/{order_id}/order_id")
     public RedirectView cancelOrder(@PathVariable("order_id") Long orderId) {
         orderService.cancelOrder(orderId);
@@ -112,53 +101,15 @@ public class AdminOrderController {
         return new RedirectView("/amin/admin/order/all");
     }
 
-//    @PostMapping("/process/update/orderStatus")
-//    public RedirectView processUpdateOrderStatus(@Valid @ModelAttribute("orderStatus") OrderStatus orderStatus,
-//                                                 BindingResult theBindingResult,
-//                                                 HttpSession session) {
-//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
-//        if (!theBindingResult.hasErrors()) {
-//            systemOrder.setOrderStatus(orderStatus);
-//            orderService.updateOrderStatus(systemOrder);
-//        }
-//        return new RedirectView("/amin/admin/order/edit/" +
-//                systemOrder.getId() + "/order_id");
-//    }
-//    @PostMapping("/process/update/orderStatus")
-//    public RedirectView processUpdateOrderStatus(@Valid @ModelAttribute("orderStatus") OrderStatus orderStatus,
-//                                                 BindingResult theBindingResult,
-//                                                 HttpSession session) {
-//        System.out.println("New order status: " + orderStatus);
-//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
-//        if (!theBindingResult.hasErrors()) {
-//            Order order = orderService.updateOrderStatus(systemOrder, orderStatus);
-//            systemOrder.setOrderStatus(order.getOrderStatus());
-//
-//            System.out.println("********* order *************");
-//            System.out.println(order);
-//
-//            //send email to the user
-////            mailService.sendOrderMail(orderService.findById(systemOrder.getId()));
-////            mailService.sendOrderMail(order);
-//        }
-//        return new RedirectView("/amin/admin/order/edit/" +
-//                systemOrder.getId() + "/order_id");
-//    }
     @PostMapping("/process/update/orderStatus")
     public RedirectView processUpdateOrderStatus(@Valid @ModelAttribute("orderStatus") OrderStatus orderStatus,
                                                  BindingResult theBindingResult,
                                                  HttpSession session) {
-        System.out.println("New order status: " + orderStatus);
         SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
         if (!theBindingResult.hasErrors()) {
             Order order = orderService.updateOrderStatus(systemOrder, orderStatus);
             systemOrder.setOrderStatus(order.getOrderStatus());
-
-            System.out.println("********* order *************");
-            System.out.println(order);
-
             //send email to the user
-//            mailService.sendOrderMail(orderService.findById(systemOrder.getId()));
             mailService.sendOrderMail(order);
         }
         return new RedirectView("/amin/admin/order/edit/" +

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import ru.geekbrains.spring.ishop.entity.OrderStatus;
 import ru.geekbrains.spring.ishop.service.OrderService;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
@@ -17,17 +16,7 @@ import java.math.BigDecimal;
 public class WebSocketController {
     private final ShoppingCartService cartService;
     private final OrderService orderService;
-//    private final ProxyStorage proxyStorage;
 
-//    @Autowired
-//    public void setShoppingCartService(ShoppingCartService cartService) {
-//        this.cartService = cartService;
-//    }
-//    @Autowired
-//    public WebSocketController(ShoppingCartService cartService, ProxyStorage proxyStorage) {
-//        this.cartService = cartService;
-//        this.proxyStorage = proxyStorage;
-//    }
     @Autowired
     public WebSocketController(ShoppingCartService cartService, OrderService orderService) {
         this.cartService = cartService;
@@ -71,35 +60,10 @@ public class WebSocketController {
                 String.valueOf(totalCost));
     }
 
-//    @MessageMapping("/changeOrderStatus")
-//    @SendTo("/topic/changeOrderStatus")
-//    public Response sendChangeOrderStatusResponse(Request request) {
-//        String title = request.getTitle();
-//
-//        System.out.println("title: " + title);
-//
-//        List<OrderStatus> orderStatusList = (List<OrderStatus>) proxyStorage.getValue(ProxyStorage.ORDER_STATUSES);
-//
-//        System.out.println("orderStatusList:\n" + orderStatusList);
-//
-//        Response response = new Response();
-//        for (OrderStatus orderStatus : orderStatusList) {
-//            if(orderStatus.getTitle().equalsIgnoreCase(title)) {
-//                response.setOrderStatus(orderStatus);
-//            }
-//        }
-//
-//        System.out.println("response.orderStatus: " + response.getOrderStatus());
-//
-//        return response;
-//    }
     @MessageMapping("/changeOrderStatus")
     @SendTo("/topic/changeOrderStatus")
     public Response sendChangeOrderStatusResponse(Request request) {
         String title = request.getTitle();
-
-        System.out.println("title: " + title);
-
         Response response = new Response();
         response.setOrderStatus(orderService.findOrderStatusByTitle(title));
         return response;
