@@ -10,4 +10,13 @@
 
 3. DONE.To create an entity Product.
 
+4. Emailing.
+    See an examples on:
+    https://www.thymeleaf.org/doc/articles/springmail.html;
+    https://docs.spring.io/spring/docs/4.3.x/spring-framework-reference/html/mail.html.
+
+5. Caching constant data from data base.
+    See an examples on:
+    https://www.baeldung.com/spring-cache-tutorial
+
 

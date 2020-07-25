@@ -18,7 +18,7 @@ public class OrderStatus {
 
     @Column(name = "title", unique = true)
     @NotNull(message = "Fill this field!")
-    @Size(min = 5, max = 255, message = "Number of symbols should be between 5 to 255!")
+    @Size(min = 1, max = 255, message = "Number of symbols should be between 5 to 255!")
     private String title;
 
     @Column(name = "description")
@@ -26,5 +26,13 @@ public class OrderStatus {
     @Size(max = 5000, message = "Maximum 5000 symbols is allowed!")
     private String description;
 
+    @Override
+    public String toString() {
+        return "OrderStatus{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 
 }

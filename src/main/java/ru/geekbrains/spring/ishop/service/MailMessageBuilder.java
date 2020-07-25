@@ -18,6 +18,6 @@ public class MailMessageBuilder {
     public String buildOrderEmail(Order order) {
         Context context = new Context();
         context.setVariable("order", order);
-        return templateEngine.process("amin/order-mail", context);
+        return templateEngine.process("amin/messages/order-mail", context);
     }
 }

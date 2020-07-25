@@ -103,14 +103,29 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
+//    @Transactional
+//    public void updateOrderStatus(SystemOrder systemOrder) {
+//        //получаем экземпляр заказа из БД
+//        Order order = orderRepository.getOne(systemOrder.getId());
+//        //записываем в заказ обновленный объект статуса
+//        order.setOrderStatus(systemOrder.getOrderStatus());
+//        //сохраняем обновленный заказ в БД
+//        orderRepository.save(order);
+//    }
     @Transactional
-    public void updateOrderStatus(SystemOrder systemOrder) {
+    public Order updateOrderStatus(SystemOrder systemOrder, OrderStatus newOrderStatus) {
         //получаем экземпляр заказа из БД
         Order order = orderRepository.getOne(systemOrder.getId());
+
+        //находим в базе новый статус заказа
+//        OrderStatus orderStatus = orderStatusRepository.getOrderStatusByTitleEquals(newOrderStatus.getTitle());
+        OrderStatus orderStatus = findOrderStatusByTitle(newOrderStatus.getTitle());
+
         //записываем в заказ обновленный объект статуса
-        order.setOrderStatus(systemOrder.getOrderStatus());
+        order.setOrderStatus(orderStatus);
         //сохраняем обновленный заказ в БД
         orderRepository.save(order);
+        return order;
     }
 
     @Transactional

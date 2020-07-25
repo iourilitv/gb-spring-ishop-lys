@@ -30,8 +30,7 @@ public class OrderController {
     private final OrderService orderService;
     private final OrderFilter orderFilter;
     private final RabbitSender rabbitSender;
-
-    private MailService mailService;
+    private final MailService mailService;
 
     @Autowired
     public OrderController(CategoryService categoryService, ShoppingCartService cartService, OrderService orderService, OrderFilter orderFilter, RabbitSender rabbitSender, MailService mailService) {
@@ -110,37 +109,17 @@ public class OrderController {
         if(order != null && orderService.isOrderSavedCorrectly(order, systemOrder)) {
             cartService.getClearedCartForSession(session);
             session.removeAttribute("order");
-
+            //send email to the user
             mailService.sendOrderMail(order);
-
             return new RedirectView("/amin/profile/order/all");
         }
         return new RedirectView("/amin/profile/order/rollBack");
     }
 
-//    @GetMapping("/show/{order_id}/order_id")
-//    public String showOrderDetails(@PathVariable Long order_id, ModelMap model,
-//                                   HttpSession session){
-//        SystemOrder systemOrder = orderService.getSystemOrderForSession(session, order_id);
-//
-//        model.addAttribute("order", systemOrder);
-//        model.addAttribute("delivery", systemOrder.getSystemDelivery());
-//
-//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
-//        //добавляем общее количество товаров в корзине
-//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
-//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-//
-//        return "amin/order-details";
-//    }
     @GetMapping("/show/{order_id}/order_id")
     public String showOrderDetails(@PathVariable Long order_id, ModelMap model,
                                    HttpSession session){
         SystemOrder systemOrder = orderService.getSystemOrderForSession(session, order_id);
-
-        if(order_id != 0) {
-            mailService.sendOrderMail(orderService.findById(order_id));
-        }
 
         model.addAttribute("order", systemOrder);
         model.addAttribute("delivery", systemOrder.getSystemDelivery());

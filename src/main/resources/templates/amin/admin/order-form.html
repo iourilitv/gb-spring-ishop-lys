@@ -24,6 +24,11 @@
     <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+
+    <!-- Подключаем скрипты для Websocket -->
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js}"></script>
+    <script type="text/javascript" th:src="@{/js/amin/topics/change-order-status.js}"></script>
 </head>
 
 <body>
@@ -83,29 +88,71 @@
                             <th>id</th>
                             <th>title</th>
                             <th>description</th>
+<!--                            <th>operation</th>-->
                         </tr></thead>
+<!--                        <tbody><tr>-->
+<!--                            <td><label class="filter-field-label" style="margin-bottom: 0;">-->
+<!--                                    <select th:field="*{id}" class="select-btn-dropdown-toggle" style="margin-bottom: 0;">-->
+<!--                                        <option class="dropdown-option"-->
+<!--                                                th:each="oStatus : ${orderStatuses}"-->
+<!--                                                th:text="${oStatus.title}"-->
+<!--                                                th:selected="${#strings.equals(order.orderStatus.id, oStatus.id)}" th:value="${oStatus.id}"></option>-->
+<!--                                    </select>-->
+<!--                                </label></td>-->
+
+<!--                            <td><label>-->
+<!--                                    <input th:field="*{title}" th:hidden="true" th:text="*{title}">-->
+<!--                                </label></td>-->
+
+<!--                            <td><label>-->
+<!--                                    <input th:field="*{description}" th:hidden="true" th:text="*{description}">-->
+<!--                                </label></td>-->
+<!--                        </tr></tbody>-->
                         <tbody><tr>
-                            <td><label class="filter-field-label" style="margin-bottom: 0;">
-                                    <select th:field="*{id}" class="select-btn-dropdown-toggle" style="margin-bottom: 0;">
-                                        <option class="dropdown-option"
-                                                th:each="oStatus : ${orderStatuses}"
-                                                th:text="${oStatus.title}"
-                                                th:selected="${#strings.equals(order.orderStatus.id, oStatus.id)}" th:value="${oStatus.id}"></option>
-                                    </select>
-                                </label></td>
+                            <td id="o_s_id_td" th:text="*{id}" style="width: 5%"></td>
 
-                            <td><label>
-                                    <input th:field="*{title}" th:hidden="true" th:text="*{title}">
-                                </label></td>
+                            <td style="width: 25%"><label class="filter-field-label" style="margin-bottom: 0">
+<!--                                <select th:field="*{title}" class="select-btn-dropdown-toggle" style="margin-bottom: 0;">-->
+<!--                                    <option th:id="'o_s_title'" th:onchange="'changeOrderStatus('+${order.id}+')'"-->
+<!--                                            class="dropdown-option"-->
+<!--                                            th:each="oStatus : ${orderStatuses}"-->
+<!--                                            th:text="${oStatus.title}"-->
+<!--                                            th:selected="${#strings.equals(order.orderStatus.title, oStatus.title)}" th:value="${oStatus.title}"></option>-->
+<!--                                </select>-->
+<!--                                <select id="title" name="title" th:onchange="'changeOrderStatus()'"-->
+<!--                                        class="select-btn-dropdown-toggle" style="margin-bottom: 0;">-->
+<!--                                    <option th:id="'o_s_title'"-->
+<!--                                            class="dropdown-option"-->
+<!--                                            th:each="oStatus : ${orderStatuses}"-->
+<!--                                            th:text="${oStatus.title}"-->
+<!--                                            th:selected="${#strings.equals(order.orderStatus.title, oStatus.title)}" th:value="${oStatus.title}"></option>-->
+<!--                                </select>-->
+                                <select id="o_s_title" name="title" th:onchange="'changeOrderStatus()'"
+                                        class="select-btn-dropdown-toggle" style="margin-bottom: 0;">
+                                    <option class="dropdown-option"
+                                            th:each="oStatus : ${orderStatuses}"
+                                            th:text="${oStatus.title}"
+                                            th:selected="${#strings.equals(order.orderStatus.title, oStatus.title)}"
+                                            th:value="${oStatus.title}"></option>
+                                </select>
+                            </label></td>
 
-                            <td><label>
-                                    <input th:field="*{description}" th:hidden="true" th:text="*{description}">
-                                </label></td>
+                            <td id="o_s_description_td" th:text="*{description}" style="width: auto"></td>
+
+<!--                            <td><label>-->
+<!--                                <a class="btn btn-info" th:onclick="'changeOrderStatus()'"-->
+<!--                                   style="font-size: 11px">Render</a>-->
+<!--                            </label></td>-->
                         </tr></tbody>
                     </table>
+
+                    <input id="o_s_id_input" th:field="*{id}" type="hidden">
+                    <input id="o_s_description_input" th:field="*{description}" type="hidden">
+
                     <!-- Buttons -->
                     <div class="user_form__buttons__div">
-                        <button type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
+                        <button id="o_s_button" style="visibility: hidden; font-size: 0; margin-bottom: 0; padding: 0 18px 0;"
+                                type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
                     </div>
                 </form>
                 <!-- Form: Order Status End -->

@@ -1,11 +1,16 @@
 package ru.geekbrains.spring.ishop.utils.websocket;
 
+import ru.geekbrains.spring.ishop.entity.OrderStatus;
+
 public class Response {
-    private final String prodId;
-    private final String quantity;
-    private final String cartItemsQuantity;
+    private String prodId;
+    private String quantity;
+    private String cartItemsQuantity;
     private String cartItemCost;
     private String totalCost;
+    private OrderStatus orderStatus;
+
+    public Response(){}
 
     public Response(String prodId, String quantity, String cartItemsQuantity) {
         this.prodId = prodId;
@@ -40,5 +45,13 @@ public class Response {
 
     public String getTotalCost() {
         return totalCost;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }
