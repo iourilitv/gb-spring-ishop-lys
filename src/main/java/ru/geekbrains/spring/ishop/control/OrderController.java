@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.informing.rabbit.RabbitSender;
-import ru.geekbrains.spring.ishop.informing.subjects.AbstractSubject;
 import ru.geekbrains.spring.ishop.informing.subjects.OrderSubject;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.OrderService;
@@ -32,18 +31,8 @@ public class OrderController {
     private final OrderService orderService;
     private final OrderFilter orderFilter;
     private final RabbitSender rabbitSender;
-//    private final INotifier notifier;
     private final OrderSubject orderSubject;
 
-//    @Autowired
-//    public OrderController(CategoryService categoryService, ShoppingCartService cartService, OrderService orderService, OrderFilter orderFilter, RabbitSender rabbitSender, INotifier notifier) {
-//        this.categoryService = categoryService;
-//        this.cartService = cartService;
-//        this.orderService = orderService;
-//        this.orderFilter = orderFilter;
-//        this.rabbitSender = rabbitSender;
-//        this.notifier = notifier;
-//    }
     @Autowired
     public OrderController(CategoryService categoryService, ShoppingCartService cartService, OrderService orderService, OrderFilter orderFilter, RabbitSender rabbitSender, OrderSubject orderSubject) {
         this.categoryService = categoryService;
@@ -103,19 +92,6 @@ public class OrderController {
         return new RedirectView("/amin/profile/cart");
     }
 
-//    @GetMapping("/create")
-//    public RedirectView createOrder(HttpSession session) {
-//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
-//        Order order = orderService.saveNewOrder(systemOrder);
-//        if(order != null && orderService.isOrderSavedCorrectly(order, systemOrder)) {
-//            cartService.getClearedCartForSession(session);
-//            session.removeAttribute("order");
-//            //send email to the user
-//            notifier.putMessageIntoQueue(order, OrderText.SUBJECT_NEW_ORDER_CREATED);
-//            return new RedirectView("/amin/profile/order/all");
-//        }
-//        return new RedirectView("/amin/profile/order/rollBack");
-//    }
     @GetMapping("/create")
     public RedirectView createOrder(HttpSession session) {
         SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
