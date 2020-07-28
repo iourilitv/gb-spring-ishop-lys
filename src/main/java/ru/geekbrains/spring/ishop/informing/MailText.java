@@ -1,4 +1,4 @@
-package ru.geekbrains.spring.ishop.utils;
+package ru.geekbrains.spring.ishop.informing;
 
 public enum MailText {
     SUBJECT_NEW_ORDER_CREATED("Your order id: %d%n has been created successfully"),

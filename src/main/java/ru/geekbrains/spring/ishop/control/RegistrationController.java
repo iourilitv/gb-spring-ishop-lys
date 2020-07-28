@@ -2,7 +2,7 @@ package ru.geekbrains.spring.ishop.control;
 
 import ru.geekbrains.spring.ishop.utils.SystemUser;
 import ru.geekbrains.spring.ishop.entity.User;
-import ru.geekbrains.spring.ishop.service.UserService;
+import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,10 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/register")
 public class RegistrationController {
-    private UserService userService;
+    private IUserService userService;
 
     @Autowired
-    public void setUserService(UserService userService) {
+    public void setUserService(IUserService userService) {
         this.userService = userService;
     }
 

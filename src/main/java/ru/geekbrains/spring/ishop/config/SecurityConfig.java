@@ -1,6 +1,6 @@
 package ru.geekbrains.spring.ishop.config;
 
-import ru.geekbrains.spring.ishop.service.UserService;
+import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +16,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private UserService userService;
+    private IUserService userService;
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Autowired
-    public void setUserService(UserService userService) {
+    public void setUserService(IUserService userService) {
         this.userService = userService;
     }
 

@@ -1,11 +1,10 @@
-package ru.geekbrains.spring.ishop.service;
+package ru.geekbrains.spring.ishop.informing;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import ru.geekbrains.spring.ishop.entity.Order;
-import ru.geekbrains.spring.ishop.utils.MailText;
 
 @Service
 public class MailMessageBuilder {

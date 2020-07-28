@@ -1,4 +1,4 @@
-package ru.geekbrains.spring.ishop.service.interfaces;
+package ru.geekbrains.spring.ishop.informing.messages;
 
 public abstract class AbstractMailMessage {
     String sendTo, cc, subject, body;

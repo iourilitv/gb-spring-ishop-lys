@@ -1,6 +1,6 @@
-package ru.geekbrains.spring.ishop.service.interfaces;
+package ru.geekbrains.spring.ishop.informing;
 
-import ru.geekbrains.spring.ishop.utils.MailText;
+import ru.geekbrains.spring.ishop.informing.messages.AbstractMailMessage;
 
 import javax.annotation.PostConstruct;
 import java.util.LinkedList;

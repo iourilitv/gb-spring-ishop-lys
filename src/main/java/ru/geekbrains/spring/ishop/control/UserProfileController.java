@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.spring.ishop.entity.User;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
-import ru.geekbrains.spring.ishop.service.UserService;
+import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 
 import javax.servlet.http.HttpSession;
@@ -14,11 +14,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/profile")
 public class UserProfileController {
-    private UserService userService;
+    private IUserService userService;
     private ShoppingCartService cartService;
 
     @Autowired
-    public UserProfileController(UserService userService, ShoppingCartService cartService) {
+    public UserProfileController(IUserService userService, ShoppingCartService cartService) {
         this.userService = userService;
         this.cartService = cartService;
     }

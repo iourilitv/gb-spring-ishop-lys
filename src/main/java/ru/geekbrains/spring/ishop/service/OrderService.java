@@ -9,6 +9,7 @@ import ru.geekbrains.spring.ishop.repository.AddressRepository;
 import ru.geekbrains.spring.ishop.repository.OrderItemRepository;
 import ru.geekbrains.spring.ishop.repository.OrderRepository;
 import ru.geekbrains.spring.ishop.repository.OrderStatusRepository;
+import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
 import ru.geekbrains.spring.ishop.utils.SystemDelivery;
 import ru.geekbrains.spring.ishop.utils.SystemOrder;
 import ru.geekbrains.spring.ishop.utils.filters.OrderFilter;
@@ -22,17 +23,17 @@ import java.util.List;
 
 @Service
 public class OrderService {
-    private ShoppingCartService cartService;
-    private DeliveryService deliveryService;
-    private UserService userService;
-    private AddressRepository addressRepository;
-    private OrderStatusRepository orderStatusRepository;
-    private OrderItemRepository orderItemRepository;
-    private OrderRepository orderRepository;
-    private UtilFilter utilFilter;
+    private final ShoppingCartService cartService;
+    private final DeliveryService deliveryService;
+    private final IUserService userService;
+    private final AddressRepository addressRepository;
+    private final OrderStatusRepository orderStatusRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final OrderRepository orderRepository;
+    private final UtilFilter utilFilter;
 
     @Autowired
-    public OrderService(ShoppingCartService cartService, DeliveryService deliveryService, UserService userService, AddressRepository addressRepository, OrderStatusRepository orderStatusRepository, OrderItemRepository orderItemRepository, OrderRepository orderRepository, UtilFilter utilFilter) {
+    public OrderService(ShoppingCartService cartService, DeliveryService deliveryService, IUserService userService, AddressRepository addressRepository, OrderStatusRepository orderStatusRepository, OrderItemRepository orderItemRepository, OrderRepository orderRepository, UtilFilter utilFilter) {
         this.cartService = cartService;
         this.deliveryService = deliveryService;
         this.userService = userService;

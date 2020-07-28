@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.Role;
 import ru.geekbrains.spring.ishop.entity.User;
-import ru.geekbrains.spring.ishop.service.UserService;
+import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
 import ru.geekbrains.spring.ishop.utils.filters.UserFilter;
 
 import javax.servlet.http.HttpSession;
@@ -18,11 +18,11 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin/user")
 public class UserController {
-    private final UserService userService;
+    private final IUserService userService;
     private final UserFilter userFilter;
 
     @Autowired
-    public UserController(UserService userService, UserFilter userFilter) {
+    public UserController(IUserService userService, UserFilter userFilter) {
         this.userService = userService;
         this.userFilter = userFilter;
     }

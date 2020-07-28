@@ -1,4 +1,4 @@
-package ru.geekbrains.spring.ishop.service;
+package ru.geekbrains.spring.ishop.informing;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,10 +8,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.Order;
-import ru.geekbrains.spring.ishop.service.interfaces.AbstractMailMessage;
-import ru.geekbrains.spring.ishop.service.interfaces.OrderEmailMessage;
-import ru.geekbrains.spring.ishop.service.interfaces.INotifier;
-import ru.geekbrains.spring.ishop.utils.MailText;
+import ru.geekbrains.spring.ishop.informing.messages.AbstractMailMessage;
+import ru.geekbrains.spring.ishop.informing.messages.OrderEmailMessage;
 
 import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;

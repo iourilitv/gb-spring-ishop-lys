@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.Address;
 import ru.geekbrains.spring.ishop.entity.User;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
-import ru.geekbrains.spring.ishop.service.UserService;
+import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 import ru.geekbrains.spring.ishop.utils.SystemUser;
 
@@ -23,11 +23,11 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/profile/form")
 public class UserProfileFormController {
-    private final UserService userService;
+    private final IUserService userService;
     private final ShoppingCartService cartService;
 
     @Autowired
-    public UserProfileFormController(UserService userService, ShoppingCartService cartService) {
+    public UserProfileFormController(IUserService userService, ShoppingCartService cartService) {
         this.userService = userService;
         this.cartService = cartService;
     }

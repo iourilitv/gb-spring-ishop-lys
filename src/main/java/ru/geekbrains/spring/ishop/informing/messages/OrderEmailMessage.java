@@ -1,4 +1,4 @@
-package ru.geekbrains.spring.ishop.service.interfaces;
+package ru.geekbrains.spring.ishop.informing.messages;
 
 import ru.geekbrains.spring.ishop.entity.Order;
 
