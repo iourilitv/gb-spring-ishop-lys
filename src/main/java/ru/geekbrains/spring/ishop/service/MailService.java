@@ -43,15 +43,6 @@ public class MailService implements INotifier {
         sender.send(message);
     }
 
-//    public void sendOrderMail(Order order) {
-//        try {
-//            sendMail(order.getUser().getEmail(), String.format("New Status of order id: %d%n. %s", order.getId(), order.getOrderStatus().getTitle()), messageBuilder.buildOrderEmail(order));
-//        } catch (MessagingException e) {
-//            logger.warn("Unable to create order mail message for order: " + order.getId());
-//        } catch (MailException e) {
-//            logger.warn("Unable to send order mail message for order: " + order.getId());
-//        }
-//    }
     public void sendOrderMail(OrderEmailMessage orderEmailMessage) {
         try {
             sendMail(orderEmailMessage.getSendTo(), orderEmailMessage.getSubject(), orderEmailMessage.getBody());

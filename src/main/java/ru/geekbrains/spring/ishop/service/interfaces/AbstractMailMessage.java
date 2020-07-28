@@ -1,21 +1,11 @@
 package ru.geekbrains.spring.ishop.service.interfaces;
 
 public abstract class AbstractMailMessage {
-//    String sendTo = null;
-//    String cc = null;
-//    String subject = null;
-//    String body = null;
-//    Object attachment = null;
-//    Object origin = null;
     String sendTo, cc, subject, body;
     Object attachment, origin;
 
     public AbstractMailMessage() {
     }
-//
-//    public AbstractMailMessage(Object origin) {
-//        this.origin = origin;
-//    }
 
     public String getSendTo() {
         return sendTo;
