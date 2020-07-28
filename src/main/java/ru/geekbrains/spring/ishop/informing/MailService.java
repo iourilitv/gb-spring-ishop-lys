@@ -45,18 +45,18 @@ public class MailService implements INotifier {
         try {
             sendMail(orderEmailMessage.getSendTo(), orderEmailMessage.getSubject(), orderEmailMessage.getBody());
         } catch (MessagingException e) {
-            logger.warn(MailText.ERROR_CREATE_ORDER_MAIL.getText(), orderEmailMessage.getOrder().getId());
+            logger.warn(OrderText.ERROR_CREATE_ORDER_MAIL.getText(), orderEmailMessage.getOrder().getId());
             takePauseInSec(10);
             queueToSend.add(orderEmailMessage);
         } catch (MailException e) {
-            logger.warn(MailText.ERROR_SEND_ORDER_MAIL.getText(), orderEmailMessage.getOrder().getId());
+            logger.warn(OrderText.ERROR_SEND_ORDER_MAIL.getText(), orderEmailMessage.getOrder().getId());
             takePauseInSec(10);
             queueToSend.add(orderEmailMessage);
         }
     }
 
     @Override
-    public void putMessageIntoQueue(Object object, MailText subject) {
+    public void putMessageIntoQueue(Object object, OrderText subject) {
         if(object instanceof Order) {
             AbstractMailMessage emailMessage = createOrderMailMessage((Order) object, subject);
             queueToSend.add(emailMessage);
@@ -86,13 +86,13 @@ public class MailService implements INotifier {
 
     }
 
-    private AbstractMailMessage createOrderMailMessage(Order order, MailText subject) {
+    private AbstractMailMessage createOrderMailMessage(Order order, OrderText subject) {
         AbstractMailMessage emailMessage = new OrderEmailMessage();
         emailMessage.setSendTo(order.getUser().getEmail());
 
-        if(subject.equals(MailText.SUBJECT_NEW_ORDER_CREATED)) {
+        if(subject.equals(OrderText.SUBJECT_NEW_ORDER_CREATED)) {
             emailMessage.setSubject(String.format(subject.getText(), order.getId()));
-        } else if (subject.equals(MailText.SUBJECT_ORDER_STATUS_CHANGED)) {
+        } else if (subject.equals(OrderText.SUBJECT_ORDER_STATUS_CHANGED)) {
             emailMessage.setSubject(String.format(subject.getText(), order.getId(), order.getOrderStatus().getTitle()));
         }
         emailMessage.setBody(messageBuilder.buildOrderEmail(order));

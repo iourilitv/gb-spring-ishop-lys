@@ -1,6 +1,6 @@
 package ru.geekbrains.spring.ishop.informing;
 
-public enum MailText {
+public enum OrderText {
     SUBJECT_NEW_ORDER_CREATED("Your order id: %d%n has been created successfully"),
     SUBJECT_ORDER_STATUS_CHANGED("New Status of order id: %d%n. %s"),
 
@@ -13,7 +13,7 @@ public enum MailText {
     ;
     private final String text;
 
-    MailText(String text) {
+    OrderText(String text) {
         this.text = text;
     }
 

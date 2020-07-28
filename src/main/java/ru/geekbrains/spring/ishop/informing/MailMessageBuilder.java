@@ -20,10 +20,10 @@ public class MailMessageBuilder {
         context.setVariable("order", order);
         String notice;
         if(order.getOrderStatus().getTitle().equalsIgnoreCase("Created")) {
-            notice = String.format(MailText.NOTICE_NEW_ORDER_CREATED.getText(),
+            notice = String.format(OrderText.NOTICE_NEW_ORDER_CREATED.getText(),
                     order.getId());
         } else {
-            notice = String.format(MailText.NOTICE_ORDER_STATUS_CHANGED.getText(),
+            notice = String.format(OrderText.NOTICE_ORDER_STATUS_CHANGED.getText(),
                     order.getId(), order.getOrderStatus().getTitle());
         }
         context.setVariable("notice", notice);
