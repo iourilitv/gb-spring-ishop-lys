@@ -10,9 +10,10 @@ import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.rabbit.RabbitSender;
 import ru.geekbrains.spring.ishop.service.CategoryService;
-import ru.geekbrains.spring.ishop.service.MailService;
 import ru.geekbrains.spring.ishop.service.OrderService;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
+import ru.geekbrains.spring.ishop.service.interfaces.INotifier;
+import ru.geekbrains.spring.ishop.utils.MailText;
 import ru.geekbrains.spring.ishop.utils.SystemOrder;
 import ru.geekbrains.spring.ishop.utils.filters.OrderFilter;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
@@ -30,16 +31,26 @@ public class OrderController {
     private final OrderService orderService;
     private final OrderFilter orderFilter;
     private final RabbitSender rabbitSender;
-    private final MailService mailService;
+//    private final MailService mailService;
+    private final INotifier notifier;
 
+//    @Autowired
+//    public OrderController(CategoryService categoryService, ShoppingCartService cartService, OrderService orderService, OrderFilter orderFilter, RabbitSender rabbitSender, MailService mailService) {
+//        this.categoryService = categoryService;
+//        this.cartService = cartService;
+//        this.orderService = orderService;
+//        this.orderFilter = orderFilter;
+//        this.rabbitSender = rabbitSender;
+//        this.mailService = mailService;
+//    }
     @Autowired
-    public OrderController(CategoryService categoryService, ShoppingCartService cartService, OrderService orderService, OrderFilter orderFilter, RabbitSender rabbitSender, MailService mailService) {
+    public OrderController(CategoryService categoryService, ShoppingCartService cartService, OrderService orderService, OrderFilter orderFilter, RabbitSender rabbitSender, INotifier notifier) {
         this.categoryService = categoryService;
         this.cartService = cartService;
         this.orderService = orderService;
         this.orderFilter = orderFilter;
         this.rabbitSender = rabbitSender;
-        this.mailService = mailService;
+        this.notifier = notifier;
     }
 
     @GetMapping("/all")
@@ -91,6 +102,19 @@ public class OrderController {
         return new RedirectView("/amin/profile/cart");
     }
 
+//    @GetMapping("/create")
+//    public RedirectView createOrder(HttpSession session) {
+//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
+//        Order order = orderService.saveNewOrder(systemOrder);
+//        if(order != null && orderService.isOrderSavedCorrectly(order, systemOrder)) {
+//            cartService.getClearedCartForSession(session);
+//            session.removeAttribute("order");
+//            //send email to the user
+//            mailService.sendOrderMail(order);
+//            return new RedirectView("/amin/profile/order/all");
+//        }
+//        return new RedirectView("/amin/profile/order/rollBack");
+//    }
     @GetMapping("/create")
     public RedirectView createOrder(HttpSession session) {
         SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
@@ -99,7 +123,7 @@ public class OrderController {
             cartService.getClearedCartForSession(session);
             session.removeAttribute("order");
             //send email to the user
-            mailService.sendOrderMail(order);
+            notifier.putMessageIntoQueue(order, MailText.SUBJECT_NEW_ORDER_CREATED);
             return new RedirectView("/amin/profile/order/all");
         }
         return new RedirectView("/amin/profile/order/rollBack");

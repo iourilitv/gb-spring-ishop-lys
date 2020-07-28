@@ -11,8 +11,9 @@ import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.Order;
 import ru.geekbrains.spring.ishop.entity.OrderStatus;
 import ru.geekbrains.spring.ishop.service.CategoryService;
-import ru.geekbrains.spring.ishop.service.MailService;
 import ru.geekbrains.spring.ishop.service.OrderService;
+import ru.geekbrains.spring.ishop.service.interfaces.INotifier;
+import ru.geekbrains.spring.ishop.utils.MailText;
 import ru.geekbrains.spring.ishop.utils.SystemDelivery;
 import ru.geekbrains.spring.ishop.utils.SystemOrder;
 import ru.geekbrains.spring.ishop.utils.filters.OrderFilter;
@@ -27,14 +28,22 @@ public class AdminOrderController {
     private final CategoryService categoryService;
     private final OrderService orderService;
     private final OrderFilter orderFilter;
-    private final MailService mailService;
+//    private final MailService mailService;
+    private final INotifier notifier;
 
+//    @Autowired
+//    public AdminOrderController(CategoryService categoryService, OrderService orderService, OrderFilter orderFilter, MailService mailService) {
+//        this.categoryService = categoryService;
+//        this.orderService = orderService;
+//        this.orderFilter = orderFilter;
+//        this.mailService = mailService;
+//    }
     @Autowired
-    public AdminOrderController(CategoryService categoryService, OrderService orderService, OrderFilter orderFilter, MailService mailService) {
+    public AdminOrderController(CategoryService categoryService, OrderService orderService, OrderFilter orderFilter, INotifier notifier) {
         this.categoryService = categoryService;
         this.orderService = orderService;
         this.orderFilter = orderFilter;
-        this.mailService = mailService;
+        this.notifier = notifier;
     }
 
     @GetMapping
@@ -93,14 +102,37 @@ public class AdminOrderController {
         return new RedirectView("/amin/admin/order/all");
     }
 
+//    @GetMapping("/cancel/{order_id}/order_id")
+//    public RedirectView cancelOrder(@PathVariable("order_id") Long orderId) {
+//        orderService.cancelOrder(orderId);
+//        //send email to the user
+//        mailService.sendOrderMail(orderService.findById(orderId));
+//        return new RedirectView("/amin/admin/order/all");
+//    }
     @GetMapping("/cancel/{order_id}/order_id")
     public RedirectView cancelOrder(@PathVariable("order_id") Long orderId) {
         orderService.cancelOrder(orderId);
+
         //send email to the user
-        mailService.sendOrderMail(orderService.findById(orderId));
+        notifier.putMessageIntoQueue(orderService.findById(orderId), MailText.SUBJECT_ORDER_STATUS_CHANGED);
+
         return new RedirectView("/amin/admin/order/all");
     }
 
+//    @PostMapping("/process/update/orderStatus")
+//    public RedirectView processUpdateOrderStatus(@Valid @ModelAttribute("orderStatus") OrderStatus orderStatus,
+//                                                 BindingResult theBindingResult,
+//                                                 HttpSession session) {
+//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
+//        if (!theBindingResult.hasErrors()) {
+//            Order order = orderService.updateOrderStatus(systemOrder, orderStatus);
+//            systemOrder.setOrderStatus(order.getOrderStatus());
+//            //send email to the user
+//            mailService.sendOrderMail(order);
+//        }
+//        return new RedirectView("/amin/admin/order/edit/" +
+//                systemOrder.getId() + "/order_id");
+//    }
     @PostMapping("/process/update/orderStatus")
     public RedirectView processUpdateOrderStatus(@Valid @ModelAttribute("orderStatus") OrderStatus orderStatus,
                                                  BindingResult theBindingResult,
@@ -109,8 +141,10 @@ public class AdminOrderController {
         if (!theBindingResult.hasErrors()) {
             Order order = orderService.updateOrderStatus(systemOrder, orderStatus);
             systemOrder.setOrderStatus(order.getOrderStatus());
+
             //send email to the user
-            mailService.sendOrderMail(order);
+            notifier.putMessageIntoQueue(order, MailText.SUBJECT_ORDER_STATUS_CHANGED);
+
         }
         return new RedirectView("/amin/admin/order/edit/" +
                 systemOrder.getId() + "/order_id");
