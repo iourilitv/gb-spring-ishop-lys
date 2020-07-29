@@ -1,4 +1,4 @@
-package ru.geekbrains.spring.ishop.config;
+package ru.geekbrains.spring.ishop.informing.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

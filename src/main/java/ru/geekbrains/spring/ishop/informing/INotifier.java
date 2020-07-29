@@ -9,10 +9,11 @@ import java.util.Queue;
 public interface INotifier {
     Queue<AbstractMailMessage> queueToSend = new LinkedList<>();
 
-    void putMessageIntoQueue(Object object, OrderText subject);
+//    void putMessageIntoQueue(Object object, TextTemplates subject);
+    void addMessageToQueue(AbstractMailMessage mailMessage);
 
     @PostConstruct
-    void sendMessageFromQueue();
+    void sendMessagesFromQueue();
 
 
 }

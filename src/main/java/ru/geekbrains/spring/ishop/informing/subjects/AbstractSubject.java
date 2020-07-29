@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractSubject {
-    List<IObserver> observers = new ArrayList<>();
+    private final List<IObserver> observers = new ArrayList<>();
 
     public void attach(IObserver observer) {
         if(observers.contains(observer)) {

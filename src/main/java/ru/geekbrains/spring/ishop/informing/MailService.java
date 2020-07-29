@@ -17,56 +17,42 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 public class MailService implements INotifier {
-    private JavaMailSender sender;
-    private MailMessageBuilder messageBuilder;
-
     private final Logger logger = LoggerFactory.getLogger(MailService.class);
+    private final JavaMailSender sender;
+    private final MailMessageBuilder messageBuilder;
 
+//    @Autowired
+//    public void setSender(JavaMailSender sender) {
+//        this.sender = sender;
+//    }
+//
+//    @Autowired
+//    public void setMessageBuilder(MailMessageBuilder messageBuilder) {
+//        this.messageBuilder = messageBuilder;
+//    }
     @Autowired
-    public void setSender(JavaMailSender sender) {
+    public MailService(JavaMailSender sender, MailMessageBuilder messageBuilder) {
         this.sender = sender;
-    }
-
-    @Autowired
-    public void setMessageBuilder(MailMessageBuilder messageBuilder) {
         this.messageBuilder = messageBuilder;
     }
 
-    private void sendMail(String email, String subject, String text) throws MessagingException {
-        MimeMessage message = sender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
-        helper.setTo(email);
-        helper.setText(text, true);
-        helper.setSubject(subject);
-        sender.send(message);
-    }
-
-    public void sendOrderMail(OrderEmailMessage orderEmailMessage) {
-        try {
-            sendMail(orderEmailMessage.getSendTo(), orderEmailMessage.getSubject(), orderEmailMessage.getBody());
-        } catch (MessagingException e) {
-            logger.warn(OrderText.ERROR_CREATE_ORDER_MAIL.getText(), orderEmailMessage.getOrder().getId());
-            takePauseInSec(10);
-            queueToSend.add(orderEmailMessage);
-        } catch (MailException e) {
-            logger.warn(OrderText.ERROR_SEND_ORDER_MAIL.getText(), orderEmailMessage.getOrder().getId());
-            takePauseInSec(10);
-            queueToSend.add(orderEmailMessage);
-        }
-    }
-
+    //    @Override
+//    public void putMessageIntoQueue(Object object, TextTemplates subject) {
+//        if(object instanceof Order) {
+//            AbstractMailMessage emailMessage = createOrderMailMessage((Order) object, subject);
+//            queueToSend.add(emailMessage);
+//            logger.info("******** putMessageIntoQueue() ***********\n" + "QueueToSend: " + queueToSend);
+//        }
+//    }
     @Override
-    public void putMessageIntoQueue(Object object, OrderText subject) {
-        if(object instanceof Order) {
-            AbstractMailMessage emailMessage = createOrderMailMessage((Order) object, subject);
-            queueToSend.add(emailMessage);
-            logger.info("******** putMessageIntoQueue() ***********\n" + "QueueToSend: " + queueToSend);
-        }
+    public void addMessageToQueue(AbstractMailMessage mailMessage) {
+        queueToSend.add(mailMessage);
+        logger.info("******** addMessageToQueue() ***********\n" + "After adding. QueueToSend: " + queueToSend);
     }
 
     @Override
     @PostConstruct
-    public void sendMessageFromQueue() {
+    public void sendMessagesFromQueue() {
         new Thread(() -> {
             logger.info("******** sendMessageFromQueue() has been launched successfully *********");
             while (true) {
@@ -86,13 +72,26 @@ public class MailService implements INotifier {
 
     }
 
-    private AbstractMailMessage createOrderMailMessage(Order order, OrderText subject) {
+//    private AbstractMailMessage createOrderMailMessage(Order order, TextTemplates subject) {
+//        AbstractMailMessage emailMessage = new OrderEmailMessage();
+//        emailMessage.setSendTo(order.getUser().getEmail());
+//
+//        if(subject.equals(TextTemplates.SUBJECT_NEW_ORDER_CREATED)) {
+//            emailMessage.setSubject(String.format(subject.getText(), order.getId()));
+//        } else if (subject.equals(TextTemplates.SUBJECT_ORDER_STATUS_CHANGED)) {
+//            emailMessage.setSubject(String.format(subject.getText(), order.getId(), order.getOrderStatus().getTitle()));
+//        }
+//        emailMessage.setBody(messageBuilder.buildOrderEmail(order));
+//        emailMessage.setOrigin(order);
+//        return emailMessage;
+//    }
+    public AbstractMailMessage createOrderMailMessage(Order order, TextTemplates subject) {
         AbstractMailMessage emailMessage = new OrderEmailMessage();
         emailMessage.setSendTo(order.getUser().getEmail());
 
-        if(subject.equals(OrderText.SUBJECT_NEW_ORDER_CREATED)) {
+        if(subject.equals(TextTemplates.SUBJECT_NEW_ORDER_CREATED)) {
             emailMessage.setSubject(String.format(subject.getText(), order.getId()));
-        } else if (subject.equals(OrderText.SUBJECT_ORDER_STATUS_CHANGED)) {
+        } else if (subject.equals(TextTemplates.SUBJECT_ORDER_STATUS_CHANGED)) {
             emailMessage.setSubject(String.format(subject.getText(), order.getId(), order.getOrderStatus().getTitle()));
         }
         emailMessage.setBody(messageBuilder.buildOrderEmail(order));
@@ -100,7 +99,30 @@ public class MailService implements INotifier {
         return emailMessage;
     }
 
-    void takePauseInSec(int period) {
+    private void sendMail(String email, String subject, String text) throws MessagingException {
+        MimeMessage message = sender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
+        helper.setTo(email);
+        helper.setText(text, true);
+        helper.setSubject(subject);
+        sender.send(message);
+    }
+
+    private void sendOrderMail(OrderEmailMessage orderEmailMessage) {
+        try {
+            sendMail(orderEmailMessage.getSendTo(), orderEmailMessage.getSubject(), orderEmailMessage.getBody());
+        } catch (MessagingException e) {
+            logger.warn(TextTemplates.ERROR_CREATE_ORDER_MAIL.getText(), orderEmailMessage.getOrder().getId());
+            takePauseInSec(10);
+            queueToSend.add(orderEmailMessage);
+        } catch (MailException e) {
+            logger.warn(TextTemplates.ERROR_SEND_ORDER_MAIL.getText(), orderEmailMessage.getOrder().getId());
+            takePauseInSec(10);
+            queueToSend.add(orderEmailMessage);
+        }
+    }
+
+    private void takePauseInSec(int period) {
         int sec = period * 1000;
         logger.info("******** takePauseInSec() ***********\n" + "Pause period(sec): " + sec);
         try {

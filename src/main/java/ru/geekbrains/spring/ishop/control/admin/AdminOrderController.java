@@ -13,7 +13,7 @@ import ru.geekbrains.spring.ishop.entity.OrderStatus;
 import ru.geekbrains.spring.ishop.informing.subjects.OrderSubject;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.OrderService;
-import ru.geekbrains.spring.ishop.informing.OrderText;
+import ru.geekbrains.spring.ishop.informing.TextTemplates;
 import ru.geekbrains.spring.ishop.utils.SystemDelivery;
 import ru.geekbrains.spring.ishop.utils.SystemOrder;
 import ru.geekbrains.spring.ishop.utils.filters.OrderFilter;
@@ -98,7 +98,7 @@ public class AdminOrderController {
     public RedirectView cancelOrder(@PathVariable("order_id") Long orderId) {
         orderService.cancelOrder(orderId);
         //send email to the user
-        orderSubject.requestToSendMessage(orderService.findById(orderId), OrderText.SUBJECT_ORDER_STATUS_CHANGED);
+        orderSubject.requestToSendMessage(orderService.findById(orderId), TextTemplates.SUBJECT_ORDER_STATUS_CHANGED);
         return new RedirectView("/amin/admin/order/all");
     }
 
@@ -111,7 +111,7 @@ public class AdminOrderController {
             Order order = orderService.updateOrderStatus(systemOrder, orderStatus);
             systemOrder.setOrderStatus(order.getOrderStatus());
             //send email to the user
-            orderSubject.requestToSendMessage(order, OrderText.SUBJECT_ORDER_STATUS_CHANGED);
+            orderSubject.requestToSendMessage(order, TextTemplates.SUBJECT_ORDER_STATUS_CHANGED);
         }
         return new RedirectView("/amin/admin/order/edit/" +
                 systemOrder.getId() + "/order_id");

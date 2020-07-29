@@ -13,7 +13,7 @@ import ru.geekbrains.spring.ishop.informing.subjects.OrderSubject;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.OrderService;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
-import ru.geekbrains.spring.ishop.informing.OrderText;
+import ru.geekbrains.spring.ishop.informing.TextTemplates;
 import ru.geekbrains.spring.ishop.utils.SystemOrder;
 import ru.geekbrains.spring.ishop.utils.filters.OrderFilter;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
@@ -100,7 +100,7 @@ public class OrderController {
             cartService.getClearedCartForSession(session);
             session.removeAttribute("order");
             //send email to the user
-            orderSubject.requestToSendMessage(order, OrderText.SUBJECT_NEW_ORDER_CREATED);
+            orderSubject.requestToSendMessage(order, TextTemplates.SUBJECT_NEW_ORDER_CREATED);
             return new RedirectView("/amin/profile/order/all");
         }
         return new RedirectView("/amin/profile/order/rollBack");
