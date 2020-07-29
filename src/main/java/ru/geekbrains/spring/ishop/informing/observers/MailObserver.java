@@ -17,18 +17,6 @@ public class MailObserver implements IObserver {
         this.mailService = mailService;
     }
 
-//    @Override
-//    public void update(AbstractSubject subject, Object arg) {
-////        OrderSubject orderSubject = (OrderSubject) subject;
-//        if(arg instanceof OrderMessage) {
-//            OrderMessage orderMessage = (OrderMessage) arg;
-//            AbstractMailMessage orderMailMessage =
-//                    mailService.createOrderMailMessage(
-//                            orderMessage.getOrder(), orderMessage.getText());
-//
-//            mailService.addMessageToQueue(orderMailMessage);
-//        }
-//    }
     @Override
     public void update(AbstractSubject subject, Object arg) {
         if(subject instanceof OrderSubject) {

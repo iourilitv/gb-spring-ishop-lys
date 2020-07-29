@@ -21,29 +21,12 @@ public class MailService implements INotifier {
     private final JavaMailSender sender;
     private final MailMessageBuilder messageBuilder;
 
-//    @Autowired
-//    public void setSender(JavaMailSender sender) {
-//        this.sender = sender;
-//    }
-//
-//    @Autowired
-//    public void setMessageBuilder(MailMessageBuilder messageBuilder) {
-//        this.messageBuilder = messageBuilder;
-//    }
     @Autowired
     public MailService(JavaMailSender sender, MailMessageBuilder messageBuilder) {
         this.sender = sender;
         this.messageBuilder = messageBuilder;
     }
 
-    //    @Override
-//    public void putMessageIntoQueue(Object object, TextTemplates subject) {
-//        if(object instanceof Order) {
-//            AbstractMailMessage emailMessage = createOrderMailMessage((Order) object, subject);
-//            queueToSend.add(emailMessage);
-//            logger.info("******** putMessageIntoQueue() ***********\n" + "QueueToSend: " + queueToSend);
-//        }
-//    }
     @Override
     public void addMessageToQueue(AbstractMailMessage mailMessage) {
         queueToSend.add(mailMessage);
@@ -72,19 +55,6 @@ public class MailService implements INotifier {
 
     }
 
-//    private AbstractMailMessage createOrderMailMessage(Order order, TextTemplates subject) {
-//        AbstractMailMessage emailMessage = new OrderEmailMessage();
-//        emailMessage.setSendTo(order.getUser().getEmail());
-//
-//        if(subject.equals(TextTemplates.SUBJECT_NEW_ORDER_CREATED)) {
-//            emailMessage.setSubject(String.format(subject.getText(), order.getId()));
-//        } else if (subject.equals(TextTemplates.SUBJECT_ORDER_STATUS_CHANGED)) {
-//            emailMessage.setSubject(String.format(subject.getText(), order.getId(), order.getOrderStatus().getTitle()));
-//        }
-//        emailMessage.setBody(messageBuilder.buildOrderEmail(order));
-//        emailMessage.setOrigin(order);
-//        return emailMessage;
-//    }
     public AbstractMailMessage createOrderMailMessage(Order order, TextTemplates subject) {
         AbstractMailMessage emailMessage = new OrderEmailMessage();
         emailMessage.setSendTo(order.getUser().getEmail());

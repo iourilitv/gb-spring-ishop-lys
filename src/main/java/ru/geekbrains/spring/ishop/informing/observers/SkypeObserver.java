@@ -16,10 +16,6 @@ public class SkypeObserver implements IObserver {
         if(subject instanceof OrderSubject) {
             //TODO здесь можно добавить разделение на разные подтипы OrderMessage
             OrderMessage orderMessage = (OrderMessage) arg;
-//            logger.info("******** update() *********\n" +
-//                    "Has sent through Skype: OrderMessage(Order id: " +
-//                    orderMessage.getOrder().getId() +
-//                    ". Operation: " + orderMessage.getTextTemplate() + ")");
             logger.info("******** update() *********\n" +
                     "Has sent through Skype: " + orderMessage);
 
