@@ -7,6 +7,7 @@ import ru.geekbrains.spring.ishop.entity.Product;
  */
 public interface IProductRepositorySql2o {
     Product findById(Long id);
+    Product findByTitle(String title);
     void insert(Product product);
     void update(Product product);
     void delete(Product product);

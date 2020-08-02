@@ -89,12 +89,12 @@ public class AdminProductController {
     }
 
     /**
-     * Метод сохраняет в БД новый продукт.
+     * Метод сохраняет в БД новый продукт или изменяет существующий.
      * @param product - объект нового продукта
      * @param bindingResult - объект результата валидации
      * @return - ссылку на список всех товаров в разделе admin
      */
-    @PostMapping("/form")
+    @PostMapping("/update")
     public String updateProduct(@ModelAttribute @Valid Product product,
                                 BindingResult bindingResult) {
         if(bindingResult.hasErrors()){

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import ru.geekbrains.spring.ishop.entity.Product;
-import ru.geekbrains.spring.ishop.entity.Role;
 import ru.geekbrains.spring.ishop.providers.interfaces.IProductRepositorySql2o;
 
 /**
@@ -35,10 +34,23 @@ public class ProductRepositorySql2o implements IProductRepositorySql2o {
     }
 
     @Override
+    public Product findByTitle(String title) {
+        final String query =
+                "select * from products where title = :title";
+        try (Connection connection = sql2o.open()) {
+            return connection
+                    .createQuery(query, false)
+                    .addParameter("title", title)
+                    //выполняем запрос и получаем первый объект
+                    .executeAndFetchFirst(Product.class);
+        }
+    }
+
+    @Override
     public void insert(Product product) {
         final String query =
-                "INSERT INTO products (title, description, price, category_id) " +
-                        "VALUES (:title, :description, :price, :category_id)";
+                "INSERT INTO products (title, description, price, category_id, img_pathname) " +
+                        "VALUES (:title, :description, :price, :category_id, :img_pathname)";
         try (Connection connection = sql2o.beginTransaction()) {
 
             connection.createQuery(query)
@@ -46,6 +58,7 @@ public class ProductRepositorySql2o implements IProductRepositorySql2o {
                     .addParameter("description", product.getDescription())
                     .addParameter("price", product.getPrice())
                     .addParameter("category_id", product.getCategory())
+                    .addParameter("img_pathname", product.getImgPathname())
                     .executeUpdate();
             connection.commit();
         }
@@ -54,7 +67,7 @@ public class ProductRepositorySql2o implements IProductRepositorySql2o {
     @Override
     public void update(Product product) {
         final String query =
-                "UPDATE products SET title=:title, description=:description, price=:price, category_id=:category_id " +
+                "UPDATE products SET title=:title, description=:description, price=:price, category_id=:category_id, img_pathname=:img_pathname " +
                         "WHERE id=:id";
         try (Connection connection = sql2o.beginTransaction()) {
 
@@ -64,6 +77,7 @@ public class ProductRepositorySql2o implements IProductRepositorySql2o {
                     .addParameter("description", product.getDescription())
                     .addParameter("price", product.getPrice())
                     .addParameter("category_id", product.getCategory())
+                    .addParameter("img_pathname", product.getImgPathname())
                     .executeUpdate();
             connection.commit();
         }
