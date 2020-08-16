@@ -166,14 +166,16 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator</artifactId>
-            <version>RELEASE</version>
+<!--            <version>RELEASE</version>-->
+            <version>0.40</version>
         </dependency>
         <!-- 18.3 -->
         <!-- для клиента(что?) -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>sockjs-client</artifactId>
-            <version>RELEASE</version>
+<!--            <version>RELEASE</version>-->
+            <version>1.1.2</version>
         </dependency>
         <!-- 18.4 -->
         <!-- Подключение библиотеки для JS - STOMP — протокол простого обмена сообщениями -->
@@ -194,7 +196,8 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
-            <version>RELEASE</version>
+<!--            <version>RELEASE</version>-->
+            <version>3.5.1</version>
         </dependency>
 
         <!-- 19.RabbitMQ для взаимодействия с другими сервисами -->
