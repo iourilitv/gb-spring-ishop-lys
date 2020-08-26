@@ -10,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.spring.ishop.entity.User;
-import ru.geekbrains.spring.ishop.service.UserService;
+import ru.geekbrains.spring.ishop.services.interfaces.IUserServiceSql2o;
 import ru.geekbrains.spring.ishop.utils.SystemUser;
 
 import javax.servlet.http.HttpSession;
@@ -19,11 +19,11 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/profile/form")
 public class UserProfileFormController {
-    private UserService userService;
+    private IUserServiceSql2o IUserServiceSql2o;
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setIUserServiceSql2o(IUserServiceSql2o IUserServiceSql2o) {
+        this.IUserServiceSql2o = IUserServiceSql2o;
     }
 
     private final Logger logger = LoggerFactory.getLogger(UserProfileFormController.class);
@@ -61,7 +61,7 @@ public class UserProfileFormController {
 //        return "amin/password-changing-form";
             return "password-changing-form";
         }
-        User existing = userService.findByUserName(userName);
+        User existing = IUserServiceSql2o.findByUserName(userName);
         if (existing == null) {
             theModel.addAttribute("systemUser", theSystemUser);
             theModel.addAttribute("registrationError", "There is no user with current username!");
@@ -69,7 +69,7 @@ public class UserProfileFormController {
 //        return "amin/password-changing-form";
             return "password-changing-form";
         }
-        userService.updatePassword(userName, theSystemUser.getPassword());
+        IUserServiceSql2o.updatePassword(userName, theSystemUser.getPassword());
         logger.debug("Successfully updated user password: " + userName);
         theModel.addAttribute("confirmationTitle", "Password Changing Confirmation");
         theModel.addAttribute("confirmationMessage", "The password has been changed successfully!");

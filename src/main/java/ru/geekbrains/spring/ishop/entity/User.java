@@ -6,6 +6,8 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "users")
@@ -51,6 +53,19 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
+    public static final Map<String, String> COLUMN_MAPPINGS = new HashMap<>();
+
+    static {
+        COLUMN_MAPPINGS.put("id", "id");
+        COLUMN_MAPPINGS.put("username", "userName");
+        COLUMN_MAPPINGS.put("password", "password");
+        COLUMN_MAPPINGS.put("first_name", "firstName");
+        COLUMN_MAPPINGS.put("last_name", "lastName");
+        COLUMN_MAPPINGS.put("phone_number", "phoneNumber");
+        COLUMN_MAPPINGS.put("email", "email");
+        COLUMN_MAPPINGS.put("delivery_address_id", "deliveryAddress");
+    }
+
     public User() {
     }
 
@@ -72,6 +87,19 @@ public class User {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.roles = roles;
+    }
+
+    public User(Long id, String userName, String password, String firstName, String lastName,
+                String phoneNumber, String email, Address deliveryAddress, Collection<Role> roles) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.deliveryAddress = deliveryAddress;
         this.roles = roles;
     }
 

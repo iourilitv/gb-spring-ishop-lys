@@ -1,6 +1,6 @@
 package ru.geekbrains.spring.ishop.config;
 
-import ru.geekbrains.spring.ishop.service.UserService;
+import ru.geekbrains.spring.ishop.services.interfaces.IUserServiceSql2o;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,12 +16,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private UserService userService;
+    private IUserServiceSql2o IUserServiceSql2o;
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setIUserServiceSql2o(IUserServiceSql2o IUserServiceSql2o) {
+        this.IUserServiceSql2o = IUserServiceSql2o;
     }
 
     @Autowired
@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-        auth.setUserDetailsService(userService);
+        auth.setUserDetailsService(IUserServiceSql2o);
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
     }

@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.Order;
-import ru.geekbrains.spring.ishop.service.CategoryService;
-import ru.geekbrains.spring.ishop.service.OrderService;
-import ru.geekbrains.spring.ishop.service.ShoppingCartService;
+import ru.geekbrains.spring.ishop.services.CategoryService;
+import ru.geekbrains.spring.ishop.services.OrderService;
+import ru.geekbrains.spring.ishop.services.ShoppingCartService;
 import ru.geekbrains.spring.ishop.utils.OrderFilter;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 

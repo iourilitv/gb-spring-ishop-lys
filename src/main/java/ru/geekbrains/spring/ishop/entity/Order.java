@@ -53,7 +53,8 @@ public class Order {
         return "Order{" +
                 "id=" + id +
                 ", orderStatus=" + orderStatus +
-                ", user=" + user +
+//                ", user=" + user +
+                ", userId=" + user.getId() +
                 ", orderItems=" + orderItems +
                 ", totalItemsCosts=" + totalItemsCosts +
                 ", totalCosts=" + totalCosts +

@@ -1,4 +1,4 @@
-package ru.geekbrains.spring.ishop.service;
+package ru.geekbrains.spring.ishop.services;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

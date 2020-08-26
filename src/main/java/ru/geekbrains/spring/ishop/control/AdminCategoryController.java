@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.spring.ishop.entity.Category;
-import ru.geekbrains.spring.ishop.service.CategoryService;
+import ru.geekbrains.spring.ishop.services.CategoryService;
 import ru.geekbrains.spring.ishop.utils.CategoryFilter;
 
 import javax.validation.Valid;

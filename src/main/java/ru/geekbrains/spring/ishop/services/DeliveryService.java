@@ -1,4 +1,4 @@
-package ru.geekbrains.spring.ishop.service;
+package ru.geekbrains.spring.ishop.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

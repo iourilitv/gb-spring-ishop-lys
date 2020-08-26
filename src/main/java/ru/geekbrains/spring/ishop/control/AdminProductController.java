@@ -9,8 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.spring.ishop.entity.Category;
 import ru.geekbrains.spring.ishop.entity.Product;
-import ru.geekbrains.spring.ishop.service.CategoryService;
-import ru.geekbrains.spring.ishop.service.ProductService;
+import ru.geekbrains.spring.ishop.services.CategoryService;
+import ru.geekbrains.spring.ishop.services.ProductService;
 import ru.geekbrains.spring.ishop.utils.ProductFilter;
 
 import javax.validation.Valid;
@@ -89,12 +89,12 @@ public class AdminProductController {
     }
 
     /**
-     * Метод сохраняет в БД новый продукт.
+     * Метод сохраняет в БД новый продукт или изменяет существующий.
      * @param product - объект нового продукта
      * @param bindingResult - объект результата валидации
      * @return - ссылку на список всех товаров в разделе admin
      */
-    @PostMapping("/form")
+    @PostMapping("/update")
     public String updateProduct(@ModelAttribute @Valid Product product,
                                 BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
